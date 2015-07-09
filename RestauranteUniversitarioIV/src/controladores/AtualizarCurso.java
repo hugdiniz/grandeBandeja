@@ -13,11 +13,6 @@ import controladores.ccu.GerirCurso;
 import controladores.ccu.GerirDepartamento;
 import controladores.ccu.exceptions.CursoNotFound;
 import controladores.ccu.exceptions.DepartamentoNotFound;
-import controladores.ccu.exceptions.NomeNotFoundException;
-import controladores.ccu.exceptions.SiglaAlreadyExistsException;
-import controladores.ccu.exceptions.SiglaNotFoundException;
-import entidades.Curso;
-import entidades.Departamento;
 import entidades.value_objects.CursoVO;
 import entidades.value_objects.DepartamentoVO;
 
@@ -25,10 +20,11 @@ import entidades.value_objects.DepartamentoVO;
 public class AtualizarCurso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String acao = (String) request.getParameter("acaoAtualizar");
-		Collection<DepartamentoVO> departamentosDisponiveis = GerirDepartamento.listarDepartamentos(request.getSession());
+		Collection<DepartamentoVO> departamentosDisponiveis = GerirDepartamento.getInstance().listarDepartamentos(request.getSession());
 		request.setAttribute("departamentosDisponiveis", departamentosDisponiveis);
 		
 		if (acao == null)
