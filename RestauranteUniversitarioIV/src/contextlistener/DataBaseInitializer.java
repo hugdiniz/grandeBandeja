@@ -54,6 +54,7 @@ public class DataBaseInitializer {
 	    }
 	    System.out.println("Sucesso");
 	    stmt.close();
+	    conn.close();
 	}
 	
 	
