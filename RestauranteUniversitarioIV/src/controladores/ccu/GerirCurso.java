@@ -1,5 +1,7 @@
 package controladores.ccu;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpSession;
 
 import controladores.ccu.exceptions.CursoNotFound;
@@ -13,14 +15,14 @@ import entidades.value_objects.CursoVO;
 import entidades.value_objects.DepartamentoVO;
 
 public class GerirCurso {
-	public static Object listarCursos(HttpSession session) {
-		return Curso._listarCursosDisponiveis(session);
+	public static Object listarCursos(CursoVO vo) {
+		return Curso._listarCursosDisponiveis(vo);
 	}
 
-	public static CursoVO buscarCurso(HttpSession session, String sigla) throws CursoNotFound{
+	public static CursoVO buscarCurso(CursoVO vo, String sigla) throws CursoNotFound{
 		CursoVO cursoAntigo = new CursoVO("", sigla,null);
 		try {
-			cursoAntigo = Curso._buscarCurso(session, cursoAntigo.getSigla());
+			Collection antigo = Curso._listarCursosDisponiveis(cursoAntigo);
 		} catch (NullPointerException e) {
 			throw new CursoNotFound();
 		}
@@ -31,22 +33,22 @@ public class GerirCurso {
 		return cursoAntigo;
 	}
 
-	public static void criarCurso(HttpSession session, String nome, String sigla, String siglaDpto) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, DepartamentoNotFound {
-		DepartamentoVO dpto = Departamento.getInstance().buscarDepartamento(session,siglaDpto);
+	public static void criarCurso(CursoVO vo, String nome, String sigla, String siglaDpto) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, DepartamentoNotFound {
+		DepartamentoVO dpto = Departamento.getInstance().buscarDepartamento(vo,siglaDpto);
 		
 		if (dpto == null){
 			throw new DepartamentoNotFound();
 		} else{
 			CursoVO curso = new CursoVO(nome,sigla,dpto);
 			
-			if (Curso._buscarCurso(session,sigla) == null){
+			if (Curso._buscarCurso(vo,sigla) == null){
 				if (sigla==""){
 					throw new SiglaNotFoundException();
 				}else{
 					if (nome==""){
 						throw new NomeNotFoundException();
 					}else{
-						Curso._adicionarCurso(session,curso);
+						Curso._adicionarCurso(vo,curso);
 					}
 				}
 			}else{

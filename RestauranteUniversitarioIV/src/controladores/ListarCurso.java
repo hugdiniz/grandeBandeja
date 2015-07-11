@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import controladores.ccu.GerirCurso;
 import controladores.ccu.GerirDepartamento;
 import entidades.Curso;
+import entidades.value_objects.CursoVO;
 
 @WebServlet("/ListarCurso")
 public class ListarCurso extends HttpServlet {
@@ -48,7 +49,8 @@ public class ListarCurso extends HttpServlet {
 
 	
 	private void listarCursos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("cursos", GerirCurso.listarCursos(request.getSession()));
+		CursoVO cursoVo = new CursoVO(null, null, null);
+		request.setAttribute("cursos", GerirCurso.listarCursos(cursoVo));
 		request.getRequestDispatcher("WEB-INF/ListarCurso.jsp").forward(request,response);
 	}
 
