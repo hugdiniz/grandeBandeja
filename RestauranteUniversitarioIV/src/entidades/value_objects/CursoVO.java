@@ -1,8 +1,6 @@
 package entidades.value_objects;
 
-import java.io.Serializable;
-
-public class CursoVO implements Serializable {
+public class CursoVO implements VO {
 	private String nome;
 	private String sigla;
 	private DepartamentoVO departamento;

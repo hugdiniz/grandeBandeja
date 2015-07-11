@@ -5,29 +5,37 @@ import java.util.Collection;
 import javax.servlet.http.HttpSession;
 
 import entidades.value_objects.CursoVO;
+import entidades.value_objects.VO;
 
-public class RepositorioCurso extends Repositorio<CursoVO> {
+public class RepositorioCurso extends Repositorio
+{
+	private static RepositorioCurso repositorio;
 	
-	public RepositorioCurso(HttpSession session) {
-		super(session, "cursosDisponiveis");
-	}
 	
-	@Override
-	public void atualizar(CursoVO antigo, CursoVO novo) {
-		Collection<CursoVO> cursosDisponiveis = listar();
-		CursoVO cursoAntigo = buscar(antigo);
-		cursoAntigo.setNome(novo.getNome());
-		cursoAntigo.setDepartamento(novo.getDepartamento());
-		cursosDisponiveis.add(cursoAntigo);
-	}
-		
-	@Override
-	public CursoVO buscar(CursoVO alvo) {
-		Collection<CursoVO> cursosDisponiveis = listar();
-		for(CursoVO di : cursosDisponiveis){
-			if (alvo.getSigla().equals(di.getSigla()))
-				return di;
+	public static RepositorioCurso getInstance() {
+		if (repositorio == null) {
+			repositorio = new RepositorioCurso();
 		}
-		return null;	
+		return repositorio;
 	}
+
+	@Override
+	public void inserirOuAtualizar(VO vo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Collection buscar(VO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection remover(VO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 }
