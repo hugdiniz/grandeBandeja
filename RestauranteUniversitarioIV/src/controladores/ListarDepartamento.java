@@ -47,7 +47,7 @@ public class ListarDepartamento extends HttpServlet {
 	}
 
 	private void listarDepartamentos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("departamentos", GerirDepartamento.getInstance().listarDepartamentos(request.getSession()));
+		//request.setAttribute("departamentos", GerirDepartamento.getInstance().listarDepartamentos(request.getSession()));
 		request.getRequestDispatcher("WEB-INF/ListarDepartamento.jsp").forward(request,response);
 	}
 

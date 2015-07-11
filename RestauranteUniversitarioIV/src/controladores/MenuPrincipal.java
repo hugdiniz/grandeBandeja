@@ -13,6 +13,7 @@ public class MenuPrincipal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		initJsp(request, response);
 	}
 	
@@ -23,7 +24,7 @@ public class MenuPrincipal extends HttpServlet {
 	}
 
 	private void initJsp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("departamentos", GerirDepartamento.getInstance().listarDepartamentos(request.getSession()));
+		//request.setAttribute("departamentos", GerirDepartamento.getInstance().listarDepartamentos(request.getSession()));
 		request.getRequestDispatcher("WEB-INF/MenuPrincipal.jsp").forward(request,response);
 	}
 
