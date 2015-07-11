@@ -11,11 +11,14 @@ public class RepositorioCurso extends Repositorio
 {
 	private static RepositorioCurso repositorio;
 	
+	private RepositorioCurso() {
+		super();
+	}
 	
 	public static RepositorioCurso getInstance() {
 		if (repositorio == null) {
 			repositorio = new RepositorioCurso();
-		}
+		}	
 		return repositorio;
 	}
 
