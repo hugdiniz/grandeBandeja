@@ -8,6 +8,7 @@ public class ConnectionFactory {
 	
 	private static final String CONNECTION_URL = "jdbc:h2:~/jerry";
 	private static final String USER = "admin";
+	private static final String PASSWORD = "foca";
 	
 	private ConnectionFactory () {
 		
@@ -16,9 +17,9 @@ public class ConnectionFactory {
 	public static Connection getConnection() {
 		try {
 			return DriverManager.
-			         getConnection(CONNECTION_URL, USER, "");
+			         getConnection(CONNECTION_URL, USER, PASSWORD);
 		} catch (SQLException e) {
-			throw new RuntimeException("Nao foi possivel abrir uma conexao", e);
+			throw new RuntimeException("Nao foi possivel abrir uma conexao");
 		}
 	}
 }

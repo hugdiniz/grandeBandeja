@@ -6,12 +6,12 @@ import entidades.value_objects.VO;
 
 public class RepositorioTicket extends Repositorio
 {
-	private static RepositorioTicket repositorio;
+	private static RepositorioDepartamento repositorio;
 	
 	
 	public static RepositorioDepartamento getInstance() {
 		if (repositorio == null) {
-			repositorio = new RepositorioTicket();
+			repositorio = new RepositorioDepartamento();
 		}
 		return repositorio;
 	}

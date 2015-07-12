@@ -20,8 +20,8 @@ public class GerirDepartamento {
 		}
 		return gerirDepartamento;
 	}
-	public Collection<DepartamentoVO> listarDepartamentos(HttpSession session) {
-		return Departamento.getInstance().listarDepartamentosDisponiveis(session);
+	public Collection<DepartamentoVO> listarDepartamentos(DepartamentoVO departamentoVO) {
+		return Departamento.getInstance().listarDepartamentosDisponiveis(departamentoVO);
 	}
 	
 	public static DepartamentoVO buscarDepartamento(HttpSession session, String sigla) throws DepartamentoNotFound{
@@ -49,7 +49,7 @@ public class GerirDepartamento {
 				if (nome==""){
 					throw new NomeNotFoundException();
 				}else{
-					Departamento.getInstance().adicionarDepartamento(session,dpto);
+					Departamento.getInstance().adicionarDepartamento(dpto);
 				}
 			}
 		}else{

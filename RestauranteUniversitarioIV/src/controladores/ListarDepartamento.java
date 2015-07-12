@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import controladores.ccu.GerirDepartamento;
 import entidades.Departamento;
+import entidades.value_objects.DepartamentoVO;
 
 @WebServlet("/ListarDepartamento")
 public class ListarDepartamento extends HttpServlet {
@@ -47,7 +48,7 @@ public class ListarDepartamento extends HttpServlet {
 	}
 
 	private void listarDepartamentos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//request.setAttribute("departamentos", GerirDepartamento.getInstance().listarDepartamentos(request.getSession()));
+		request.setAttribute("departamentos", GerirDepartamento.getInstance().listarDepartamentos(new DepartamentoVO()));
 		request.getRequestDispatcher("WEB-INF/ListarDepartamento.jsp").forward(request,response);
 	}
 
