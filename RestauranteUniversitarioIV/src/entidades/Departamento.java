@@ -22,6 +22,7 @@ public class Departamento
 		return departamento;
 
 	}
+	
 	public Collection recuperarDepartamentos(DepartamentoVO departamentoVO) throws DepartamentoException
 	{
 		
@@ -31,7 +32,7 @@ public class Departamento
 		} 
 		catch (SQLException e)
 		{
-			throw new DepartamentoException("erro.recuperar.departamentos.repositorio.departamento.buscar",e);			
+			throw new DepartamentoException("erro.recuperar.departamentos.repositorio.departamento.buscar");			
 		}
 	}
 

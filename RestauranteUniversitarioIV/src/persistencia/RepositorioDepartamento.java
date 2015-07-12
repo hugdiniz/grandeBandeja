@@ -143,6 +143,22 @@ public class RepositorioDepartamento extends Repositorio
 			}
 			
 			vars.add(departamentoVO.getSigla());
+		}
+		if (departamentoVO.getId()!= null)
+		{			
+			if (primeiroCampo)
+			{
+				primeiroCampo = false;
+				campos.append(" where id like ");
+				campos.append(" ? ");
+			}
+			else 
+			{
+				campos.append("and id like");
+				campos.append( " ? " );
+			}
+			
+			vars.add(departamentoVO.getId());
 		}	
 		
 		campos.append(";");

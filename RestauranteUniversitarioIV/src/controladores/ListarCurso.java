@@ -15,23 +15,27 @@ import javax.servlet.http.HttpSession;
 import controladores.ccu.GerirCurso;
 import controladores.ccu.GerirDepartamento;
 import entidades.Curso;
+import entidades.exceptions.CursoException;
 import entidades.value_objects.CursoVO;
 
 @WebServlet("/ListarCurso")
 public class ListarCurso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		listarCursos(request, response);
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		
 		String acao = (String) request.getParameter("acaoListar");
 		
 		if (acao == null) acao = "";
 		
-		switch (acao) {
+		switch (acao) 
+		{
 			case "Criar":
 				request.getRequestDispatcher("CriarCurso").forward(request,response);
 				break;
@@ -48,9 +52,17 @@ public class ListarCurso extends HttpServlet {
 	}
 
 	
-	private void listarCursos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CursoVO cursoVo = new CursoVO(null, null, null);
-		request.setAttribute("cursos", GerirCurso.listarCursos(cursoVo));
+	private void listarCursos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		
+		try
+		{
+			request.setAttribute("cursos", GerirCurso.getInstance().listarCursos());
+		}
+		catch (CursoException e)
+		{			
+			e.printStackTrace();
+		}
 		request.getRequestDispatcher("WEB-INF/ListarCurso.jsp").forward(request,response);
 	}
 

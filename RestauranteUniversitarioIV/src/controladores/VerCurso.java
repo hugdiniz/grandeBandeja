@@ -14,6 +14,7 @@ import controladores.ccu.GerirDepartamento;
 import controladores.ccu.exceptions.CursoNotFound;
 import controladores.ccu.exceptions.DepartamentoNotFound;
 import entidades.Curso;
+import entidades.exceptions.CursoException;
 import entidades.value_objects.CursoVO;
 import entidades.value_objects.DepartamentoVO;
 
@@ -21,24 +22,36 @@ import entidades.value_objects.DepartamentoVO;
 public class VerCurso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 
 		String acao = (String) request.getParameter("acaoVer");
 		if (acao == null)
 			acao = "";
 
-		switch (acao) {
+		CursoVO cursoVO = new CursoVO();
+		
+		if (request.getParameter("sigla") != null)
+		{
+			cursoVO.setSigla(request.getParameter("sigla"));
+		}
+		
+		switch (acao) 
+		{
 			case "Voltar":
 				request.getRequestDispatcher("ListarCurso").forward(request,response);
 				break;
 			default:
 				CursoVO cursoAntigo;
-				try {
-					cursoAntigo = GerirCurso.buscarCurso(request.getSession(),request.getParameter("sigla"));
+				try 
+				{
+					cursoAntigo = GerirCurso.getInstance().buscarCurso(cursoVO);
 					request.setAttribute("curso antigo",cursoAntigo);
 					request.getRequestDispatcher("WEB-INF/VerCurso.jsp").forward(request,response);
-				} catch (CursoNotFound e) {
-					request.setAttribute("erro", "Curso não existe!");
+				} 
+				catch (CursoException e) 
+				{
+					request.setAttribute("erro", e.getMessage());
 					request.getRequestDispatcher("WEB-INF/VerCurso.jsp").forward(request,response);
 				}				
 		}

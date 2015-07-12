@@ -13,24 +13,39 @@ import controladores.ccu.GerirCurso;
 import controladores.ccu.GerirDepartamento;
 import controladores.ccu.exceptions.CursoNotFound;
 import controladores.ccu.exceptions.DepartamentoNotFound;
+import entidades.exceptions.CursoException;
+import entidades.exceptions.DepartamentoException;
 import entidades.value_objects.CursoVO;
 import entidades.value_objects.DepartamentoVO;
 
 @WebServlet("/AtualizarCurso")
-public class AtualizarCurso extends HttpServlet {
+public class AtualizarCurso extends HttpServlet 
+{
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 
 		String acao = (String) request.getParameter("acaoAtualizar");
-		Collection<DepartamentoVO> departamentosDisponiveis = GerirDepartamento.getInstance().listarDepartamentos(request.getSession());
+		Collection departamentosDisponiveis = null;
+		
+		try
+		{
+			departamentosDisponiveis = GerirDepartamento.getInstance().listarDepartamentos();
+		}
+		catch (DepartamentoException e)
+		{			
+			e.printStackTrace();
+		}
+		
 		request.setAttribute("departamentosDisponiveis", departamentosDisponiveis);
 		
 		if (acao == null)
 			acao = "";
 
-		switch (acao) {
+		switch (acao)
+		{
 			case "Cancelar":
 			case "Voltar":
 				request.getRequestDispatcher("ListarCurso").forward(request,response);
@@ -39,37 +54,55 @@ public class AtualizarCurso extends HttpServlet {
 				atualizarCursoAntigo(request,response);
 				break;
 			default:
-				try {
-					CursoVO cursoAntigo = GerirCurso.buscarCurso(request.getSession(),request.getParameter("sigla"));
+				try
+				{
+					String nome = (String) request.getParameter("nome");
+					String sigla = (String) request.getParameter("sigla");
+					
+					CursoVO cursoVO = new CursoVO();
+					cursoVO.setNome(nome);
+					cursoVO.setSigla(sigla);
+					
+					CursoVO cursoAntigo = GerirCurso.getInstance().buscarCurso(cursoVO);
 					request.setAttribute("curso antigo",cursoAntigo);
 					request.getRequestDispatcher("WEB-INF/AtualizarCurso.jsp").forward(request,response);
-				} catch (CursoNotFound e2) {
-					request.setAttribute("erro", "O curso informado nao existe");
+				}
+				catch (CursoException e2)
+				{
+					request.setAttribute("erro", e2.getMessage());
 					request.getRequestDispatcher("WEB-INF/AtualizarCurso.jsp").forward(request,response);
 				}	
 		}
 	}
 	
 	
-	private void atualizarCursoAntigo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void atualizarCursoAntigo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		String nome = (String) request.getParameter("nome");
 		String sigla = (String) request.getParameter("sigla");
 		
-		if (nome=="" || sigla=="" || request.getParameter("departamento") == null){
+		CursoVO cursoVO = new CursoVO();
+		cursoVO.setNome(nome);
+		cursoVO.setSigla(sigla);
+		
+		if (nome=="" || sigla=="" || request.getParameter("departamento") == null)
+		{
 			request.setAttribute("erro", "Um curso deve conter um nome, uma sigla e um departamento");
 			request.getRequestDispatcher("WEB-INF/AtualizarCurso.jsp").forward(request,response);
-		}else{
-			try {
-				GerirCurso.atualizarCurso(request.getSession(), nome, sigla, request.getParameter("departamento"));
+		}
+		else
+		{
+			try 
+			{
+				GerirCurso.getInstance().atualizarCurso(cursoVO);
 				request.setAttribute("message", "Novo curso criado!");
 				request.getRequestDispatcher("ListarCurso").forward(request,response);
-			}catch (DepartamentoNotFound e) {
-				request.setAttribute("erro", "Informe um departamento valido");
+			}
+			catch (CursoException e)
+			{
+				request.setAttribute("erro", e.getMessage());
 				request.getRequestDispatcher("WEB-INF/CriarCurso.jsp").forward(request,response);
-			} catch (CursoNotFound e) {
-				request.setAttribute("erro", "O curso informado nao existe");
-				request.getRequestDispatcher("WEB-INF/CriarCurso.jsp").forward(request,response);
-			}			
+			} 			
 		}
 	}
 }
