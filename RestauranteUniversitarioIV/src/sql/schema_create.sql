@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS CURSO
 	SIGLA varchar(255),
 	departamento_fk bigint,
 	FOREIGN KEY (departamento_fk) REFERENCES DEPARTAMENTO(id)
-); 
+) ;
 
 
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS ALUNO
 	FOREIGN KEY (id) REFERENCES CONSUMIDOR(id),
 	curso_fk bigint,
 	FOREIGN KEY (curso_fk) REFERENCES CURSO(id)
-); 
+) ;
 
 CREATE TABLE IF NOT EXISTS FUNCIONARIO
 (
@@ -63,4 +63,3 @@ CREATE TABLE IF NOT EXISTS TICKET
 	refeicao_fk bigint,
 	FOREIGN KEY (refeicao_fk) REFERENCES REFEICAO(id)
 );
-

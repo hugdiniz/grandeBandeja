@@ -18,7 +18,7 @@ public class ConnectionFactory {
 			return DriverManager.
 			         getConnection(CONNECTION_URL, USER, "");
 		} catch (SQLException e) {
-			throw new RuntimeException("Nao foi possivel abrir uma conexao");
+			throw new RuntimeException("Nao foi possivel abrir uma conexao", e);
 		}
 	}
 }

@@ -24,7 +24,7 @@ public class ApplicationContextListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 			try {
-				DataBaseInitializer.inicializarDb();
+				DataBaseInitializer.inicializarDb(arg0);
 			} catch (ClassNotFoundException | SQLException e) {
 				throw new java.lang.RuntimeException("Exceção não tratada!", e);
 			}
