@@ -1,14 +1,9 @@
 package persistencia;
 
-import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
-
-import javax.servlet.http.HttpSession;
-
 import entidades.value_objects.DepartamentoVO;
 import entidades.value_objects.VO;
 
@@ -19,29 +14,33 @@ public class RepositorioDepartamento extends Repositorio
 	
 	public static RepositorioDepartamento getInstance()
 	{
-		if (repositorio == null) {
+		if (repositorio == null) 
+		{
 			repositorio = new RepositorioDepartamento();
 		}
 		return repositorio;
 	}
 
 	@Override
-	public void inserirOuAtualizar(VO vo)
+	public void inserirOuAtualizar(VO vo) throws SQLException
 	{
 		DepartamentoVO departamentoVO = (DepartamentoVO) vo;
 		Collection vars = new ArrayList();
 		
 		StringBuilder stringVars = new StringBuilder();
-		stringVars.append("VALUES (");
+		
 		StringBuilder campos = new StringBuilder();
 		
 		if (departamentoVO.getId() != null)
 		{
 			campos.append("UPDATE departamento SET (");
+			stringVars.append(" = (");
 		}
 		else
 		{
 			campos.append("INSERT INTO departamento (");
+			stringVars.append("VALUES (");
+			
 		}	
 		
 		
@@ -81,9 +80,10 @@ public class RepositorioDepartamento extends Repositorio
 		campos.append(") ");
 		
 		campos.append(stringVars);
+		
 		if (departamentoVO.getId() != null)
 		{
-			campos.append(") WHERE id=?");
+			campos.append(") WHERE id=?;");
 			vars.add(departamentoVO.getId());
 		}
 		else
@@ -92,15 +92,8 @@ public class RepositorioDepartamento extends Repositorio
 		}
 		
 		
-		try 
-		{
-			System.out.println(campos);
-			insertOrUpdateSQL(campos.toString(), vars);
-		} catch (SQLException e) 
-		{			
-			e.printStackTrace();
-		}
-		
+		System.out.println(campos);
+		insertOrUpdateSQL(campos.toString(), vars);		
 		
 	}
 	
@@ -112,11 +105,9 @@ public class RepositorioDepartamento extends Repositorio
 		DepartamentoVO departamentoVO = (DepartamentoVO) vo;
 		Collection vars = new ArrayList();
 		
-		StringBuilder stringVars = new StringBuilder();
-		stringVars.append("VALUES (");
 		StringBuilder campos = new StringBuilder();
 		
-		campos.append("select * from departamento");
+		campos.append("select * from departamento ");
 		ResultSet resultSet = null;	
 		
 		
@@ -126,13 +117,13 @@ public class RepositorioDepartamento extends Repositorio
 			if (primeiroCampo)
 			{
 				primeiroCampo = false;
-				campos.append("where nome ilike ");
-				campos.append(" %?% ");
+				campos.append(" where nome like ");
+				campos.append(" ? ");
 			}
 			else 
 			{
-				campos.append(" and nome ilike");
-				campos.append(" %?% ");
+				campos.append(" and nome like");
+				campos.append(" ? ");
 			}
 			
 			vars.add(departamentoVO.getNome());
@@ -142,32 +133,28 @@ public class RepositorioDepartamento extends Repositorio
 			if (primeiroCampo)
 			{
 				primeiroCampo = false;
-				campos.append("where sigla ilike ");
-				campos.append(" %?% ");
+				campos.append(" where sigla like ");
+				campos.append(" ? ");
 			}
 			else 
 			{
-				campos.append("and sigla ilike");
-				campos.append( "%?%" );
+				campos.append("and sigla like");
+				campos.append( " ? " );
 			}
 			
 			vars.add(departamentoVO.getSigla());
-		}		
-		try 
-		{
-			System.out.println(campos);
-			resultSet = executeSQL(campos.toString(), vars);
-		} catch (SQLException e) 
-		{			
-			e.printStackTrace();
-		}
+		}	
+		
+		campos.append(";");
+		System.out.println(campos);
+		resultSet = executeSQL(campos.toString(), vars);		
 		
 		Collection vos = new ArrayList(); 
 		while (resultSet.next()) 
 		{
 			DepartamentoVO departamentoVOSaida = new DepartamentoVO();
 			departamentoVOSaida.setNome(resultSet.getString("nome"));
-			departamentoVO.setId(resultSet.getLong("id"));
+			departamentoVOSaida.setId(resultSet.getLong("id"));
 			departamentoVOSaida.setSigla(resultSet.getString("sigla"));
 			
 			vos.add(departamentoVOSaida);
@@ -179,8 +166,8 @@ public class RepositorioDepartamento extends Repositorio
 
 
 	@Override
-	public Collection remover(VO vo) {
-		// TODO Auto-generated method stub
+	public Collection remover(VO vo) 
+	{		
 		return null;
 	}
 	

@@ -9,7 +9,7 @@ public class RepositorioTicket extends Repositorio
 	private static RepositorioTicket repositorio;
 	
 	
-	public static RepositorioDepartamento getInstance() {
+	public static RepositorioTicket getInstance() {
 		if (repositorio == null) {
 			repositorio = new RepositorioTicket();
 		}

@@ -14,23 +14,27 @@ import javax.servlet.http.HttpSession;
 
 import controladores.ccu.GerirDepartamento;
 import entidades.Departamento;
+import entidades.exceptions.DepartamentoException;
 import entidades.value_objects.DepartamentoVO;
 
 @WebServlet("/ListarDepartamento")
 public class ListarDepartamento extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		listarDepartamentos(request, response);
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		
 		String acao = (String) request.getParameter("acaoListar");
 		
 		if (acao == null) acao = "";
 		
-		switch (acao) {
+		switch (acao) 
+		{
 			case "Criar":
 				request.getRequestDispatcher("CriarDepartamento").forward(request,response);
 				
@@ -47,9 +51,18 @@ public class ListarDepartamento extends HttpServlet {
 		}
 	}
 
-	private void listarDepartamentos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("departamentos", GerirDepartamento.getInstance().listarDepartamentos(new DepartamentoVO()));
-		request.getRequestDispatcher("WEB-INF/ListarDepartamento.jsp").forward(request,response);
+	private void listarDepartamentos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		try
+		{
+			request.setAttribute("departamentos", GerirDepartamento.getInstance().listarDepartamentos());			
+		}
+		catch (DepartamentoException e)
+		{			
+			e.printStackTrace();
+		}
+		
+		request.getRequestDispatcher("WEB-INF/ListarDepartamento.jsp").forward(request,response);		
 	}
 
 }

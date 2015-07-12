@@ -3,7 +3,7 @@ package entidades.value_objects;
 public class DepartamentoVO implements VO {
 	private String nome;
 	private String sigla;
-	private Long id;
+	private Long id;	
 	
 	public Long getId() {
 		return id;

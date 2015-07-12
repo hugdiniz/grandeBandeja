@@ -6,44 +6,110 @@ import java.util.Collection;
 import javax.servlet.http.HttpSession;
 
 import persistencia.RepositorioDepartamento;
+import entidades.exceptions.DepartamentoException;
 import entidades.value_objects.DepartamentoVO;
 
-public class Departamento {
+public class Departamento
+{
 	private static Departamento departamento;
-	public static Departamento getInstance() {
-		if (departamento == null) {
+	
+	public static Departamento getInstance() 
+	{
+		if (departamento == null) 
+		{
 			departamento = new Departamento();
 		}
 		return departamento;
 
 	}
-	public Collection<DepartamentoVO> listarDepartamentosDisponiveis(DepartamentoVO departamentoVO){
+	public Collection recuperarDepartamentos(DepartamentoVO departamentoVO) throws DepartamentoException
+	{
 		
 		try
 		{
 			return RepositorioDepartamento.getInstance().buscar(departamentoVO);
-		} catch (SQLException e)
+		} 
+		catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			throw new DepartamentoException("erro.recuperar.departamentos.repositorio.departamento.buscar",e);			
 		}
 	}
 
-	// metodos de persistencia para Departamento
 	
-	public void adicionarDepartamento(DepartamentoVO departamentoVO) {
-		RepositorioDepartamento.getInstance().inserirOuAtualizar(departamentoVO);
+	
+	public void adicionarDepartamento(DepartamentoVO departamentoVO) throws DepartamentoException 
+	{
+		DepartamentoVO departamentoVOBusca = new DepartamentoVO();
+		departamentoVOBusca.setSigla(departamentoVO.getSigla());
 		
+		DepartamentoVO departamentoVOantigo = recuperarDepartamento(departamentoVOBusca);
+		if (departamentoVOantigo != null)
+		{
+			throw new DepartamentoException("erro.adiconar.departamento.repositorio.departamento.ja.existe");
+		}
+		
+		try
+		{
+			RepositorioDepartamento.getInstance().inserirOuAtualizar(departamentoVO);
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+			throw new DepartamentoException("erro.adiconar.departamento.repositorio.departamento.inserirOuAtualizar");			
+		}
+				
+	}
+	
+	public DepartamentoVO recuperarDepartamento(DepartamentoVO departamentoVO) throws DepartamentoException 
+	{
+		Collection departamentoVOs = null;
+		try
+		{
+			departamentoVOs =  RepositorioDepartamento.getInstance().buscar(departamentoVO);
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+			throw new DepartamentoException("erro.recuperar.departamentos.repositorio.departamento.buscar");			
+		}
+		
+		if (departamentoVOs != null && !departamentoVOs.isEmpty())
+		{
+			return (DepartamentoVO) departamentoVOs.iterator().next();
+		}
+		else
+		{
+			return null;
+		}	
 	}
 
-	public DepartamentoVO buscarDepartamento(HttpSession session, String sigla) {
-		//RepositorioDepartamento repositorio = new RepositorioDepartamento(session);
-		return null;
-	}
-
-	public void atualizarDepartamento (HttpSession session, DepartamentoVO dpto){
-		//RepositorioDepartamento repositorio = new RepositorioDepartamento(session);
-		//repositorio.atualizar(new DepartamentoVO(null,dpto.getSigla()), dpto);
+	public void atualizarDepartamento (DepartamentoVO departamentoVO) throws DepartamentoException
+	{
+		if (departamentoVO.getId() == null)
+		{
+			DepartamentoVO departamentoVOantigo = new DepartamentoVO();
+			departamentoVOantigo.setSigla(departamentoVO.getSigla());
+			departamentoVOantigo = recuperarDepartamento(departamentoVOantigo);
+			
+			if (departamentoVOantigo != null)
+			{
+				departamentoVO.setId(departamentoVOantigo.getId());
+			}
+			else
+			{				
+				throw new DepartamentoException("erro.atualizar.departamento.nao.encontrado");	
+			}	
+		}
+		
+		
+		try
+		{
+			RepositorioDepartamento.getInstance().inserirOuAtualizar(departamentoVO);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+			throw new DepartamentoException("erro.atualizar.departamento.repositorio.inserirOuAtualizar");	
+		}
 	}
 }
