@@ -22,12 +22,12 @@
 		  <%
 			  try{
 				  Collection<RefeicaoVO> refeicoesDisponiveis = (Collection<RefeicaoVO>)request.getAttribute("refeicoes");
-				  for (RefeicaoVO depti: refeicoesDisponiveis){
+				  for (RefeicaoVO refeicao: refeicoesDisponiveis){
 		  %>
 			  <tr align="center">
-			    <td><%=depti.getTurno()%>'><%=depti.getTurno()%></td>
-			    <td><%=depti.getDescricao()%></td>
-			    <td><%=depti.getOp_vegetariana()%></td>
+			    <td><%=refeicao.getTurno()%>'><%=refeicao.getTurno()%></td>
+			    <td><%=refeicao.getDescricao()%></td>
+			    <td><%=refeicao.getOp_vegetariana()%></td>
 			  </tr>
 		  <%
 				  }
