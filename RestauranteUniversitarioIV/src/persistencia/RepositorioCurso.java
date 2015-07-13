@@ -93,7 +93,7 @@ public class RepositorioCurso extends Repositorio
 			}
 			else 
 			{
-				campos.append(",sigla");
+				campos.append(",departamento_fk");
 				stringVars.append(",?");
 			}
 			
@@ -230,10 +230,8 @@ public class RepositorioCurso extends Repositorio
 		 * Parte do Joins
 		 */
 		tabela.append("from curso ");
-		if (joinDepartamento)
-		{
-			tabela.append(" join departamento on departamento.id = curso.departamento_fk");
-		}
+		tabela.append(" join departamento on departamento.id = curso.departamento_fk");
+		
 		
 		
 		sql.append(projecao);
@@ -248,9 +246,14 @@ public class RepositorioCurso extends Repositorio
 		while (resultSet.next()) 
 		{
 			CursoVO cursoVOSaida = new CursoVO();
-			cursoVOSaida.setNome(resultSet.getString("nome"));
-			cursoVOSaida.setId(resultSet.getLong("id"));
-			cursoVOSaida.setSigla(resultSet.getString("sigla"));
+			cursoVOSaida.setNome(resultSet.getString("curso.nome"));
+			cursoVOSaida.setId(resultSet.getLong("curso.id"));
+			cursoVOSaida.setSigla(resultSet.getString("curso.sigla"));
+			
+			DepartamentoVO departamentoVOSaida = new DepartamentoVO();
+			departamentoVOSaida.setNome(resultSet.getString("departamento.nome"));
+			departamentoVOSaida.setId(resultSet.getLong("departamento.id"));
+			departamentoVOSaida.setSigla(resultSet.getString("departamento.sigla"));
 			
 			vos.add(cursoVOSaida);
 			
