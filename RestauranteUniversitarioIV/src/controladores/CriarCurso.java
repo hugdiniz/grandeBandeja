@@ -60,10 +60,15 @@ public class CriarCurso extends HttpServlet {
 	{
 		String nome = (String) request.getParameter("nome");
 		String sigla = (String) request.getParameter("sigla");
+		Long idDepartamento = Long.parseLong(request.getParameter("departamento"));
+		
+		DepartamentoVO departamentoVO = new DepartamentoVO();
+		departamentoVO.setId(idDepartamento);
 		
 		CursoVO cursoVO = new CursoVO();
 		cursoVO.setNome(nome);
 		cursoVO.setSigla(sigla);
+		cursoVO.setDepartamentoVO(departamentoVO);
 		
 		try 
 		{

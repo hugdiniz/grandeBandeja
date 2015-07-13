@@ -24,7 +24,7 @@ public class GerirDepartamento
 		return gerirDepartamento;
 	}
 	
-	public Collection<DepartamentoVO> listarDepartamentos() throws DepartamentoException
+	public Collection listarDepartamentos() throws DepartamentoException
 	{
 		return Departamento.getInstance().recuperarDepartamentos(new DepartamentoVO());
 	}

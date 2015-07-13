@@ -22,7 +22,7 @@
 	Sigla : <%=sigla%> <input type="hidden" name ="sigla" value = "<%=sigla%>">
 	Departamento : <select name ="departamento">
 	<% for(DepartamentoVO dptoi : departamentosDisponiveis){ %>
-		<option value="<%=dptoi.getSigla()%>" <%= dptoi.equals(curso.getDepartamento())? "selected" : ""  %>><%=dptoi.getNome()%></option>
+		<option value="<%=dptoi.getId()%>" <%= dptoi.equals(curso.getDepartamentoVO())? "selected" : ""  %>><%=dptoi.getNome()%></option>
 	<% } %>
 	</select>	
 	<br>

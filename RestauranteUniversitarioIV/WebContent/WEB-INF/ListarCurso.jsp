@@ -29,7 +29,7 @@
 			  <tr align="center">
 			    <td><input type="radio" name='sigla' value='<%=cursoi.getSigla()%>'><%=cursoi.getSigla()%></td>
 			    <td><%=cursoi.getNome()%></td>
-			    <td><%=cursoi.getDepartamento().getSigla()%></td>
+			    <td><%=cursoi.getDepartamentoVO().getSigla()%></td>
 			  </tr>
 		  <%
 				  }

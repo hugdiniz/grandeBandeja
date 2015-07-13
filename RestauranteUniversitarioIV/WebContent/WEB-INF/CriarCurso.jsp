@@ -18,7 +18,7 @@
 	Departamento : <select name ="departamento">
 	<option value=""></option>
 	<% for(DepartamentoVO dptoi : departamentosDisponiveis){ %>
-		<option value="<%=dptoi.getSigla()%>"><%=dptoi.getNome()%></option>
+		<option value="<%=dptoi.getId()%>"><%=dptoi.getNome()%></option>
 	<% } %>
 	</select>
 	<br>
