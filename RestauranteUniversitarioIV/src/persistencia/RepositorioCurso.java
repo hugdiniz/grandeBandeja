@@ -254,7 +254,7 @@ public class RepositorioCurso extends Repositorio
 			departamentoVOSaida.setNome(resultSet.getString("departamento.nome"));
 			departamentoVOSaida.setId(resultSet.getLong("departamento.id"));
 			departamentoVOSaida.setSigla(resultSet.getString("departamento.sigla"));
-			
+			cursoVOSaida.setDepartamentoVO(departamentoVOSaida);
 			vos.add(cursoVOSaida);
 			
 		}

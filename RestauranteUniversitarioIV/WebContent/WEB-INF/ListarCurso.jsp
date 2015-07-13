@@ -33,7 +33,9 @@
 			  </tr>
 		  <%
 				  }
-			  }catch(Exception e){ }
+			  }catch(Exception e){ 
+				  %> <span>seu Burro</span> <% 
+			  }
 		  %>
 		</table>
 
