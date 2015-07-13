@@ -17,7 +17,9 @@
 	<form action="AtualizarCurso" method="post">
 <% try{ 
 	String nome = curso.getNome();
-	String sigla = curso.getSigla(); %>
+	String sigla = curso.getSigla(); 
+	Long id = curso.getId(); %>
+	<input type="text" style="display:none;" name="id" value="<%=id%>">
 	Nome : <input type="text" name ="nome" value = "<%=nome%>">
 	Sigla : <%=sigla%> <input type="hidden" name ="sigla" value = "<%=sigla%>">
 	Departamento : <select name ="departamento">

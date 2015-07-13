@@ -71,7 +71,7 @@ public class Curso
 		CursoVO cursoVOBusca = new CursoVO();
 		cursoVOBusca.setSigla(cursoVO.getSigla());
 		CursoVO cursoVOantigo = recuperarCurso(cursoVOBusca);
-			
+		
 		
 		if (cursoVOantigo != null )
 		{
@@ -92,17 +92,26 @@ public class Curso
 		{
 			e.printStackTrace();
 			throw new CursoException("erro.recuperar.adicionar.repositorio.curso.inserirOuAtualizar");
-		}
-					
-		
+		}	
 	}
 
 	public void atualizarCurso(CursoVO vo) throws CursoException 
-	{
+	{	
 		CursoVO cursoVOBusca = new CursoVO();
 		cursoVOBusca.setSigla(vo.getSigla());
 		CursoVO cursoVOantigo = recuperarCurso(cursoVOBusca);
-				
+		
+		//Verifica se objeto recuperado na base é o mesmo alterado no front-end. Caso não seja, lança erro.
+		if (cursoVOantigo != null && cursoVOantigo.getId() != vo.getId())
+		{	
+			//RN não pode ter mesmo curso (nome e sigla) 
+			throw new CursoException("erro.adiconar.curso.repositorio.curso.ja.existe");
+		}
+		if(vo.getDepartamentoVO().getId() == null)
+		{
+			//RN Não existe curso sem o seu respectivo Departamento.
+			throw new CursoException("erro.adicionar.curso.repositorio.curso.nao.existe.departamento");
+		}
 		try
 		{
 			RepositorioCurso.getInstance().inserirOuAtualizar(vo);

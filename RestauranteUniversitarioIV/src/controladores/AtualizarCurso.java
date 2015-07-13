@@ -80,15 +80,16 @@ public class AtualizarCurso extends HttpServlet
 	{
 		String nome = (String) request.getParameter("nome");
 		String sigla = (String) request.getParameter("sigla");
-		
+		Long id = Long.parseLong(request.getParameter("id"));
 		Long idDepartamento = Long.parseLong(request.getParameter("departamento"));
-		
+				
 		DepartamentoVO departamentoVO = new DepartamentoVO();
 		departamentoVO.setId(idDepartamento);
 		
 		CursoVO cursoVO = new CursoVO();
 		cursoVO.setNome(nome);
 		cursoVO.setSigla(sigla);
+		cursoVO.setId(id);
 		cursoVO.setDepartamentoVO(departamentoVO);
 		
 		if (nome=="" || sigla=="" || request.getParameter("departamento") == null)

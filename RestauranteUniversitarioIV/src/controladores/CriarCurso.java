@@ -62,10 +62,14 @@ public class CriarCurso extends HttpServlet {
 		String sigla = (String) request.getParameter("sigla");
 		Long idDepartamento;
 		
+		System.out.println(request.getParameter("id"));
+		
+		//Capturando e verificando se o id esta preenchido
 		if(request.getParameter("departamento") == "")
 			idDepartamento = null;
 		else
 			idDepartamento = Long.parseLong(request.getParameter("departamento"));
+			
 		
 		DepartamentoVO departamentoVO = new DepartamentoVO();
 		departamentoVO.setId(idDepartamento);
@@ -74,6 +78,7 @@ public class CriarCurso extends HttpServlet {
 		cursoVO.setNome(nome);
 		cursoVO.setSigla(sigla);
 		cursoVO.setDepartamentoVO(departamentoVO);
+
 		
 		try 
 		{
