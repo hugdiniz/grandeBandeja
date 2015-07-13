@@ -2,6 +2,7 @@ package entidades;
 
 import java.sql.SQLException;
 import java.util.Collection;
+
 import persistencia.RepositorioCurso;
 import persistencia.RepositorioDepartamento;
 import entidades.exceptions.CursoException;
@@ -64,21 +65,44 @@ public class Curso
 		}	
 	}
 	
-	public void adicionarCurso(CursoVO vo) throws CursoException 
+	@SuppressWarnings("null")
+	public void adicionarCurso(CursoVO cursoVO) throws CursoException 
 	{
+		CursoVO cursoVOBusca = new CursoVO();
+		cursoVOBusca.setSigla(cursoVO.getSigla());
+		CursoVO cursoVOantigo = recuperarCurso(cursoVOBusca);
+			
+		
+		if (cursoVOantigo != null )
+		{
+			//RN não pode ter mesmo curso (nome e sigla) 
+			throw new CursoException("erro.adiconar.curso.repositorio.curso.ja.existe");
+		}
+		if(cursoVO.getDepartamentoVO().getId() == null)
+		{
+			//RN Não existe curso sem o seu respectivo Departamento.
+			throw new CursoException("erro.adicionar.curso.repositorio.curso.nao.existe.departamento");
+		}
+		
 		 try
 		{
-			RepositorioCurso.getInstance().inserirOuAtualizar(vo);
+			RepositorioCurso.getInstance().inserirOuAtualizar(cursoVO);
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
 			throw new CursoException("erro.recuperar.adicionar.repositorio.curso.inserirOuAtualizar");
 		}
+					
+		
 	}
 
 	public void atualizarCurso(CursoVO vo) throws CursoException 
 	{
+		CursoVO cursoVOBusca = new CursoVO();
+		cursoVOBusca.setSigla(vo.getSigla());
+		CursoVO cursoVOantigo = recuperarCurso(cursoVOBusca);
+				
 		try
 		{
 			RepositorioCurso.getInstance().inserirOuAtualizar(vo);

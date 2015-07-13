@@ -60,7 +60,12 @@ public class CriarCurso extends HttpServlet {
 	{
 		String nome = (String) request.getParameter("nome");
 		String sigla = (String) request.getParameter("sigla");
-		Long idDepartamento = Long.parseLong(request.getParameter("departamento"));
+		Long idDepartamento;
+		
+		if(request.getParameter("departamento") == "")
+			idDepartamento = null;
+		else
+			idDepartamento = Long.parseLong(request.getParameter("departamento"));
 		
 		DepartamentoVO departamentoVO = new DepartamentoVO();
 		departamentoVO.setId(idDepartamento);
@@ -73,7 +78,7 @@ public class CriarCurso extends HttpServlet {
 		try 
 		{
 			GerirCurso.getInstance().criarCurso(cursoVO);
-			request.setAttribute("message", "Novo departamento criado!");
+			request.setAttribute("message", "Novo curso criado!");
 			request.getRequestDispatcher("ListarCurso").forward(request,response);
 		} 
 		catch (CursoException e2) 
