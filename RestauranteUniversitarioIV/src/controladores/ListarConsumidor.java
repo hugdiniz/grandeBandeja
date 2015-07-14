@@ -19,8 +19,6 @@ import entidades.Consumidor;
 import entidades.Curso;
 import entidades.Departamento;
 import entidades.Funcionario;
-import entidades.Sexo;
-import entidades.Titulo;
 import entidades.value_objects.CursoVO;
 import entidades.value_objects.DepartamentoVO;
 
