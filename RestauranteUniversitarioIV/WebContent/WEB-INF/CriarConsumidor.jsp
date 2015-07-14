@@ -1,3 +1,6 @@
+<%@page import="entidades.enumerados.SexoEnum"%>
+<%@page import="entidades.enumerados.TituloEnum"%>
+<%@page import="entidades.value_objects.DepartamentoVO"%>
 <%@page import="entidades.value_objects.CursoVO"%>
 <%@page import="java.util.Collection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -6,17 +9,12 @@
 
 <%@include file="messagePage.jsp" %>
 <jsp:include page="header.html"></jsp:include>
-<% Collection cursoVOs = (Collection<CursoVO>)request.getAttribute("cursoVOs"); %>
-<% Collection departamentoVOs = (Collection<CursoVO>)request.getAttribute("departamentoVOs"); %>
+<% Collection<CursoVO> cursoVOs = (Collection<CursoVO>)request.getAttribute("cursoVOs"); %>
+<% Collection<DepartamentoVO> departamentoVOs = (Collection<DepartamentoVO>)request.getAttribute("departamentoVOs"); %>
 
 
 <body><form action="CriarConsumidor" method="post">
-	<select name ="departamento">
-	<option value=""></option>
-	<% for(String curso : departamentosDisponiveis){ %>
-		<option value="<%=dptoi.getId()%>"><%=dptoi.getNome()%></option>
-	<% } %>
-	</select>
+	
 	<table style="margin-top: 80px; margin-left: 30px;">
 		<tr>
 			<td>
@@ -44,26 +42,49 @@
 		</tr>
 		<tr>
 			<td>
-				Sexo :			
+				Sexo		
 			</td>
 			<td>			
-				<input type="text" name ="sexo" value = "">			
+				<select name ="sexo">
+					<option value=""></option>
+					<% for(SexoEnum sexoEnum : SexoEnum.values()){ %>
+						<option value="<%=sexoEnum.name()%>"><%=sexoEnum.name()%></option>
+					<% } %>		
+				</select>		
 			</td>
 		</tr>
 		<tr>
 			<td>
-				Titulo :			
+				Titulo 
 			</td>
 			<td>			
-				<input type="text" name ="titulo" value = "">		
+				<select name ="titulo">
+					<option value=""></option>
+					<% for(TituloEnum tituloEnum : TituloEnum.values()){ %>
+						<option value="<%=tituloEnum.name()%>"><%=tituloEnum.name()%></option>
+					<% } %>		
+				</select>		
 			</td>
 		</tr>
 		<tr>
 			<td>
-				CPF :			
+				CPF 
 			</td>
 			<td>			
 				<input type="text" name ="cpf" value = "">			
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Departamento		
+			</td>
+			<td>			
+				<select name ="departamento">
+					<option value=""></option>
+					<% for(DepartamentoVO departamentoVO : departamentoVOs){ %>
+						<option value="<%=departamentoVO.getId()%>"><%=departamentoVO.getNome()%></option>
+					<% } %>
+				</select>			
 			</td>
 		</tr>
 		

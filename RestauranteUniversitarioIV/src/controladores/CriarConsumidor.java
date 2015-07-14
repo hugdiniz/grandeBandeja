@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import controladores.ccu.GerirConsumidor;
 import controladores.ccu.GerirDepartamento;
+import entidades.exceptions.DepartamentoException;
 import entidades.value_objects.ConsumidorVO;
 import entidades.value_objects.DepartamentoVO;
 
@@ -19,6 +21,14 @@ public class CriarConsumidor extends HttpServlet
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		try
+		{
+			request.setAttribute("departamentoVOs", GerirConsumidor.getInstance().listarDepartamentos());
+			request.setAttribute("cursoVOs", GerirConsumidor.getInstance().listarCursos());
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 		initJsp(request, response);
 	}
