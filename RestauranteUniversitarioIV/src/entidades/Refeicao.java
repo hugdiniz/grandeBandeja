@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpSession;
 
 import persistencia.RepositorioRefeicao;
+import entidades.exceptions.CursoException;
 import entidades.exceptions.RefeicaoException;
 import entidades.value_objects.RefeicaoVO;
 
@@ -25,7 +26,6 @@ public class Refeicao
 	
 	public Collection recuperarRefeicoes(RefeicaoVO refeicaoVO) throws RefeicaoException
 	{
-		
 		try
 		{
 			return RepositorioRefeicao.getInstance().buscar(refeicaoVO);
@@ -40,7 +40,21 @@ public class Refeicao
 	
 	public void adicionarRefeicao(RefeicaoVO refeicaoVO) throws RefeicaoException 
 	{
-				
+		
+		System.out.println(refeicaoVO.getDescricao() + refeicaoVO.getOp_vegetariana() + refeicaoVO.getTurno().name());
+		
+		if(refeicaoVO.getDescricao()== null)
+		{
+			throw new RefeicaoException("erro.adiconar.curso.repositorio.curso.preencha.descricao");
+		}
+		if(refeicaoVO.getTurno()== null)
+		{
+			throw new RefeicaoException("erro.adiconar.curso.repositorio.curso.selecione.turno");
+		}
+		if(refeicaoVO.getOp_vegetariana()== null)
+		{
+			throw new RefeicaoException("erro.adiconar.curso.repositorio.curso.preencha.opecao.vegetariana");
+		}
 		try
 		{
 			RepositorioRefeicao.getInstance().inserirOuAtualizar(refeicaoVO);
@@ -83,16 +97,11 @@ public class Refeicao
 		refeicaoVOantigo.setId(refeicaoVO.getId());
 		refeicaoVOantigo = recuperarRefeicao(refeicaoVOantigo);
 
-		if (refeicaoVOantigo != null)
+		if (refeicaoVOantigo == null)
 		{
-			refeicaoVO.setDescricao(refeicaoVOantigo.getDescricao());
-			refeicaoVO.setOp_vegetariana(refeicaoVOantigo.getOp_vegetariana());
-		}
-		else
-		{				
 			throw new RefeicaoException("erro.atualizar.refeicao.nao.encontrado");	
-		}	
-
+		}
+		
 		try
 		{
 			RepositorioRefeicao.getInstance().inserirOuAtualizar(refeicaoVO);

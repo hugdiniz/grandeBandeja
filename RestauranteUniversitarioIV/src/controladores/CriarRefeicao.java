@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import controladores.ccu.GerirRefeicao;
 import entidades.exceptions.RefeicaoException;
 import entidades.value_objects.RefeicaoVO;
+import entidades.enumerados.Turno;
 
 @WebServlet("/CriarRefeicao")
 public class CriarRefeicao extends HttpServlet
@@ -44,24 +45,31 @@ public class CriarRefeicao extends HttpServlet
 		String descricao = (String) request.getParameter("descricao");
 		String op_vegetariana = (String) request.getParameter("op_vegetariana");
 	
-		RefeicaoVO refeicaoVO = new RefeicaoVO();
-		
-		refeicaoVO.setTurno(turno);
-		refeicaoVO.setDescricao(descricao);
-		refeicaoVO.setOp_vegetariana(op_vegetariana);
-		
-		
-		try 
+		if (descricao=="" || op_vegetariana=="" || turno=="")
 		{
-			GerirRefeicao.getInstance().criarRefeicao(refeicaoVO);
-			request.setAttribute("message", "Nova refeicao criada!");
-			request.getRequestDispatcher("ListarRefeicao").forward(request,response);
-		} 
-		catch (RefeicaoException e2)
+			request.setAttribute("erro", "Um refeicao deve conter uma descricao e uma opcao vegetariana");
+			request.getRequestDispatcher("WEB-INF/AtualizarRefeicao.jsp").forward(request,response);
+		}
+		else
 		{
-			request.setAttribute("erro", e2.getMessage());
-			request.getRequestDispatcher("WEB-INF/CriarRefeicao.jsp").forward(request,response);
-		}		
+			RefeicaoVO refeicaoVO = new RefeicaoVO();
+			
+			refeicaoVO.setTurno(Turno.valueOf(turno));
+			refeicaoVO.setDescricao(descricao);
+			refeicaoVO.setOp_vegetariana(op_vegetariana);
+			
+			try 
+			{
+				GerirRefeicao.getInstance().criarRefeicao(refeicaoVO);
+				request.setAttribute("message", "Nova refeicao criada!");
+				request.getRequestDispatcher("ListarRefeicao").forward(request,response);
+			} 
+			catch (RefeicaoException e2)
+			{
+				request.setAttribute("erro", e2.getMessage());
+				request.getRequestDispatcher("WEB-INF/CriarRefeicao.jsp").forward(request,response);
+			}
+		}
 		
 	}
 

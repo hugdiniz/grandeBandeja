@@ -1,12 +1,25 @@
 package entidades.value_objects;
-
+import entidades.enumerados.Turno;
 
 public class RefeicaoVO implements VO {
 	
-	private String turno;
+	private Turno turno;
 	private String descricao;
 	private String op_vegetariana;
 	private Long id;
+	
+	
+	public RefeicaoVO() 
+	{
+		
+	}
+
+	public RefeicaoVO(Turno turno, String descricao, String op_vegetariana ) {
+		this.turno = turno;
+		this.descricao = descricao;
+		this.op_vegetariana = op_vegetariana;
+	}
+
 	
 	public String getOp_vegetariana() {
 		return op_vegetariana;
@@ -27,16 +40,8 @@ public class RefeicaoVO implements VO {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	public RefeicaoVO() { }
-
-	public RefeicaoVO(String turno, String descricao, String op_vegetariana ) {
-		this.turno = turno;
-		this.descricao = descricao;
-		this.op_vegetariana = op_vegetariana;
-	}
 	
-	public String getTurno() {
+	public Turno getTurno() {
 		return turno;
 	}
 	
@@ -44,8 +49,18 @@ public class RefeicaoVO implements VO {
 		return descricao;
 	}
 	
-	public void setTurno(String turno) {
+	public void setTurno(Turno turno) {
 		this.turno = turno;
+	}
+	
+	public double getValorFuncionario()
+	{
+		return turno.getValorFuncionario();
+	}
+	
+	public double getValorAluno()
+	{
+		return turno.getValorAluno();
 	}
 }
  

@@ -48,10 +48,9 @@ CREATE TABLE IF NOT EXISTS FUNCIONARIO
 CREATE TABLE IF NOT EXISTS REFEICAO
 (
 	id bigint auto_increment,
-	departamento_fk bigint,
 	turno varchar(255),
 	descricao varchar(255),
-	opcaoVegan varchar(255),	
+	opcaoVegan varchar(255)	
 );
 
 
