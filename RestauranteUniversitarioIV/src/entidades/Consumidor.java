@@ -57,7 +57,7 @@ public abstract class Consumidor
 		consumidorVOBusca.setId(consumidorVO.getId());
 		ConsumidorVO consumidorVOantigo = recuperarConsumidor(consumidorVOBusca);		
 		
-		if (consumidorVOantigo != null )
+		if (consumidorVOantigo != null && consumidorVOantigo.getId() == consumidorVO.getId())
 		{
 			//RN não pode ter mesmo consumidor (nome e sigla) 
 			throw new ConsumidorException("erro.adiconar.consumidor.repositorio.consumidor.ja.existe");
@@ -87,9 +87,9 @@ public abstract class Consumidor
 		ConsumidorVO consumidorVOantigo = recuperarConsumidor(consumidorVOBusca);
 		
 		//Verifica se objeto recuperado na base é o mesmo alterado no front-end. Caso não seja, lança erro.
-		if (consumidorVOantigo != null && consumidorVOantigo.getId() != vo.getId())
+		if (consumidorVOantigo == null || consumidorVOantigo.getId() != vo.getId())
 		{			
-			throw new ConsumidorException("erro.adiconar.consumidor.repositorio.consumidor.ja.existe");
+			throw new ConsumidorException("erro.atualizar.consumidor.repositorio.consumidor.nao.existe");
 		}
 		
 		try
@@ -99,7 +99,7 @@ public abstract class Consumidor
 		catch (SQLException e)
 		{			
 			e.printStackTrace();
-			throw new ConsumidorException("erro.recuperar.atualizar.repositorio.consumidor.inserirOuAtualizar");
+			throw new ConsumidorException("erro.atualizar.consumidor.repositorio.consumidor.inserirOuAtualizar");
 		}	
 	}
 }
