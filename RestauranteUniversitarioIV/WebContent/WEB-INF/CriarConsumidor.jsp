@@ -9,6 +9,9 @@
 
 <%@include file="messagePage.jsp" %>
 <jsp:include page="header.html"></jsp:include>
+
+<style><%@include file="style.css"%></style>
+
 <% Collection<CursoVO> cursoVOs = (Collection<CursoVO>)request.getAttribute("cursoVOs"); %>
 <% Collection<DepartamentoVO> departamentoVOs = (Collection<DepartamentoVO>)request.getAttribute("departamentoVOs"); %>
 
@@ -92,7 +95,7 @@
 		
 		
 	</table>
-	<div style="margin-left: 25%;">
+	<div class="botoes">
 		<input type="submit" name="acaoCriar" value="Criar">
 		<input type="submit" name="acaoCriar" value="Cancelar">
 	</div>
