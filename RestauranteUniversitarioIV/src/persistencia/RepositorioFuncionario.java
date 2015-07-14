@@ -8,20 +8,20 @@ import java.util.Collection;
 import entidades.value_objects.ConsumidorVO;
 import entidades.value_objects.VO;
 
-public class RepositorioConsumidor extends Repositorio
+public class RepositorioFuncionario extends Repositorio
 {
-	private static RepositorioConsumidor repositorio;
+	private static RepositorioFuncionario repositorio;
 	
-	private RepositorioConsumidor()
+	private RepositorioFuncionario()
 	{
 		super();
 	}
 	
-	public static RepositorioConsumidor getInstance()
+	public static RepositorioFuncionario getInstance()
 	{
 		if (repositorio == null) 
 		{
-			repositorio = new RepositorioConsumidor();
+			repositorio = new RepositorioFuncionario();
 		}	
 		return repositorio;
 	}
@@ -38,18 +38,18 @@ public class RepositorioConsumidor extends Repositorio
 		
 		if (consumidorVO.getId() != null)
 		{
-			campos.append("UPDATE consumidor SET (");
+			campos.append("UPDATE funcionario SET (");
 			stringVars.append(" = (");
 		}
 		else
 		{
-			campos.append("INSERT INTO consumidor (");
+			campos.append("INSERT INTO funcionario (");
 			stringVars.append("VALUES (");
 			
 		}	
 		
 		
-		Boolean primeiroCampo = true;		
+		Boolean primeiroCampo = true;
 		if (consumidorVO.getId()!= null && !consumidorVO.getId().equals(""))
 		{			
 			if (primeiroCampo)
@@ -66,106 +66,22 @@ public class RepositorioConsumidor extends Repositorio
 			
 			vars.add(consumidorVO.getId());
 		}
-		if (consumidorVO.getNome()!= null && !consumidorVO.getNome().equals(""))
+		if (consumidorVO.getIdDepartamento()!= null && !consumidorVO.getIdDepartamento().equals(""))
 		{			
 			if (primeiroCampo)
 			{
 				primeiroCampo = false;
-				campos.append("nome");
+				campos.append("departamento_fk");
 				stringVars.append("?");
 			}
 			else 
 			{
-				campos.append(",nome");
+				campos.append(",departamento_fk");
 				stringVars.append(",?");
 			}
 			
-			vars.add(consumidorVO.getNome());
+			vars.add(consumidorVO.getIdDepartamento());
 		}
-		if (consumidorVO.getMatricula()!= null && !consumidorVO.getMatricula().equals(""))
-		{			
-			if (primeiroCampo)
-			{
-				primeiroCampo = false;
-				campos.append("matricula");
-				stringVars.append("?");
-			}
-			else 
-			{
-				campos.append(",matricula");
-				stringVars.append(",?");
-			}
-			
-			vars.add(consumidorVO.getMatricula());
-		}
-
-		if (consumidorVO.getAnoIngresso()!= null && !consumidorVO.getAnoIngresso().equals(""))
-		{			
-			if (primeiroCampo)
-			{
-				primeiroCampo = false;
-				campos.append("anoIngresso");
-				stringVars.append("?");
-			}
-			else 
-			{
-				campos.append(",anoIngresso");
-				stringVars.append(",?");
-			}
-			
-			vars.add(consumidorVO.getAnoIngresso());
-		}
-		if (consumidorVO.getSexo()!= null && !consumidorVO.getSexo().equals(""))
-		{			
-			if (primeiroCampo)
-			{
-				primeiroCampo = false;
-				campos.append("sexo");
-				stringVars.append("?");
-			}
-			else 
-			{
-				campos.append(",sexo");
-				stringVars.append(",?");
-			}
-			
-			vars.add(consumidorVO.getSexo());
-		}
-		if (consumidorVO.getTitulo()!= null && !consumidorVO.getTitulo().equals(""))
-		{			
-			if (primeiroCampo)
-			{
-				primeiroCampo = false;
-				campos.append("titulo");
-				stringVars.append("?");
-			}
-			else 
-			{
-				campos.append(",titulo");
-				stringVars.append(",?");
-			}
-			
-			vars.add(consumidorVO.getTitulo());
-		}
-		if (consumidorVO.getCpf()!= null && !consumidorVO.getCpf().equals(""))
-		{			
-			if (primeiroCampo)
-			{
-				primeiroCampo = false;
-				campos.append("cpf");
-				stringVars.append("?");
-			}
-			else 
-			{
-				campos.append(",cpf");
-				stringVars.append(",?");
-			}
-			
-			vars.add(consumidorVO.getCpf());
-		}
-
-		
-		
 		
 		campos.append(") ");
 		
@@ -208,12 +124,12 @@ public class RepositorioConsumidor extends Repositorio
 			if (primeiroCampo)
 			{
 				primeiroCampo = false;
-				restricao.append(" where consumidor.id like ");
+				restricao.append(" where funcionario.id like ");
 				restricao.append(" ? ");
 			}
 			else 
 			{
-				restricao.append(" and consumidor.id like");
+				restricao.append(" and funcionario.id like");
 				restricao.append(" ? ");
 			}
 			
@@ -224,8 +140,8 @@ public class RepositorioConsumidor extends Repositorio
 		/*
 		 * Parte do Joins
 		 */
-		tabela.append("from consumidor ");
-		//tabela.append(" join departamento on departamento.id = consumidor.departamento_fk");
+		tabela.append("from funcionario ");
+		//tabela.append(" join departamento on departamento.id = funcionario.departamento_fk");
 		
 		
 		
@@ -241,8 +157,8 @@ public class RepositorioConsumidor extends Repositorio
 		while (resultSet.next()) 
 		{
 			ConsumidorVO consumidorVOSaida = new ConsumidorVO();
-			consumidorVOSaida.setId(resultSet.getLong("consumidor.id"));
-			consumidorVOSaida.setIdDepartamento(resultSet.getLong("consumidor.curso_fk"));
+			consumidorVOSaida.setId(resultSet.getLong("funcionario.id"));
+			consumidorVOSaida.setIdDepartamento(resultSet.getLong("funcionario.curso_fk"));
 						
 			vos.add(consumidorVOSaida);
 			

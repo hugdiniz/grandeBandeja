@@ -14,7 +14,7 @@
 <% try{ 
 	String nome = curso.getNome();
 	String sigla = curso.getSigla(); 
-	String siglaDepartamento = curso.getDepartamento().getSigla();
+	String siglaDepartamento = curso.getDepartamentoVO().getSigla();
 %>
 	Nome : <%=nome%>
 	Sigla : <%=sigla%> <input type="hidden" name ="sigla" value = "<%=sigla%>">
