@@ -4,37 +4,57 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import entidades.exceptions.DepartamentoException;
 import entidades.value_objects.DepartamentoVO;
 
 public class DepartamentoTest {
 
 	@Test
 	public void testGetInstance() {
-		fail("Not yet implemented");
-		Departamento departamento = new Departamento();
-		assertNotNull(departamento);
+		
+		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento","DCC");
+		assertNotNull(departamentoVO);
 		
 	}
 
 	@Test
-	public void testRecuperarDepartamentos() {
+	public void testRecuperarDepartamentos() throws DepartamentoException {
+		
+		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento","DCC");
+		departamentoVO.setSigla("DCC");
+		Departamento.getInstance().recuperarDepartamentos(departamentoVO);
+		assertNotNull(departamentoVO);
+	
+	}
+
+	@Test
+	public void testAdicionarDepartamento() throws DepartamentoException {
+		
+		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento Letras","DL");
+		departamentoVO.setSigla("DL");
+		Departamento.getInstance().adicionarDepartamento(departamentoVO);
+		assertNotNull(departamentoVO);
+		
 		
 		
 	}
 
 	@Test
-	public void testAdicionarDepartamento() {
+	public void testRecuperarDepartamento() throws DepartamentoException {
 		
+		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento","DCC");
+		departamentoVO.setSigla("DCC");
+		Departamento.getInstance().recuperarDepartamento(departamentoVO);
+		assertNotNull(departamentoVO);
 	}
 
 	@Test
-	public void testRecuperarDepartamento() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAtualizarDepartamento() {
-		fail("Not yet implemented");
+	public void testAtualizarDepartamento() throws DepartamentoException {
+		
+		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento","DCC");
+		departamentoVO.setSigla("DCC");
+		Departamento.getInstance().atualizarDepartamento(departamentoVO); 
+		assertNotNull(departamentoVO);
 	}
 
 }
