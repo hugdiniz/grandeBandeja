@@ -14,10 +14,6 @@ public class Curso
 {
 	private static Curso curso;
 	
-	private Curso()
-	{
-		// TODO Auto-generated constructor stub
-	}
 	
 	public static Curso getInstance() 
 	{
