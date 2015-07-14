@@ -1,18 +1,20 @@
 package entidades.value_objects;
 
+import entidades.enumerados.SexoEnum;
+import entidades.enumerados.TituloEnum;
+
 public class ConsumidorVO implements VO
 {
 	private String nome;
 	private String matricula;
 	private String anoIngresso;
-	private String sexo;
-	private String titulo;
+	private SexoEnum sexo;
+	private TituloEnum titulo;
 	private String cpf;
-	private Long id;
-	private Long idAluno;
-	private Long idFuncionario;
+	private Long id;	
 	private Long idDepartamento;
 	private Long idCurso;
+	
 	
 	public Long getIdCurso()
 	{
@@ -29,25 +31,7 @@ public class ConsumidorVO implements VO
 	public void setIdDepartamento(Long idDepartamento)
 	{
 		this.idDepartamento = idDepartamento;
-	}
-	
-	
-	public Long getIdAluno()
-	{
-		return idAluno;
-	}
-	public void setIdAluno(Long idAluno)
-	{
-		this.idAluno = idAluno;
-	}
-	public Long getIdFuncionario()
-	{
-		return idFuncionario;
-	}
-	public void setIdFuncionario(Long idFuncionario)
-	{
-		this.idFuncionario = idFuncionario;
-	}
+	}	
 	public String getNome()
 	{
 		return nome;
@@ -72,19 +56,19 @@ public class ConsumidorVO implements VO
 	{
 		this.anoIngresso = anoIngresso;
 	}
-	public String getSexo()
+	public SexoEnum getSexo()
 	{
 		return sexo;
 	}
-	public void setSexo(String sexo)
+	public void setSexo(SexoEnum sexo)
 	{
 		this.sexo = sexo;
 	}
-	public String getTitulo()
+	public TituloEnum getTitulo()
 	{
 		return titulo;
 	}
-	public void setTitulo(String titulo)
+	public void setTitulo(TituloEnum titulo)
 	{
 		this.titulo = titulo;
 	}

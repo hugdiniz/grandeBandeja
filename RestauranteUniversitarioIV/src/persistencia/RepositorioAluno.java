@@ -50,7 +50,7 @@ public class RepositorioAluno extends Repositorio
 		
 		
 		Boolean primeiroCampo = true;
-		if (consumidorVO.getIdAluno()!= null && !consumidorVO.getIdAluno().equals(""))
+		if (consumidorVO.getId()!= null && !consumidorVO.getId().equals(""))
 		{			
 			if (primeiroCampo)
 			{
@@ -64,7 +64,7 @@ public class RepositorioAluno extends Repositorio
 				stringVars.append(",?");
 			}
 			
-			vars.add(consumidorVO.getIdAluno());
+			vars.add(consumidorVO.getId());
 		}
 		if (consumidorVO.getIdCurso()!= null && !consumidorVO.getIdCurso().equals(""))
 		{			
@@ -90,7 +90,7 @@ public class RepositorioAluno extends Repositorio
 		if (consumidorVO.getId() != null)
 		{
 			campos.append(") WHERE id=?;");
-			vars.add(consumidorVO.getIdAluno());
+			vars.add(consumidorVO.getId());
 		}
 		else
 		{
@@ -119,7 +119,7 @@ public class RepositorioAluno extends Repositorio
 		Boolean primeiroCampo = true;
 		Boolean joinDepartamento = false;
 		
-		if (consumidorVO.getNome()!= null && !consumidorVO.getNome().equals(""))
+		if (consumidorVO.getId()!= null && !consumidorVO.getId().equals(""))
 		{			
 			if (primeiroCampo)
 			{
@@ -133,7 +133,23 @@ public class RepositorioAluno extends Repositorio
 				restricao.append(" ? ");
 			}
 			
-			vars.add(consumidorVO.getNome());
+			vars.add(consumidorVO.getId());
+		}
+		if (consumidorVO.getIdCurso()!= null && !consumidorVO.getIdCurso().equals(""))
+		{			
+			if (primeiroCampo)
+			{
+				primeiroCampo = false;
+				restricao.append(" where aluno.curso_fk like ");
+				restricao.append(" ? ");
+			}
+			else 
+			{
+				restricao.append(" and aluno.curso_fk like");
+				restricao.append(" ? ");
+			}
+			
+			vars.add(consumidorVO.getIdCurso());
 		}
 		
 		
