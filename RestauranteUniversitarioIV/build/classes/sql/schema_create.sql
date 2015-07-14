@@ -3,7 +3,7 @@
 	id bigint auto_increment,
 	nome varchar(255),
 	matricula varchar(255),
-	anoIngresso date,
+	anoIngresso varchar(255),
 	sexo varchar(255),
 	titulo varchar(255),
 	cpf varchar(255),
