@@ -12,8 +12,7 @@ import entidades.value_objects.DepartamentoVO;
 
 public class Curso
 {
-	private static Curso curso;
-	
+	private static Curso curso;	
 	
 	public static Curso getInstance() 
 	{

@@ -2,8 +2,9 @@ package entidades;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
 
+
+import org.junit.Test;
 import entidades.exceptions.DepartamentoException;
 import entidades.value_objects.DepartamentoVO;
 
@@ -30,8 +31,8 @@ public class DepartamentoTest {
 	@Test
 	public void testAdicionarDepartamento() throws DepartamentoException {
 		
-		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento Letras","DL");
-		departamentoVO.setSigla("DL");
+		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento Letras","LL");
+		departamentoVO.setSigla("LL");
 		Departamento.getInstance().adicionarDepartamento(departamentoVO);
 		assertNotNull(departamentoVO);
 		
@@ -40,7 +41,8 @@ public class DepartamentoTest {
 	}
 
 	@Test
-	public void testRecuperarDepartamento() throws DepartamentoException {
+	public void testRecuperarDepartamento() throws DepartamentoException 
+	{
 		
 		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento","DCC");
 		departamentoVO.setSigla("DCC");
@@ -49,12 +51,16 @@ public class DepartamentoTest {
 	}
 
 	@Test
-	public void testAtualizarDepartamento() throws DepartamentoException {
+	public void testAtualizarDepartamento() throws DepartamentoException 
+	{
 		
-		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento","DCC");
-		departamentoVO.setSigla("DCC");
-		Departamento.getInstance().atualizarDepartamento(departamentoVO); 
+		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento","CC");
+		departamentoVO.setSigla("CC");
+		Departamento.getInstance().atualizarDepartamento(departamentoVO);
 		assertNotNull(departamentoVO);
+		
+		
+		
 	}
 
 }

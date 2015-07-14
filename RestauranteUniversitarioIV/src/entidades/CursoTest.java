@@ -2,35 +2,70 @@ package entidades;
 
 import static org.junit.Assert.*;
 
+import java.util.Random;
+
 import org.junit.Test;
+
+import entidades.exceptions.CursoException;
+import entidades.value_objects.CursoVO;
+import entidades.exceptions.DepartamentoException;
+import entidades.value_objects.DepartamentoVO;
 
 public class CursoTest {
 
 	@Test
 	public void testGetInstance() {
+		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento","DCC");
+		CursoVO cursoVO = new CursoVO("Curso","CC", departamentoVO);
+		assertNotNull(cursoVO);
+	}
+
+	@Test
+	public void testRecuperarCursos() throws CursoException {
 		
-		Curso curso= new Curso();
-		assertNotNull(curso); //
+		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento","DCC");
+		CursoVO cursoVO = new CursoVO("Curso","CC", departamentoVO);
+		cursoVO.setSigla("CC");
+		Curso.getInstance().recuperarCursos(cursoVO);
+		assertNotNull(cursoVO);
 	}
 
 	@Test
-	public void testRecuperarCursos() {
-		fail("Not yet implemented");
+	public void testRecuperarCurso() throws CursoException {
+		
+		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento","DCC");
+		CursoVO cursoVO = new CursoVO("Curso","CC", departamentoVO);
+		cursoVO.setSigla("CC");
+		Curso.getInstance().recuperarCurso(cursoVO);
+		assertNotNull(cursoVO);
+		
 	}
 
 	@Test
-	public void testRecuperarCurso() {
-		fail("Not yet implemented");
+	public void testAdicionarCurso() throws CursoException, DepartamentoException {
+		
+		DepartamentoVO departamentoVO = new DepartamentoVO(null,"CC");
+		Random random = new Random();
+		String randNome = String.valueOf(random.nextLong());
+		departamentoVO = Departamento.getInstance().recuperarDepartamento(departamentoVO);
+		CursoVO cursoVO = new CursoVO("Curso Turismo","CT2cc", departamentoVO);
+		cursoVO.setSigla(randNome);
+		Curso.getInstance().adicionarCurso(cursoVO); 
+		assertNotNull(cursoVO);
+				
 	}
 
 	@Test
-	public void testAdicionarCurso() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAtualizarCurso() {
-		fail("Not yet implemented");
+	public void testAtualizarCurso() throws CursoException, DepartamentoException {
+		
+		DepartamentoVO departamentoVO = new DepartamentoVO(" Departamento Direito ","CD");
+		departamentoVO = Departamento.getInstance().recuperarDepartamento(departamentoVO);
+		CursoVO cursoVO = new CursoVO("Curso Direito","CD", departamentoVO);
+		cursoVO.setSigla("CD");
+		Curso.getInstance().atualizarCurso(cursoVO); 
+		assertNotNull(cursoVO);
+		
+		
 	}
 
 }
