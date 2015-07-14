@@ -96,7 +96,7 @@ public class Aluno extends Consumidor
 		if (consumidorVOantigo != null && consumidorVOantigo.getId() == consumidorVO.getId())
 		{
 			//RN não pode ter mesmo consumidor (nome e sigla) 
-			throw new AlunoException("erro.adiconar.aluno.aluno.ja.existe");
+			throw new AlunoException("erro.adiconar.aluno.aluno.ja.existe (nome ou sigla)");
 		}
 		
 		/*if(consumidorVO.getDepartamentoVO().getId() == null)
