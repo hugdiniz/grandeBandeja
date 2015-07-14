@@ -99,12 +99,22 @@ public class Aluno extends Consumidor
 			throw new AlunoException("erro.adiconar.aluno.aluno.ja.existe (nome ou sigla)");
 		}
 		
+		
 		/*if(consumidorVO.getDepartamentoVO().getId() == null)
 		{
 			//RN Não existe consumidor sem o seu respectivo Departamento.
 			throw new AlunoException("erro.adicionar.consumidor.repositorio.consumidor.nao.existe.departamento");
 		}*/
-		
+				
+		try
+		{
+			RepositorioConsumidor.getInstance().inserirOuAtualizar(consumidorVO);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+			throw new AlunoException("erro.adicionar.aluno.repositorio.consumidor.inserirOuAtualizar");
+		}
 		try
 		{
 			RepositorioAluno.getInstance().inserirOuAtualizar(consumidorVO);
@@ -114,15 +124,6 @@ public class Aluno extends Consumidor
 			e.printStackTrace();
 			throw new AlunoException("erro.adicionar.aluno.repositorio.aluno.inserirOuAtualizar");
 		}
-		try
-		{
-			RepositorioConsumidor.getInstance().inserirOuAtualizar(consumidorVO);
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-			throw new AlunoException("erro.adicionar.aluno.repositorio.consumidor.inserirOuAtualizar");
-		}	
 	}
 
 	public void atualizarAluno(ConsumidorVO vo) throws AlunoException 
@@ -131,12 +132,13 @@ public class Aluno extends Consumidor
 		consumidorVOBusca.setId(vo.getId());
 		ConsumidorVO consumidorVOantigo = recuperarAluno(consumidorVOBusca);
 		
+		
 		//Verifica se objeto recuperado na base é o mesmo alterado no front-end. Caso não seja, lança erro.
 		if (consumidorVOantigo == null || consumidorVOantigo.getId() != vo.getId())
 		{			
 			throw new AlunoException("erro.atualizar.aluno.nao.existe");
 		}
-		
+		vo.setAtualizar(Boolean.TRUE);
 		try
 		{
 			RepositorioAluno.getInstance().inserirOuAtualizar(vo);

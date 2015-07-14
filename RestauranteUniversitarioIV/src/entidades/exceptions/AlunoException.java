@@ -1,6 +1,6 @@
 package entidades.exceptions;
 
-public class AlunoException extends Exception
+public class AlunoException extends ConsumidorException
 {
 	public AlunoException() 
 	{

@@ -129,7 +129,7 @@ public class RepositorioConsumidor extends Repositorio
 				stringVars.append(",?");
 			}
 			
-			vars.add(consumidorVO.getSexo());
+			vars.add(consumidorVO.getSexo().name());
 		}
 		if (consumidorVO.getTitulo()!= null && !consumidorVO.getTitulo().equals(""))
 		{			
@@ -145,7 +145,7 @@ public class RepositorioConsumidor extends Repositorio
 				stringVars.append(",?");
 			}
 			
-			vars.add(consumidorVO.getTitulo());
+			vars.add(consumidorVO.getTitulo().name());
 		}
 		if (consumidorVO.getCpf()!= null && !consumidorVO.getCpf().equals(""))
 		{			

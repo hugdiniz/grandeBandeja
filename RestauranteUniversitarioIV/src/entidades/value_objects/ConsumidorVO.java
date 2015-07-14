@@ -3,6 +3,10 @@ package entidades.value_objects;
 import entidades.enumerados.SexoEnum;
 import entidades.enumerados.TituloEnum;
 
+/**
+ * @author hugdiniz
+ *
+ */
 public class ConsumidorVO implements VO
 {
 	private String nome;
@@ -14,8 +18,16 @@ public class ConsumidorVO implements VO
 	private Long id;	
 	private Long idDepartamento;
 	private Long idCurso;
+	private Boolean atualizar;
 	
-	
+	public Boolean getAtualizar()
+	{
+		return atualizar;
+	}
+	public void setAtualizar(Boolean atualizar)
+	{
+		this.atualizar = atualizar;
+	}
 	public Long getIdCurso()
 	{
 		return idCurso;

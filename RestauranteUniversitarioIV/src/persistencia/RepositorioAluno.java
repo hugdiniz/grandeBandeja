@@ -36,7 +36,7 @@ public class RepositorioAluno extends Repositorio
 		
 		StringBuilder campos = new StringBuilder();
 		
-		if (consumidorVO.getId() != null)
+		if (consumidorVO.getAtualizar() != null && consumidorVO.getAtualizar())
 		{
 			campos.append("UPDATE aluno SET (");
 			stringVars.append(" = (");
