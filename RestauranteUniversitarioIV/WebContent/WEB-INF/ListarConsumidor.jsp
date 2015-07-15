@@ -30,7 +30,7 @@
 				  for (ConsumidorVO depti: departamentosDisponiveis){
 		  %>
 			  <tr align="center">
-			    <td><input type="radio" name='sigla' value='<%=depti.getId()%>'><%=depti.getNome()%></td>
+			    <td><input type="radio" name='idConsumidor' value='<%=depti.getId()%>'><%=depti.getNome()%></td>
 			    <td><%=depti.getMatricula()%></td>
 			  </tr>
 		  <%

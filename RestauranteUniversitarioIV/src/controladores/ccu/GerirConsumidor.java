@@ -41,6 +41,10 @@ public class GerirConsumidor
 		return consumidors;
 		
 	}
+	public ConsumidorVO buscarConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException
+	{
+		return Aluno.getInstance().recuperarAluno(consumidorVO);
+	}
 	
 	public Collection listarDepartamentos() throws DepartamentoException
 	{
@@ -53,7 +57,7 @@ public class GerirConsumidor
 
 	}
 	
-	public static Object listarCursos() throws CursoException 
+	public Collection listarCursos() throws CursoException 
 	{	
 		Collection consumidors = Curso.getInstance().recuperarCursos(new CursoVO());
 		if (consumidors == null)
@@ -72,6 +76,19 @@ public class GerirConsumidor
 		else
 		{
 			Funcionario.getInstance().adicionarFuncionario(consumidorVO);
+		}	
+		
+	}
+	
+	public void atualizarConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException 
+	{
+		if (consumidorVO.getIdCurso() != null)
+		{
+			Aluno.getInstance().atualizarAluno(consumidorVO);
+		}
+		else
+		{
+			Funcionario.getInstance().atualizarFuncionario(consumidorVO);
 		}	
 		
 	}
