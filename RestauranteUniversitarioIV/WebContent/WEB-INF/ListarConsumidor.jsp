@@ -18,7 +18,12 @@
 <div  style="margin-top: 80px; margin-left: 30px;">
 	<%@include file="messagePage.jsp" %>
 	<form action="ListarConsumidor" method="post">		
-				
+	<table>	
+	<tr align="center">
+	    <td>Nome</td>
+	    <td>Matricula</td>
+	  </tr>
+			
 		<%
 			  try{
 				  Collection<ConsumidorVO> departamentosDisponiveis = (Collection<ConsumidorVO>)request.getAttribute("consumidors");
@@ -30,10 +35,12 @@
 			  </tr>
 		  <%
 				  }
-			  }catch(Exception e){ }
+			  }catch(Exception e){
+				  %> <span>seu Burro</span> <% 
+			  }
 		  %>
 		  
-	
+	</table>
 		<input type="submit" name ="acaoListar" value = "Criar">
 		<input type="submit" name ="acaoListar" value = "Atualizar">
 		<input type="submit" name ="acaoListar" value = "Ver">

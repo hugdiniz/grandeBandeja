@@ -92,7 +92,7 @@ public class ListarConsumidor extends HttpServlet {
 
 	private void listarConsumidores(HttpServletRequest request, HttpServletResponse response) throws ConsumidorException, ServletException, IOException  
 	{
-		request.setAttribute("consumidores",GerirConsumidor.getInstance().listarConsumidors());
+		request.setAttribute("consumidors",GerirConsumidor.getInstance().listarConsumidors());
 		request.getRequestDispatcher("WEB-INF/ListarConsumidor.jsp").forward(request,response);
 	}
 

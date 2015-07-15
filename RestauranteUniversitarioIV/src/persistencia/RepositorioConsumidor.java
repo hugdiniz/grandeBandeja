@@ -244,8 +244,6 @@ public class RepositorioConsumidor extends Repositorio
 		{
 			ConsumidorVO consumidorVOSaida = new ConsumidorVO();
 			consumidorVOSaida.setId(resultSet.getLong("consumidor.id"));
-			consumidorVOSaida.setIdCurso(resultSet.getLong("consumidor.curso_fk"));
-			consumidorVOSaida.setIdDepartamento(resultSet.getLong("consumidor.departamento_fk"));
 			consumidorVOSaida.setAnoIngresso(resultSet.getString("consumidor.anoIngresso"));
 			consumidorVOSaida.setNome(resultSet.getString("consumidor.nome"));
 			consumidorVOSaida.setMatricula(resultSet.getString("consumidor.matricula"));
