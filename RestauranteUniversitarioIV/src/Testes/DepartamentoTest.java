@@ -1,10 +1,10 @@
-package entidades;
+package Testes;
 
 import static org.junit.Assert.*;
 
-
-
 import org.junit.Test;
+
+import entidades.Departamento;
 import entidades.exceptions.DepartamentoException;
 import entidades.value_objects.DepartamentoVO;
 
@@ -31,8 +31,8 @@ public class DepartamentoTest {
 	@Test
 	public void testAdicionarDepartamento() throws DepartamentoException {
 		
-		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento Letras","LL");
-		departamentoVO.setSigla("LL");
+		DepartamentoVO departamentoVO = new DepartamentoVO("Departamento Engenharia","DE");
+		departamentoVO.setSigla("DE");
 		Departamento.getInstance().adicionarDepartamento(departamentoVO);
 		assertNotNull(departamentoVO);
 		

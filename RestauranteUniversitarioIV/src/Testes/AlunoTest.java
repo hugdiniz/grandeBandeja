@@ -1,8 +1,10 @@
-package entidades;
+package Testes;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import entidades.Aluno;
 
 public class AlunoTest {
 

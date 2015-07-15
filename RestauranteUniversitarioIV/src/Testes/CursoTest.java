@@ -1,4 +1,4 @@
-package entidades;
+package Testes;
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,8 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import entidades.Curso;
+import entidades.Departamento;
 import entidades.exceptions.CursoException;
 import entidades.value_objects.CursoVO;
 import entidades.exceptions.DepartamentoException;
@@ -58,12 +60,15 @@ public class CursoTest {
 	@Test
 	public void testAtualizarCurso() throws CursoException, DepartamentoException {
 		
-		DepartamentoVO departamentoVO = new DepartamentoVO(" Departamento Direito ","CD");
+		DepartamentoVO departamentoVO = new DepartamentoVO(null,"CC");
 		departamentoVO = Departamento.getInstance().recuperarDepartamento(departamentoVO);
-		CursoVO cursoVO = new CursoVO("Curso Direito","CD", departamentoVO);
-		cursoVO.setSigla("CD");
+		CursoVO cursoVO = new CursoVO("Curso Direitoo","DDdd", departamentoVO);
+		Random random = new Random();
+		String randNome = String.valueOf(random.nextLong());
+		cursoVO.setSigla(randNome);
 		Curso.getInstance().atualizarCurso(cursoVO); 
 		assertNotNull(cursoVO);
+
 		
 		
 	}
