@@ -5,6 +5,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import entidades.CPF;
+import entidades.Departamento;
+import entidades.exceptions.DepartamentoException;
+
 public class ConsumidorTest {
 
 	@Test
@@ -28,8 +32,12 @@ public class ConsumidorTest {
 	}
 
 	@Test
-	public void testRemoverConsumidor() {
-		fail("Not yet implemented");
+	public void testCPF() 
+	{
+		// CPF Valido
+		assertTrue(CPF.getInstance().isValidCPF("13251198734"));
+		
+		assertFalse(CPF.getInstance().isValidCPF("cpfErradoQualquer"));
 	}
 
 }
