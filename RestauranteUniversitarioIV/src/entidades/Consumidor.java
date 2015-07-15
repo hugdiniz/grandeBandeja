@@ -63,11 +63,6 @@ public abstract class Consumidor
 			throw new ConsumidorException("erro.adiconar.consumidor.repositorio.consumidor.ja.existe");
 		}
 		
-		/*if(consumidorVO.getDepartamentoVO().getId() == null)
-		{
-			//RN Não existe consumidor sem o seu respectivo Departamento.
-			throw new ConsumidorException("erro.adicionar.consumidor.repositorio.consumidor.nao.existe.departamento");
-		}*/
 		Boolean cpfValido = CPF.getInstance().isValidCPF(consumidorVO.getCpf());
 		if (cpfValido.equals(false))
 		{

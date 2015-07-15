@@ -7,6 +7,7 @@ import java.util.Iterator;
 import persistencia.RepositorioAluno;
 import persistencia.RepositorioConsumidor;
 import entidades.exceptions.AlunoException;
+import entidades.exceptions.ConsumidorException;
 import entidades.value_objects.ConsumidorVO;
 
 public class Aluno extends Consumidor
@@ -87,7 +88,7 @@ public class Aluno extends Consumidor
 	}	
 	
 	
-	public void adicionarAluno(ConsumidorVO consumidorVO) throws AlunoException 
+	public void adicionarAluno(ConsumidorVO consumidorVO) throws ConsumidorException 
 	{
 		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
 		consumidorVOBusca.setId(consumidorVO.getId());
@@ -105,16 +106,9 @@ public class Aluno extends Consumidor
 			//RN Não existe consumidor sem o seu respectivo Departamento.
 			throw new AlunoException("erro.adicionar.consumidor.repositorio.consumidor.nao.existe.departamento");
 		}*/
-				
-		try
-		{
-			RepositorioConsumidor.getInstance().inserirOuAtualizar(consumidorVO);
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-			throw new AlunoException("erro.adicionar.aluno.repositorio.consumidor.inserirOuAtualizar");
-		}
+		
+		consumidorVO.setHabilitado(true);
+		adicionarConsumidor(consumidorVO);
 		try
 		{
 			RepositorioAluno.getInstance().inserirOuAtualizar(consumidorVO);
@@ -126,7 +120,7 @@ public class Aluno extends Consumidor
 		}
 	}
 
-	public void atualizarAluno(ConsumidorVO vo) throws AlunoException 
+	public void atualizarAluno(ConsumidorVO vo) throws ConsumidorException
 	{	
 		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
 		consumidorVOBusca.setId(vo.getId());
@@ -139,24 +133,17 @@ public class Aluno extends Consumidor
 			throw new AlunoException("erro.atualizar.aluno.nao.existe");
 		}
 		vo.setAtualizar(Boolean.TRUE);
+		
+		
+		adicionarConsumidor(vo);
 		try
 		{
 			RepositorioAluno.getInstance().inserirOuAtualizar(vo);
 		}
 		catch (SQLException e)
-		{			
-			e.printStackTrace();
-			throw new AlunoException("erro.atualizar.aluno.repositorio.aluno.inserirOuAtualizar");
-		}	
-		
-		try
 		{
-			RepositorioConsumidor.getInstance().inserirOuAtualizar(vo);
-		}
-		catch (SQLException e)
-		{			
 			e.printStackTrace();
-			throw new AlunoException("erro.atualizar.aluno.repositorio.consumidor.inserirOuAtualizar");
-		}	
+			throw new AlunoException("erro.adicionar.aluno.repositorio.aluno.inserirOuAtualizar");
+		}
 	}
 }

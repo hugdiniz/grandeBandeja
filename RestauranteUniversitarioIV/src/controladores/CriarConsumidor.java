@@ -77,13 +77,15 @@ public class CriarConsumidor extends HttpServlet
 		} catch (Exception e)
 		{
 			e.printStackTrace();
+			request.setAttribute("message", "Novo Consumidor criado!");
+			request.getRequestDispatcher("WEB-INF/CriarConsumidor.jsp").forward(request,response);
 		}
 		
 						
 		
 	}
 
-	private void initJsp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, AlunoException, FuncionarioException 
+	private void initJsp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ConsumidorException
 	{
 		String nome = (String) request.getParameter("nome");
 		String matricula = (String) request.getParameter("matricula");
@@ -139,8 +141,8 @@ public class CriarConsumidor extends HttpServlet
 		
 		GerirConsumidor.getInstance().criarConsumidor(consumidorVO);
 		
-		request.setAttribute("message", "Novo departamento criado!");
-		request.getRequestDispatcher("ListarCurso").forward(request,response);
+		request.setAttribute("message", "Novo Consumidor criado!");
+		request.getRequestDispatcher("ListarConsumidor").forward(request,response);
 	}
 
 }

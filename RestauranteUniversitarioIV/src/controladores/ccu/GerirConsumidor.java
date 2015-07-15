@@ -31,7 +31,9 @@ public class GerirConsumidor
 	
 	public Collection listarConsumidors() throws ConsumidorException
 	{
-		Collection consumidors = Aluno.getInstance().recuperarConsumidors(new ConsumidorVO());
+		ConsumidorVO consumidorVO = new ConsumidorVO();
+		consumidorVO.setHabilitado(true);
+		Collection consumidors = Aluno.getInstance().recuperarConsumidors(consumidorVO);
 		if (consumidors == null)
 		{
 			consumidors = new ArrayList();
@@ -61,7 +63,7 @@ public class GerirConsumidor
 		return consumidors;
 	}
 	
-	public void criarConsumidor(ConsumidorVO consumidorVO) throws AlunoException, FuncionarioException 
+	public void criarConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException 
 	{
 		if (consumidorVO.getIdCurso() != null)
 		{

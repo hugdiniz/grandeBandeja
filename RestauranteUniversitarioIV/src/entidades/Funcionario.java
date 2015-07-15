@@ -4,8 +4,10 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
 
+import persistencia.RepositorioDepartamento;
 import persistencia.RepositorioFuncionario;
 import persistencia.RepositorioConsumidor;
+import entidades.exceptions.ConsumidorException;
 import entidades.exceptions.FuncionarioException;
 import entidades.value_objects.ConsumidorVO;
 
@@ -87,7 +89,7 @@ public class Funcionario extends Consumidor
 	}	
 	
 	
-	public void adicionarFuncionario(ConsumidorVO consumidorVO) throws FuncionarioException 
+	public void adicionarFuncionario(ConsumidorVO consumidorVO) throws ConsumidorException 
 	{
 		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
 		consumidorVOBusca.setId(consumidorVO.getId());
@@ -105,18 +107,11 @@ public class Funcionario extends Consumidor
 			throw new FuncionarioException("erro.adicionar.consumidor.repositorio.consumidor.nao.existe.departamento");
 		}*/
 		
+		consumidorVO.setHabilitado(true);
+		adicionarConsumidor(consumidorVO);		
 		try
 		{
 			RepositorioFuncionario.getInstance().inserirOuAtualizar(consumidorVO);
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-			throw new FuncionarioException("erro.adicionar.funcionario.repositorio.funcionario.inserirOuAtualizar");
-		}
-		try
-		{
-			RepositorioConsumidor.getInstance().inserirOuAtualizar(consumidorVO);
 		}
 		catch (SQLException e)
 		{
@@ -125,7 +120,7 @@ public class Funcionario extends Consumidor
 		}	
 	}
 
-	public void atualizarFuncionario(ConsumidorVO vo) throws FuncionarioException 
+	public void atualizarFuncionario(ConsumidorVO vo) throws ConsumidorException 
 	{	
 		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
 		consumidorVOBusca.setId(vo.getId());
@@ -137,19 +132,10 @@ public class Funcionario extends Consumidor
 			throw new FuncionarioException("erro.atualizar.funcionario.nao.existe");
 		}
 		
+		adicionarConsumidor(vo);		
 		try
 		{
 			RepositorioFuncionario.getInstance().inserirOuAtualizar(vo);
-		}
-		catch (SQLException e)
-		{			
-			e.printStackTrace();
-			throw new FuncionarioException("erro.atualizar.funcionario.repositorio.funcionario.inserirOuAtualizar");
-		}	
-		
-		try
-		{
-			RepositorioConsumidor.getInstance().inserirOuAtualizar(vo);
 		}
 		catch (SQLException e)
 		{			
