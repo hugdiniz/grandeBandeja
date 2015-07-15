@@ -3,8 +3,6 @@ package entidades;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import javax.servlet.http.HttpSession;
-
 import persistencia.RepositorioDepartamento;
 import entidades.exceptions.DepartamentoException;
 import entidades.value_objects.DepartamentoVO;
@@ -23,6 +21,19 @@ public class Departamento
 
 	}
 	
+	public Boolean verificaDepartamentoJaExiste(DepartamentoVO departamentoVOBusca) throws DepartamentoException
+	{
+		DepartamentoVO departamentoVOantigo = recuperarDepartamento(departamentoVOBusca);
+		if (departamentoVOantigo != null)
+		{
+			return Boolean.TRUE;
+		}
+		else
+		{
+			return Boolean.FALSE;
+		}
+	}
+	
 	public Collection recuperarDepartamentos(DepartamentoVO departamentoVO) throws DepartamentoException
 	{
 		
@@ -35,16 +46,13 @@ public class Departamento
 			throw new DepartamentoException("erro.recuperar.departamentos.repositorio.departamento.buscar");			
 		}
 	}
-
-	
 	
 	public void adicionarDepartamento(DepartamentoVO departamentoVO) throws DepartamentoException 
 	{
 		DepartamentoVO departamentoVOBusca = new DepartamentoVO();
 		departamentoVOBusca.setSigla(departamentoVO.getSigla());
 		
-		DepartamentoVO departamentoVOantigo = recuperarDepartamento(departamentoVOBusca);
-		if (departamentoVOantigo != null)
+		if (verificaDepartamentoJaExiste(departamentoVOBusca))
 		{
 			throw new DepartamentoException("erro.adiconar.departamento.repositorio.departamento.ja.existe");
 		}
@@ -83,7 +91,8 @@ public class Departamento
 			return null;
 		}	
 	}
-
+	
+	
 	public void atualizarDepartamento (DepartamentoVO departamentoVO) throws DepartamentoException
 	{
 		if (departamentoVO.getId() == null)
@@ -92,7 +101,7 @@ public class Departamento
 			departamentoVOantigo.setSigla(departamentoVO.getSigla());
 			departamentoVOantigo = recuperarDepartamento(departamentoVOantigo);
 			
-			if (departamentoVOantigo != null)
+			if (verificaDepartamentoJaExiste(departamentoVOantigo))
 			{
 				departamentoVO.setId(departamentoVOantigo.getId());
 			}

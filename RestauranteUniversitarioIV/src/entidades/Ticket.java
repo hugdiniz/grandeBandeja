@@ -27,30 +27,14 @@ public class Ticket {
 	}
 	public Collection recuperarTickets(TicketVO ticketvo) throws TicketException
 	{		
-		try
-		{
-			return RepositorioTicket.getInstance().buscar(ticketvo);
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-			throw new TicketException("erro.recuperar.tickets.repositorio.tikect.buscar");
-		}		
+		return RepositorioTicket.getInstance().buscar(ticketvo);		
 	}
 	
 	public TicketVO recuperarTicket(TicketVO ticketvo) throws TicketException 
 	{
 		Collection ticketsVO = null;
 		
-		try
-		{
-			ticketsVO =  RepositorioTicket.getInstance().buscar(ticketvo);
-		} 
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-			throw new TicketException("erro.recuperar.tickets.repositorio.ticket.buscar");			
-		}
+		ticketsVO =  RepositorioTicket.getInstance().buscar(ticketvo);
 		
 		if (ticketsVO != null && !ticketsVO.isEmpty())
 		{
@@ -86,15 +70,7 @@ public class Ticket {
 			throw new TicketException("erro.adicionar.ticket.repositorio.ticket.nao.existe.refeicao");
 		}
 		
-		 try
-		{
-			RepositorioTicket.getInstance().inserirOuAtualizar(ticketvo);
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-			throw new TicketException("erro.recuperar.adicionar.repositorio.ticket.inserirOuAtualizar");
-		}	
+		 RepositorioTicket.getInstance().inserirOuAtualizar(ticketvo);	
 	}
 
 	public void atualizarTicket(TicketVO vo) throws TicketException 
@@ -119,14 +95,6 @@ public class Ticket {
 			//RN Não existe curso sem o seu respectivo Departamento.
 			throw new TicketException("erro.adicionar.ticket.repositorio.ticket.nao.existe.refeicao");
 		}
-		try
-		{
-			RepositorioTicket.getInstance().inserirOuAtualizar(vo);
-		}
-		catch (SQLException e)
-		{			
-			e.printStackTrace();
-			throw new TicketException("erro.recuperar.atualizar.repositorio.curso.inserirOuAtualizar");
-		}	
+		RepositorioTicket.getInstance().inserirOuAtualizar(vo);	
 	}
 }

@@ -24,6 +24,19 @@ public class Curso
 
 	}
 
+	public Boolean verificaCursoJaExiste(CursoVO cursoVOBusca) throws CursoException
+	{
+		CursoVO departamentoVOantigo = recuperarCurso(cursoVOBusca);
+		if (departamentoVOantigo != null)
+		{
+			return Boolean.TRUE;
+		}
+		else
+		{
+			return Boolean.FALSE;
+		}
+	}
+	
 	public Collection recuperarCursos(CursoVO vo) throws CursoException
 	{		
 		try

@@ -8,7 +8,7 @@ public class ConnectionFactory {
 	
 	private static final String CONNECTION_URL = "jdbc:h2:~/jerry";
 	private static final String USER = "admin";
-	private static final String PASSWORD = "foca";
+	private static final String PASSWORD = "";
 	
 	private ConnectionFactory () {
 		
