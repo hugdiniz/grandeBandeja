@@ -1,33 +1,34 @@
-package entidades;
+package Testes;
+
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class RefeicaoTest {
+public class ConsumidorTest {
 
 	@Test
-	public void testGetInstance() {
+	public void testRecuperarConsumidor() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testRecuperarRefeicoes() {
+	public void testRecuperarConsumidors() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testAdicionarRefeicao() {
+	public void testAdicionarConsumidor() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testRecuperarRefeicao() {
+	public void testAtualizarConsumidor() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testAtualizarRefeicao() {
+	public void testRemoverConsumidor() {
 		fail("Not yet implemented");
 	}
 
