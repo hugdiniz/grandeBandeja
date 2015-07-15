@@ -19,7 +19,34 @@ public class ConsumidorVO implements VO
 	private Long idDepartamento;
 	private Long idCurso;
 	private Boolean atualizar;
+	private CursoVO cursoVO;
+	private DepartamentoVO departamentoVO;
+	private Boolean habilitado;
 	
+	public CursoVO getCursoVO()
+	{
+		return cursoVO;
+	}
+	public void setCursoVO(CursoVO cursoVO)
+	{
+		this.cursoVO = cursoVO;
+	}
+	public DepartamentoVO getDepartamentoVO()
+	{
+		return departamentoVO;
+	}
+	public void setDepartamentoVO(DepartamentoVO departamentoVO)
+	{
+		this.departamentoVO = departamentoVO;
+	}
+	public Boolean getHabilitado()
+	{
+		return habilitado;
+	}
+	public void setHabilitado(Boolean habilitado)
+	{
+		this.habilitado = habilitado;
+	}
 	public Boolean getAtualizar()
 	{
 		return atualizar;

@@ -1,62 +1,47 @@
 package entidades;
 
-public class CPF {
+public class CPF
+{
+	private static CPF aluno;
 	
-	private int[] digitos;
+	private CPF()
+	{
+		// TODO Auto-generated constructor stub
+	}
 	
-	public CPF(int... digitos) throws Exception {
-		if (digitos.length != 11){
-			throw new Exception("O CPF deve conter 11 digitos!");
-			// tambem podemos validar os calculos do dv aqui!
-		}else{
-			// usando o clone = nao permitir alteracoes externas a classe CPF nos valores do array
-			this.digitos = digitos.clone();
+	public static CPF getInstance() 
+	{
+		if (aluno == null) 
+		{
+			aluno = new CPF();
 		}
-	}
-	
-	public int getDigitosVerificadores(){
-		return digitos[9]*10 + digitos[10];
-	}
+		return aluno;
 
-	public int[] getListaDigitosVerificadores(){
-		return new int[]{digitos[9], digitos[10]};
 	}
+	
+	private final Integer[] pesoCPF = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
+	private Integer calcularDigito(String str, Integer[] peso)
+	{
+		
+	      Integer soma = 0;
+	      for (Integer indice=str.length()-1, digito; indice >= 0; indice-- )
+	      {
+	         digito = Integer.parseInt(str.substring(indice,indice+1));
+	         soma += digito*peso[peso.length-str.length()+indice];
+	      }
+	      soma = 11 - soma % 11;
+	      return soma > 9 ? 0 : soma;
+	   }
 
-	public int[] getListaDigitos(){
-		return digitos.clone();
-	}
-	@Override
-	public String toString() {
-		String results = "";
-		for (int i = 0; i < digitos.length; i++) {
-			results += ""+digitos[i];
-		}
-		return results;
-	}
+	   public boolean isValidCPF(String cpf) 
+	   {
+	      if ((cpf==null) || (cpf.length()!=11)) return false;
+
+	      Integer digito1 = calcularDigito(cpf.substring(0,9), pesoCPF);
+	      Integer digito2 = calcularDigito(cpf.substring(0,9) + digito1, pesoCPF);
+	      return cpf.equals(cpf.substring(0,9) + digito1.toString() + digito2.toString());
+	   }
+
 	
-	@Override
-	public boolean equals(Object obj) {
-		CPF outro = (CPF) obj;
-		int[] digitosOutro = outro.getListaDigitos();
-		
-		boolean iguais = true;
-		for (int i = 0; i < digitos.length; i++) {
-			if (digitos[i]!= digitosOutro[i]){
-				iguais = false;
-				break;
-			}
-		}
-		return iguais;
-	}
 	
-	public static CPF fromString(String digitos) throws Exception{
-		int[] arrayDigitos = new int[digitos.length()];
-		
-		for (int i = 0; i < arrayDigitos.length; i++) {
-			arrayDigitos[i] = Integer.parseInt(""+digitos.charAt(i)); 
-		}
-		
-		CPF cpf = new CPF(arrayDigitos);
-		return cpf;
-	}
 }

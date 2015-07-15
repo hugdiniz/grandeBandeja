@@ -165,6 +165,22 @@ public class RepositorioConsumidor extends Repositorio
 			
 			vars.add(consumidorVO.getCpf());
 		}
+		if (consumidorVO.getHabilitado()!= null && !consumidorVO.getHabilitado().equals(""))
+		{			
+			if (primeiroCampo)
+			{
+				primeiroCampo = false;
+				campos.append("habilitado");
+				stringVars.append("?");
+			}
+			else 
+			{
+				campos.append(",habilitado");
+				stringVars.append(",?");
+			}
+			
+			vars.add(consumidorVO.getCpf());
+		}
 
 		
 		
@@ -205,7 +221,7 @@ public class RepositorioConsumidor extends Repositorio
 		Boolean primeiroCampo = true;
 		Boolean joinDepartamento = false;
 		
-		if (consumidorVO.getNome()!= null && !consumidorVO.getNome().equals(""))
+		if (consumidorVO.getId() != null && !consumidorVO.getId().equals(""))
 		{			
 			if (primeiroCampo)
 			{
@@ -219,7 +235,39 @@ public class RepositorioConsumidor extends Repositorio
 				restricao.append(" ? ");
 			}
 			
+			vars.add(consumidorVO.getId());
+		}
+		if (consumidorVO.getNome()!= null && !consumidorVO.getNome().equals(""))
+		{			
+			if (primeiroCampo)
+			{
+				primeiroCampo = false;
+				restricao.append(" where consumidor.nome like ");
+				restricao.append(" ? ");
+			}
+			else 
+			{
+				restricao.append(" and consumidor.nome like");
+				restricao.append(" ? ");
+			}
+			
 			vars.add(consumidorVO.getNome());
+		}
+		if (consumidorVO.getHabilitado()!= null && !consumidorVO.getHabilitado().equals(""))
+		{			
+			if (primeiroCampo)
+			{
+				primeiroCampo = false;
+				restricao.append(" where consumidor.habilitado like ");
+				restricao.append(" ? ");
+			}
+			else 
+			{
+				restricao.append(" and consumidor.habilitado like");
+				restricao.append(" ? ");
+			}
+			
+			vars.add(consumidorVO.getHabilitado());
 		}
 		
 		
@@ -261,7 +309,8 @@ public class RepositorioConsumidor extends Repositorio
 	@Override
 	public Collection remover(VO vo) throws SQLException
 	{
-		// TODO Auto-generated method stub
+		String sql = "UPDATE consumidor SET (habilitado) = (false) where id =" + ((ConsumidorVO)vo).getId();
+		executeSQL(sql, new ArrayList());
 		return null;
 	}
 

@@ -68,7 +68,13 @@ public abstract class Consumidor
 			//RN Não existe consumidor sem o seu respectivo Departamento.
 			throw new ConsumidorException("erro.adicionar.consumidor.repositorio.consumidor.nao.existe.departamento");
 		}*/
+		Boolean cpfValido = CPF.getInstance().isValidCPF(consumidorVO.getCpf());
+		if (cpfValido.equals(false))
+		{
+			throw new ConsumidorException("erro.adiconar.consumidor.cpf.nao.valido");
+		}
 		
+		consumidorVO.setHabilitado(Boolean.TRUE);
 		 try
 		{
 			RepositorioConsumidor.getInstance().inserirOuAtualizar(consumidorVO);
@@ -92,6 +98,12 @@ public abstract class Consumidor
 			throw new ConsumidorException("erro.atualizar.consumidor.repositorio.consumidor.nao.existe");
 		}
 		
+		Boolean cpfValido = CPF.getInstance().isValidCPF(vo.getCpf());
+		if (cpfValido.equals(false))
+		{
+			throw new ConsumidorException("erro.adiconar.consumidor.cpf.nao.valido");
+		}
+		
 		try
 		{
 			RepositorioConsumidor.getInstance().inserirOuAtualizar(vo);
@@ -101,5 +113,10 @@ public abstract class Consumidor
 			e.printStackTrace();
 			throw new ConsumidorException("erro.atualizar.consumidor.repositorio.consumidor.inserirOuAtualizar");
 		}	
+	}
+	public void removerConsumidor(ConsumidorVO vo) throws ConsumidorException
+	{
+		vo.setHabilitado(Boolean.FALSE);
+		atualizarConsumidor(vo);
 	}
 }
