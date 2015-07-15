@@ -53,29 +53,30 @@ public class CriarConsumidor extends HttpServlet
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		String acao = (String) request.getParameter("acaoCriar");
-				
-		if (acao != null)
+		try
 		{
-			switch (acao) 
+			request.setAttribute("departamentoVOs", GerirConsumidor.getInstance().listarDepartamentos());
+			request.setAttribute("cursoVOs", GerirConsumidor.getInstance().listarCursos());
+			String acao = (String) request.getParameter("acaoCriar");
+			
+			if (acao != null)
 			{
-				case "Criar":
-				try
+				switch (acao) 
 				{
-					initJsp(request,response);
-				} catch (ConsumidorException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					case "Criar":
+						initJsp(request,response);
+						break;
+					default:
+						request.getRequestDispatcher("WEB-INF/CriarConsumidor.jsp").forward(request,response);
 				}
-					break;
-				default:
-					request.getRequestDispatcher("WEB-INF/CriarConsumidor.jsp").forward(request,response);
 			}
-		}
-		else
+			else
+			{
+				request.getRequestDispatcher("WEB-INF/CriarConsumidor.jsp").forward(request,response);	
+			}
+		} catch (Exception e)
 		{
-			request.getRequestDispatcher("WEB-INF/CriarConsumidor.jsp").forward(request,response);	
+			e.printStackTrace();
 		}
 		
 						

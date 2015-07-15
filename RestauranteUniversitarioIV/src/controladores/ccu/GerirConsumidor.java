@@ -1,13 +1,18 @@
 package controladores.ccu;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
+import entidades.Aluno;
 import entidades.Consumidor;
 import entidades.Curso;
 import entidades.Departamento;
+import entidades.Funcionario;
+import entidades.exceptions.AlunoException;
 import entidades.exceptions.ConsumidorException;
 import entidades.exceptions.CursoException;
 import entidades.exceptions.DepartamentoException;
+import entidades.exceptions.FuncionarioException;
 import entidades.value_objects.ConsumidorVO;
 import entidades.value_objects.CursoVO;
 import entidades.value_objects.DepartamentoVO;
@@ -24,35 +29,48 @@ public class GerirConsumidor
 		return gerirConsumidor;
 	}
 	
-	/*public Collection listarConsumidors() throws ConsumidorException
+	public Collection listarConsumidors() throws ConsumidorException
 	{
-		return Consumidor.getInstance().recuperarConsumidors(new ConsumidorVO());
-	}*/
+		Collection consumidors = Aluno.getInstance().recuperarConsumidors(new ConsumidorVO());
+		if (consumidors == null)
+		{
+			consumidors = new ArrayList();
+		}
+		return consumidors;
+		
+	}
 	
 	public Collection listarDepartamentos() throws DepartamentoException
 	{
-		return Departamento.getInstance().recuperarDepartamentos(new DepartamentoVO());
+		Collection consumidors = Departamento.getInstance().recuperarDepartamentos(new DepartamentoVO());
+		if (consumidors == null)
+		{
+			consumidors = new ArrayList();
+		}
+		return consumidors;
+
 	}
 	
 	public static Object listarCursos() throws CursoException 
-	{		
-		return Curso.getInstance().recuperarCursos(new CursoVO());
+	{	
+		Collection consumidors = Curso.getInstance().recuperarCursos(new CursoVO());
+		if (consumidors == null)
+		{
+			consumidors = new ArrayList();
+		}
+		return consumidors;
 	}
 	
-	/*public ConsumidorVO buscarConsumidor(ConsumidorVO departamentoVO) throws ConsumidorException
-	{			
-		ConsumidorVO departamentoAntigo = Consumidor.getInstance().recuperarConsumidor(departamentoVO);		
+	public void criarConsumidor(ConsumidorVO consumidorVO) throws AlunoException, FuncionarioException 
+	{
+		if (consumidorVO.getIdCurso() != null)
+		{
+			Aluno.getInstance().adicionarAluno(consumidorVO);
+		}
+		else
+		{
+			Funcionario.getInstance().adicionarFuncionario(consumidorVO);
+		}	
 		
-		return departamentoAntigo;
-	}	
-	
-	public void criarConsumidor(ConsumidorVO departamentoVO) throws ConsumidorException 
-	{
-		Consumidor.getInstance().adicionarConsumidor(departamentoVO);
 	}
-	
-	public void atualizarConsumidor(ConsumidorVO departamentoVO) throws ConsumidorException
-	{
-		Consumidor.getInstance().atualizarConsumidor(departamentoVO);
-	}*/
 }

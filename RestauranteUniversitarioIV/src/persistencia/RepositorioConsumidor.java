@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import entidades.enumerados.SexoEnum;
+import entidades.enumerados.TituloEnum;
 import entidades.value_objects.ConsumidorVO;
 import entidades.value_objects.VO;
 
@@ -242,8 +244,15 @@ public class RepositorioConsumidor extends Repositorio
 		{
 			ConsumidorVO consumidorVOSaida = new ConsumidorVO();
 			consumidorVOSaida.setId(resultSet.getLong("consumidor.id"));
-			consumidorVOSaida.setIdDepartamento(resultSet.getLong("consumidor.curso_fk"));
-						
+			consumidorVOSaida.setIdCurso(resultSet.getLong("consumidor.curso_fk"));
+			consumidorVOSaida.setIdDepartamento(resultSet.getLong("consumidor.departamento_fk"));
+			consumidorVOSaida.setAnoIngresso(resultSet.getString("consumidor.anoIngresso"));
+			consumidorVOSaida.setNome(resultSet.getString("consumidor.nome"));
+			consumidorVOSaida.setMatricula(resultSet.getString("consumidor.matricula"));
+			consumidorVOSaida.setCpf(resultSet.getString("consumidor.cpf"));
+			consumidorVOSaida.setTitulo(TituloEnum.valueOf(resultSet.getString("consumidor.titulo")));
+			consumidorVOSaida.setSexo(SexoEnum.valueOf(resultSet.getString("consumidor.sexo")));
+			
 			vos.add(consumidorVOSaida);
 			
 		}
