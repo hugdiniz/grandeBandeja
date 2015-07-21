@@ -11,7 +11,7 @@ import entidades.exceptions.ConsumidorException;
 import entidades.exceptions.FuncionarioException;
 import entidades.value_objects.ConsumidorVO;
 
-public class Funcionario extends Consumidor
+public class Funcionario
 {	
 	private static Funcionario funcionario;
 	
@@ -101,17 +101,14 @@ public class Funcionario extends Consumidor
 			throw new FuncionarioException("erro.adiconar.funcionario.funcionario.ja.existe");
 		}
 		
-		/*if(consumidorVO.getDepartamentoVO().getId() == null)
-		{
-			//RN Não existe consumidor sem o seu respectivo Departamento.
-			throw new FuncionarioException("erro.adicionar.consumidor.repositorio.consumidor.nao.existe.departamento");
-		}*/
-		
 		consumidorVO.setHabilitado(true);
-		adicionarConsumidor(consumidorVO);		
+		Consumidor.getInstance().adicionarConsumidor(consumidorVO);
+		ConsumidorVO consumidorVOAdicionado = Consumidor.getInstance().recuperarConsumidor(consumidorVO);
+		consumidorVOAdicionado.setIdDepartamento(consumidorVO.getIdDepartamento());	
+		
 		try
 		{
-			RepositorioFuncionario.getInstance().inserirOuAtualizar(consumidorVO);
+			RepositorioFuncionario.getInstance().inserirOuAtualizar(consumidorVOAdicionado);
 		}
 		catch (SQLException e)
 		{
@@ -132,7 +129,7 @@ public class Funcionario extends Consumidor
 			throw new FuncionarioException("erro.atualizar.funcionario.nao.existe");
 		}
 		
-		adicionarConsumidor(vo);		
+		Consumidor.getInstance().adicionarConsumidor(vo);			
 		try
 		{
 			RepositorioFuncionario.getInstance().inserirOuAtualizar(vo);

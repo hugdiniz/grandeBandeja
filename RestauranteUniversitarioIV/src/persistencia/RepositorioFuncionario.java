@@ -38,7 +38,7 @@ public class RepositorioFuncionario extends Repositorio
 		
 		StringBuilder campos = new StringBuilder();
 		
-		if (consumidorVO.getId() != null)
+		if (consumidorVO.getAtualizar() != null && consumidorVO.getAtualizar())
 		{
 			campos.append("UPDATE funcionario SET (");
 			stringVars.append(" = (");
@@ -89,7 +89,7 @@ public class RepositorioFuncionario extends Repositorio
 		
 		campos.append(stringVars);
 		
-		if (consumidorVO.getId() != null)
+		if (consumidorVO.getAtualizar() != null && consumidorVO.getAtualizar())
 		{
 			campos.append(") WHERE id=?;");
 			vars.add(consumidorVO.getId());
