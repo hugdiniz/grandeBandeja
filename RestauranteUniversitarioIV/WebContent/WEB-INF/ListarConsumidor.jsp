@@ -6,22 +6,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="header.html"></jsp:include>
 
 <style><%@include file="style.css"%></style>
 <%@ page import="java.util.Collection" %>
 <%@ page import="entidades.value_objects.ConsumidorVO" %>
-<body>
 
-<div  style="margin-top: 80px; margin-left: 30px;">
+<div class="container">
 	<%@include file="messagePage.jsp" %>
-	<form action="ListarConsumidor" method="post">		
-	<table>	
-	<tr align="center">
-	    <td>Nome</td>
-	    <td>Matricula</td>
+	<form class="form-horizontal" action="ListarConsumidor" method="post">		
+	<table class="table table-bordered table-striped">	
+	<tr>
+	    <th>Nome</th>
+	    <th>Matricula</th>
 	  </tr>
 			
 		<%
@@ -35,15 +32,13 @@
 			  </tr>
 		  <%
 				  }
-			  }catch(Exception e){
-				  %> <span>seu Burro</span> <% 
-			  }
+			  }catch(Exception e){ }
 		  %>
 		  
 	</table>
-		<input type="submit" name ="acaoListar" value = "Criar">
-		<input type="submit" name ="acaoListar" value = "Atualizar">
-		<input type="submit" name ="acaoListar" value = "Ver">
+		<input type="submit" class="btn btn-primary" name ="acaoListar" value = "Criar">
+		<input type="submit" class="btn btn-primary" name ="acaoListar" value = "Atualizar">
+		<input type="submit" class="btn btn-primary" name ="acaoListar" value = "Ver">
 	</form>
 </div>
 </body>

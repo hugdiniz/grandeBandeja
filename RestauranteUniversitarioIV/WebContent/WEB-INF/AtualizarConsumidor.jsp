@@ -8,14 +8,16 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@include file="messagePage.jsp" %>
 <jsp:include page="header.html"></jsp:include>
-
+<%@include file="messagePage.jsp" %>
 <style><%@include file="style.css"%></style>
 
-<% Collection<CursoVO> cursoVOs = (Collection<CursoVO>)request.getAttribute("consumidors"); 
+<% Collection<CursoVO> cursoVOs = (Collection<CursoVO>)request.getAttribute("cursos"); 
 Collection<DepartamentoVO> departamentoVOs = (Collection<DepartamentoVO>)request.getAttribute("departamentos");
-ConsumidorVO consumidorVO = (ConsumidorVO)request.getAttribute("consumidor"); %>
+ConsumidorVO consumidorVO = (ConsumidorVO)request.getAttribute("consumidor"); 
+String checkAluno = consumidorVO.getIdCurso() == null ? "" : "checked";
+String checkFuncionario = checkAluno.equals("checked") ? "" : "checked";
+%>
 
 <script>
 
@@ -40,22 +42,19 @@ $(function ()
 
 
 </script>
-
-
-<body>
-<form action="CriarConsumidor" method="post">
+<form action="AtualizarConsumidor" method="post">
 	<div style="margin-top: 80px; margin-left: 30px;">
 		<div>
-			<input onclick="alterarConsumidor('aluno')" type="radio" name="tipoConsumidor" value="aluno" checked>Aluno
-			<input onclick="alterarConsumidor('funcionario')" type="radio" name="tipoConsumidor" value="funcionario">Funcionario
+			<input onclick="alterarConsumidor('aluno')" type="radio" name="tipoConsumidor" value="aluno" <%=checkAluno%>>Aluno
+			<input onclick="alterarConsumidor('funcionario')" type="radio" name="tipoConsumidor" value="funcionario" <%=checkFuncionario%>>Funcionario
 		</div>
-		<table >
+		<table class="table">
 			<tr>
 				<td>
 					Nome 		
 				</td>
 				<td>			
-					<input type="text" name ="nome" value = "">				
+					<input type="text" name ="nome" value = "<%=consumidorVO.getNome()%>">				
 				</td>
 			</tr>
 			<tr>
@@ -63,7 +62,7 @@ $(function ()
 					Matricula 		
 				</td>
 				<td>			
-					 <input type="text" name ="matricula" value = "">				
+					 <input type="text" name ="matricula" value = "<%=consumidorVO.getMatricula()%>">				
 				</td>
 			</tr>
 			<tr>
@@ -71,7 +70,7 @@ $(function ()
 					Ano do Ingresso  		
 				</td>
 				<td>			
-					<input type="text" name ="anoIngresso" value = "">				
+					<input type="text" name ="anoIngresso" value = "<%=consumidorVO.getAnoIngresso()%>">				
 				</td>
 			</tr>
 			<tr>
@@ -105,7 +104,7 @@ $(function ()
 					CPF 
 				</td>
 				<td>			
-					<input type="text" name ="cpf" value = "">			
+					<input type="text" name ="cpf" value = "<%=consumidorVO.getCpf()%>">			
 				</td>
 			</tr>
 			<tr id="funcionario">
@@ -138,8 +137,8 @@ $(function ()
 			
 		</table>
 		<div class="botoes">
-			<input type="submit" name="acaoCriar" value="Criar">
-			<input type="submit" name="acaoCriar" value="Cancelar">
+			<input type="submit" class="btn btn-primary" name="acaoAtualizar" value="Atualizar">
+			<input type="submit" class="btn btn-primary" name="acaoAtualizar" value="Cancelar">
 		</div>
 	</div>
 </form>

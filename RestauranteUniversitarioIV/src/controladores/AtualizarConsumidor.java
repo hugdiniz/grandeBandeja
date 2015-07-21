@@ -22,6 +22,8 @@ public class AtualizarConsumidor extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
+	
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
@@ -59,15 +61,14 @@ public class AtualizarConsumidor extends HttpServlet
 					String nome = (String) request.getParameter("nome");
 					String sigla = (String) request.getParameter("sigla");
 					
-					ConsumidorVO cursoVO = new ConsumidorVO();
+					ConsumidorVO consumidorVO = new ConsumidorVO();
 					if (request.getParameter("idConsumidor") != null && !request.getParameter("idConsumidor").equals(""))
 					{
-						cursoVO.setId(Long.parseLong((String) request.getParameter("idConsumidor")));
+						consumidorVO.setId(Long.parseLong((String) request.getParameter("idConsumidor")));
 					}
 					
-					
-					ConsumidorVO cursoAntigo = GerirConsumidor.getInstance().buscarConsumidor(cursoVO);
-					request.setAttribute("consumidor",cursoAntigo);
+					ConsumidorVO consumidorAntigo = GerirConsumidor.getInstance().buscarConsumidor(consumidorVO);
+					request.setAttribute("consumidor",consumidorAntigo);
 					request.setAttribute("departamentos", departamentosDisponiveis);
 					request.setAttribute("cursos", cursos);
 					request.getRequestDispatcher("WEB-INF/AtualizarConsumidor.jsp").forward(request,response);

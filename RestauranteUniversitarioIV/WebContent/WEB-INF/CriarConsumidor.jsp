@@ -4,13 +4,14 @@
 <%@page import="entidades.value_objects.CursoVO"%>
 <%@page import="java.util.Collection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@include file="messagePage.jsp" %>
 <jsp:include page="header.html"></jsp:include>
-
-<style><%@include file="style.css"%></style>
+<%@include file="messagePage.jsp"%>
+<style>
+<%@include file="style.css"%>
+</style>
 
 <% Collection<CursoVO> cursoVOs = (Collection<CursoVO>)request.getAttribute("cursoVOs"); %>
 <% Collection<DepartamentoVO> departamentoVOs = (Collection<DepartamentoVO>)request.getAttribute("departamentoVOs"); %>
@@ -38,111 +39,61 @@ $(function ()
 
 
 </script>
-
-
-<body>
-<form action="CriarConsumidor" method="post">
-	<div style="margin-top: 80px; margin-left: 30px;">
-		<div>
-			<input onclick="alterarConsumidor('aluno')" type="radio" name="tipoConsumidor" value="aluno" checked>Aluno
-			<input onclick="alterarConsumidor('funcionario')" type="radio" name="tipoConsumidor" value="funcionario">Funcionario
+<div class="container">
+	<form action="CriarConsumidor" class="form-horizontal" method="post">
+		<div class="form-group">
+			<div class="radio">
+				<label> <input onclick="alterarConsumidor('aluno')"
+					type="radio" name="tipoConsumidor" value="aluno" checked>
+					Aluno
+				</label>
+			</div>
+			<div class="radio">
+				<label> <input onclick="alterarConsumidor('funcionario')"
+					type="radio" name="tipoConsumidor" value="funcionario">
+					Funcionario
+				</label>
+			</div>
+			<label>Nome </label> <input type="text" class="form-control"
+				name="nome" value="" style="width:50%"> <label>Matricula</label> <input
+				type="text" class="form-control" name="matricula" value="" style="width:50%">
+			<label>Ano do Ingresso</label> <input type="text"
+				class="form-control" style="width:50%" name="anoIngresso" value=""> <label>Sexo</label>
+			<select name="sexo" class="form-control" style="width:35%">
+				<option value=""></option>
+				<% for(SexoEnum sexoEnum : SexoEnum.values()){ %>
+				<option value="<%=sexoEnum.name()%>"><%=sexoEnum.name()%></option>
+				<% } %>
+			</select> <label>Titulo</label> <select name="titulo" class="form-control" style="width:35%">
+				<option value=""></option>
+				<% for(TituloEnum tituloEnum : TituloEnum.values()){ %>
+				<option value="<%=tituloEnum.name()%>"><%=tituloEnum.name()%></option>
+				<% } %>
+			</select> <label>CPF</label> <input type="text" style="width:50%" name="cpf" value=""
+				class="form-control">
+			<div id="funcionario">
+				<label>Departamento</label> <select name="departamento"
+					class="form-control" style="width:35%">
+					<option value=""></option>
+					<% for(DepartamentoVO departamentoVO : departamentoVOs){ %>
+					<option value="<%=departamentoVO.getId()%>"><%=departamentoVO.getNome()%></option>
+					<% } %>
+				</select>
+			</div>
+			<div id="aluno">
+				<label>Curso</label> <select name="curso" class="form-control" style="width:35%">
+					<option value=""></option>
+					<% for(CursoVO cursoVO : cursoVOs){ %>
+					<option value="<%=cursoVO.getId()%>"><%=cursoVO.getNome()%></option>
+					<% } %>
+				</select>
+			</div>
+			<br>
+			<input type="submit" class="btn btn-primary" name="acaoCriar" value="Criar">
+			<input type="submit" class="btn btn-primary" name="acaoCriar" value="Cancelar">
 		</div>
-		<table >
-			<tr>
-				<td>
-					Nome 		
-				</td>
-				<td>			
-					<input type="text" name ="nome" value = "">				
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Matricula 		
-				</td>
-				<td>			
-					 <input type="text" name ="matricula" value = "">				
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Ano do Ingresso  		
-				</td>
-				<td>			
-					<input type="text" name ="anoIngresso" value = "">				
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Sexo		
-				</td>
-				<td>			
-					<select name ="sexo">
-						<option value=""></option>
-						<% for(SexoEnum sexoEnum : SexoEnum.values()){ %>
-							<option value="<%=sexoEnum.name()%>"><%=sexoEnum.name()%></option>
-						<% } %>		
-					</select>		
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Titulo 
-				</td>
-				<td>			
-					<select name ="titulo">
-						<option value=""></option>
-						<% for(TituloEnum tituloEnum : TituloEnum.values()){ %>
-							<option value="<%=tituloEnum.name()%>"><%=tituloEnum.name()%></option>
-						<% } %>		
-					</select>		
-				</td>
-			</tr>
-			<tr>
-				<td>
-					CPF 
-				</td>
-				<td>			
-					<input type="text" name ="cpf" value = "">			
-				</td>
-			</tr>
-			<tr id="funcionario">
-				<td>
-					Departamento		
-				</td>
-				<td>			
-					<select name ="departamento">
-						<option value=""></option>
-						<% for(DepartamentoVO departamentoVO : departamentoVOs){ %>
-							<option value="<%=departamentoVO.getId()%>"><%=departamentoVO.getNome()%></option>
-						<% } %>
-					</select>			
-				</td>
-			</tr>
-			<tr id="aluno">
-				<td>
-					Curso		
-				</td>
-				<td>			
-					<select name ="curso">
-						<option value=""></option>
-						<% for(CursoVO cursoVO : cursoVOs){ %>
-							<option value="<%=cursoVO.getId()%>"><%=cursoVO.getNome()%></option>
-						<% } %>
-					</select>			
-				</td>
-			</tr>
-			
-			
-			
-			
-		</table>
-		<div class="botoes">
-			<input type="submit" name="acaoCriar" value="Criar">
-			<input type="submit" name="acaoCriar" value="Cancelar">
-		</div>
-	</div>
-</form>
+	</form>
+</div>
 </body>
 
 

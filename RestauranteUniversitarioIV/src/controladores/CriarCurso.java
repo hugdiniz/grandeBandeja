@@ -23,21 +23,17 @@ import entidades.value_objects.DepartamentoVO;
 @WebServlet("/CriarCurso")
 public class CriarCurso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		initDepartamento(request);
+		request.getRequestDispatcher("WEB-INF/CriarCurso.jsp").forward(request, response);
+	}
+	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String acao = (String) request.getParameter("acaoCriar");
-		Collection departamentosDisponiveis = null;
-		
-		try
-		{
-			departamentosDisponiveis = GerirDepartamento.getInstance().listarDepartamentos();
-		}
-		catch (DepartamentoException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		request.setAttribute("departamentosDisponiveis", departamentosDisponiveis);
+		initDepartamento(request);
 		
 		if (acao != null)
 		{
@@ -54,6 +50,21 @@ public class CriarCurso extends HttpServlet {
 		{
 			request.getRequestDispatcher("WEB-INF/CriarCurso.jsp").forward(request,response);	
 		}
+	}
+
+	private void initDepartamento(HttpServletRequest request) {
+		Collection departamentosDisponiveis = null;
+		
+		try
+		{
+			departamentosDisponiveis = GerirDepartamento.getInstance().listarDepartamentos();
+		}
+		catch (DepartamentoException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.setAttribute("departamentosDisponiveis", departamentosDisponiveis);
 	}
 
 	private void criarCurso(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 

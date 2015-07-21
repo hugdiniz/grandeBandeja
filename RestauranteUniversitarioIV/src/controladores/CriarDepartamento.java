@@ -20,6 +20,11 @@ public class CriarDepartamento extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
        
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("WEB-INF/CriarDepartamento.jsp").forward(request, response);
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String acao = (String) request.getParameter("acaoCriar");
