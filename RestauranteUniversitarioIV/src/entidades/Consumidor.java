@@ -7,8 +7,20 @@ import persistencia.RepositorioConsumidor;
 import entidades.exceptions.ConsumidorException;
 import entidades.value_objects.ConsumidorVO;
 
-public abstract class Consumidor
-{
+public class Consumidor
+{	
+	private static Consumidor consumidor;
+	
+	public static Consumidor getInstance() 
+	{
+		if (consumidor == null) 
+		{
+			consumidor = new Consumidor();
+		}
+		return consumidor;
+
+	}
+	
 	public ConsumidorVO recuperarConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException
 	{
 		Collection consumidorVOs = null;
@@ -64,6 +76,7 @@ public abstract class Consumidor
 		}
 		
 		Boolean cpfValido = CPF.getInstance().isValidCPF(consumidorVO.getCpf());
+		
 		if (cpfValido.equals(false))
 		{
 			throw new ConsumidorException("erro.adiconar.consumidor.cpf.nao.valido");

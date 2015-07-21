@@ -89,7 +89,7 @@ public class RepositorioAluno extends Repositorio
 		
 		campos.append(stringVars);
 		
-		if (consumidorVO.getId() != null)
+		if ((consumidorVO.getAtualizar() != null && consumidorVO.getAtualizar()))
 		{
 			campos.append(") WHERE id=?;");
 			vars.add(consumidorVO.getId());

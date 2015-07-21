@@ -33,7 +33,7 @@ public class GerirConsumidor
 	{
 		ConsumidorVO consumidorVO = new ConsumidorVO();
 		consumidorVO.setHabilitado(true);
-		Collection consumidors = Aluno.getInstance().recuperarConsumidors(consumidorVO);
+		Collection consumidors = Consumidor.getInstance().recuperarConsumidors(consumidorVO);
 		if (consumidors == null)
 		{
 			consumidors = new ArrayList();

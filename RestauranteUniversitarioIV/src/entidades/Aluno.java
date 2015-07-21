@@ -10,7 +10,7 @@ import entidades.exceptions.AlunoException;
 import entidades.exceptions.ConsumidorException;
 import entidades.value_objects.ConsumidorVO;
 
-public class Aluno extends Consumidor
+public class Aluno
 {	
 	private static Aluno aluno;
 	
@@ -91,7 +91,8 @@ public class Aluno extends Consumidor
 	public void adicionarAluno(ConsumidorVO consumidorVO) throws ConsumidorException 
 	{
 		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
-		consumidorVOBusca.setId(consumidorVO.getId());
+		consumidorVOBusca.setNome(consumidorVO.getNome());
+		
 		ConsumidorVO consumidorVOantigo = recuperarAluno(consumidorVOBusca);		
 		
 		if (consumidorVOantigo != null && consumidorVOantigo.getId() == consumidorVO.getId())
@@ -100,18 +101,14 @@ public class Aluno extends Consumidor
 			throw new AlunoException("erro.adiconar.aluno.aluno.ja.existe (nome ou sigla)");
 		}
 		
-		
-		/*if(consumidorVO.getDepartamentoVO().getId() == null)
-		{
-			//RN Não existe consumidor sem o seu respectivo Departamento.
-			throw new AlunoException("erro.adicionar.consumidor.repositorio.consumidor.nao.existe.departamento");
-		}*/
-		
 		consumidorVO.setHabilitado(true);
-		adicionarConsumidor(consumidorVO);
+		Consumidor.getInstance().adicionarConsumidor(consumidorVO);
+		ConsumidorVO consumidorVOAdicionado = Consumidor.getInstance().recuperarConsumidor(consumidorVO);
+		consumidorVOAdicionado.setIdCurso(consumidorVO.getIdCurso());		
+		
 		try
 		{
-			RepositorioAluno.getInstance().inserirOuAtualizar(consumidorVO);
+			RepositorioAluno.getInstance().inserirOuAtualizar(consumidorVOAdicionado);
 		}
 		catch (SQLException e)
 		{
@@ -135,7 +132,7 @@ public class Aluno extends Consumidor
 		vo.setAtualizar(Boolean.TRUE);
 		
 		
-		adicionarConsumidor(vo);
+		Consumidor.getInstance().adicionarConsumidor(vo);
 		try
 		{
 			RepositorioAluno.getInstance().inserirOuAtualizar(vo);
