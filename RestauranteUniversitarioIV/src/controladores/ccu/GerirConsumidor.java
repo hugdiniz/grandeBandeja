@@ -41,9 +41,25 @@ public class GerirConsumidor
 		return consumidors;
 		
 	}
-	public ConsumidorVO buscarConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException
+	public ConsumidorVO buscarConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException, CursoException, DepartamentoException
 	{
-		return Aluno.getInstance().recuperarAluno(consumidorVO);
+		ConsumidorVO consumidorVOSaida = Consumidor.getInstance().recuperarConsumidor(consumidorVO);
+		if(consumidorVO.getIdCurso() != null)
+		{
+			CursoVO cursoVO = new CursoVO();
+			cursoVO.setId(consumidorVO.getIdCurso());
+			CursoVO cursoVOSaida = Curso.getInstance().recuperarCurso(cursoVO);
+			consumidorVOSaida.setCursoVO(cursoVOSaida);
+		}
+		else
+		{
+			DepartamentoVO departamentoVO = new DepartamentoVO();
+			departamentoVO.setId(consumidorVO.getIdCurso());
+			DepartamentoVO cursoVOSaida = Departamento.getInstance().recuperarDepartamento(departamentoVO);
+			consumidorVOSaida.setDepartamentoVO(cursoVOSaida);
+		}	
+		
+		return consumidorVOSaida;
 	}
 	
 	public Collection listarDepartamentos() throws DepartamentoException
@@ -69,27 +85,36 @@ public class GerirConsumidor
 	
 	public void criarConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException 
 	{
+		consumidorVO.setAtualizar(Boolean.FALSE);
+		consumidorVO.setHabilitado(Boolean.TRUE);
 		if (consumidorVO.getIdCurso() != null)
 		{
-			Aluno.getInstance().adicionarAluno(consumidorVO);
+			Aluno.getInstance().manterAluno(consumidorVO);
 		}
 		else
 		{
-			Funcionario.getInstance().adicionarFuncionario(consumidorVO);
+			Funcionario.getInstance().manterFuncionario(consumidorVO);
 		}	
 		
 	}
 	
 	public void atualizarConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException 
 	{
+		consumidorVO.setAtualizar(Boolean.TRUE);
+		consumidorVO.setHabilitado(Boolean.TRUE);
 		if (consumidorVO.getIdCurso() != null)
 		{
-			Aluno.getInstance().atualizarAluno(consumidorVO);
+			Aluno.getInstance().manterAluno(consumidorVO);
 		}
 		else
 		{
-			Funcionario.getInstance().atualizarFuncionario(consumidorVO);
+			Funcionario.getInstance().manterFuncionario(consumidorVO);
 		}	
 		
+	}
+	
+	public void excluirConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException 
+	{
+		Consumidor.getInstance().removerConsumidor(consumidorVO);		
 	}
 }

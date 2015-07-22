@@ -87,8 +87,7 @@ public class Aluno
 		return consumidorVOs;
 	}	
 	
-	
-	public void adicionarAluno(ConsumidorVO consumidorVO) throws ConsumidorException 
+	public void manterAluno(ConsumidorVO consumidorVO) throws ConsumidorException 
 	{
 		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
 		consumidorVOBusca.setNome(consumidorVO.getNome());
@@ -102,9 +101,10 @@ public class Aluno
 		}
 		
 		consumidorVO.setHabilitado(true);
-		Consumidor.getInstance().adicionarConsumidor(consumidorVO);
+		Consumidor.getInstance().manterConsumidor(consumidorVO);
 		ConsumidorVO consumidorVOAdicionado = Consumidor.getInstance().recuperarConsumidor(consumidorVO);
-		consumidorVOAdicionado.setIdCurso(consumidorVO.getIdCurso());		
+		consumidorVOAdicionado.setIdCurso(consumidorVO.getIdCurso());	
+		consumidorVOAdicionado.setAtualizar(consumidorVO.getAtualizar());
 		
 		try
 		{
@@ -115,32 +115,5 @@ public class Aluno
 			e.printStackTrace();
 			throw new AlunoException("erro.adicionar.aluno.repositorio.aluno.inserirOuAtualizar");
 		}
-	}
-
-	public void atualizarAluno(ConsumidorVO vo) throws ConsumidorException
-	{	
-		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
-		consumidorVOBusca.setId(vo.getId());
-		ConsumidorVO consumidorVOantigo = recuperarAluno(consumidorVOBusca);
-		
-		
-		//Verifica se objeto recuperado na base é o mesmo alterado no front-end. Caso não seja, lança erro.
-		if (consumidorVOantigo == null || consumidorVOantigo.getId() != vo.getId())
-		{			
-			throw new AlunoException("erro.atualizar.aluno.nao.existe");
-		}
-		vo.setAtualizar(Boolean.TRUE);
-		
-		
-		Consumidor.getInstance().adicionarConsumidor(vo);
-		try
-		{
-			RepositorioAluno.getInstance().inserirOuAtualizar(vo);
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-			throw new AlunoException("erro.adicionar.aluno.repositorio.aluno.inserirOuAtualizar");
-		}
-	}
+	}	
 }

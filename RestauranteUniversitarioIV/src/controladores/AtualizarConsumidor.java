@@ -22,12 +22,20 @@ public class AtualizarConsumidor extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
-	
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		action(request, response);
+	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-
+		action(request, response);
+	}
+	
+	private void action(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		String acao = (String) request.getParameter("acaoAtualizar");
 		Collection departamentosDisponiveis = null;
 		Collection cursos = null;
@@ -69,18 +77,47 @@ public class AtualizarConsumidor extends HttpServlet
 					
 					ConsumidorVO consumidorAntigo = GerirConsumidor.getInstance().buscarConsumidor(consumidorVO);
 					request.setAttribute("consumidor",consumidorAntigo);
-					request.setAttribute("departamentos", departamentosDisponiveis);
-					request.setAttribute("cursos", cursos);
+					request.setAttribute("titulos",TituloEnum.valores());
+					if (consumidorAntigo.getTitulo() != null)
+					{
+						request.setAttribute("tituloConsumidor",consumidorAntigo.getTitulo().name());
+					}
+					else
+					{
+						request.setAttribute("tituloConsumidor","");
+					}
+					
+					request.setAttribute("sexos",SexoEnum.valores());
+					if (consumidorAntigo.getSexo() != null)
+					{
+						request.setAttribute("sexoConsumidor",consumidorAntigo.getSexo().name());
+					}
+					else
+					{
+						request.setAttribute("sexoConsumidor","");
+					}
+					
+					if (consumidorAntigo.getCursoVO() != null &&  consumidorAntigo.getCursoVO().getNome() != null && !consumidorAntigo.getCursoVO().getNome().equals(""))
+					{
+						request.setAttribute("cursos", cursos);
+						request.setAttribute("cursoConsumidor",consumidorAntigo.getCursoVO());
+					}
+					else
+					{
+						request.setAttribute("departamentoConsumidor",consumidorAntigo.getDepartamentoVO());
+						request.setAttribute("departamentos", departamentosDisponiveis);
+					}	
+					
 					request.getRequestDispatcher("WEB-INF/AtualizarConsumidor.jsp").forward(request,response);
 				}
-				catch (ConsumidorException e2)
+				catch (ConsumidorException | CursoException | DepartamentoException e2)
 				{
 					request.setAttribute("erro", e2.getMessage());
 					request.getRequestDispatcher("WEB-INF/AtualizarConsumidor.jsp").forward(request,response);
 				}	
 		}
+
 	}
-	
 	
 	private void atualizarConsumidorAntigo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{

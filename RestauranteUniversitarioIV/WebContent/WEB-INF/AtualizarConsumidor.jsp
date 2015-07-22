@@ -11,12 +11,13 @@
 <jsp:include page="header.html"></jsp:include>
 <%@include file="messagePage.jsp" %>
 <style><%@include file="style.css"%></style>
+<%@ taglib prefix="c"       uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt"     uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn"      uri="http://java.sun.com/jsp/jstl/functions" %> 
 
 <% Collection<CursoVO> cursoVOs = (Collection<CursoVO>)request.getAttribute("cursos"); 
 Collection<DepartamentoVO> departamentoVOs = (Collection<DepartamentoVO>)request.getAttribute("departamentos");
 ConsumidorVO consumidorVO = (ConsumidorVO)request.getAttribute("consumidor"); 
-String checkAluno = consumidorVO.getIdCurso() == null ? "" : "checked";
-String checkFuncionario = checkAluno.equals("checked") ? "" : "checked";
 %>
 
 <script>
@@ -37,7 +38,8 @@ function alterarConsumidor(consumidor)
 
 $(function ()
 {
-	alterarConsumidor("aluno");	
+	//alterarConsumidor("aluno");	
+	
 });
 
 
@@ -45,10 +47,17 @@ $(function ()
 <form action="AtualizarConsumidor" method="post">
 	<div style="margin-top: 80px; margin-left: 30px;">
 		<div>
-			<input onclick="alterarConsumidor('aluno')" type="radio" name="tipoConsumidor" value="aluno" <%=checkAluno%>>Aluno
-			<input onclick="alterarConsumidor('funcionario')" type="radio" name="tipoConsumidor" value="funcionario" <%=checkFuncionario%>>Funcionario
-		</div>
-		<table class="table">
+			<c:choose>
+			  <c:when test="${cursoConsumidor.id != null}">
+			  	<span style="font-size:18px;color:#337ab7">Aluno</span>
+			  </c:when>
+			  <c:otherwise>
+			  	<span style="font-size:18px;color:#337ab7">Funcionario</span>			    
+			  </c:otherwise>
+			</c:choose>
+		</div>		
+		<input type="hidden" name="id" value="${consumidorVO.id}">
+		<table class="table" style="margin-top: 2%;">
 			<tr>
 				<td>
 					Nome 		
@@ -80,22 +89,36 @@ $(function ()
 				<td>			
 					<select name ="sexo">
 						<option value=""></option>
-						<% for(SexoEnum sexoEnum : SexoEnum.values()){ %>
-							<option value="<%=sexoEnum.name()%>"><%=sexoEnum.name()%></option>
-						<% } %>		
+						<c:forEach var="sexo" items="${sexos}">
+			          			<c:choose>
+								  <c:when test="${sexo == sexoConsumidor}">
+								  	<option value="${sexo}" selected>${sexo}</option>
+								  </c:when>
+								  <c:otherwise>
+								    <option value="${sexo}">${sexo}</option>
+								  </c:otherwise>
+								</c:choose>
+						</c:forEach>		
 					</select>		
 				</td>
 			</tr>
 			<tr>
 				<td>
-					Titulo 
+					Titulo
 				</td>
 				<td>			
 					<select name ="titulo">
 						<option value=""></option>
-						<% for(TituloEnum tituloEnum : TituloEnum.values()){ %>
-							<option value="<%=tituloEnum.name()%>"><%=tituloEnum.name()%></option>
-						<% } %>		
+						<c:forEach var="titulo" items="${titulos}">
+			          			<c:choose>
+								  <c:when test="${titulo == tituloConsumidor}">
+								  	<option value="${titulo}" selected>${titulo}</option>
+								  </c:when>
+								  <c:otherwise>
+								    <option value="${titulo}">${titulo}</option>
+								  </c:otherwise>
+								</c:choose>
+						</c:forEach>							
 					</select>		
 				</td>
 			</tr>
@@ -107,31 +130,54 @@ $(function ()
 					<input type="text" name ="cpf" value = "<%=consumidorVO.getCpf()%>">			
 				</td>
 			</tr>
-			<tr id="funcionario">
-				<td>
-					Departamento		
-				</td>
-				<td>			
-					<select name ="departamento">
-						<option value=""></option>
-						
-					</select>			
-				</td>
-			</tr>
-			<tr id="aluno">
-				<td>
-					Curso		
-				</td>
-				<td>			
-					<select name ="curso">
-						<option value=""></option>
-						<% for(CursoVO cursoVO : cursoVOs){ %>
-							<option value="<%=cursoVO.getId()%>"><%=cursoVO.getNome()%></option>
-						<% } %>
-					</select>			
-				</td>
-			</tr>
 			
+			
+			<c:choose>
+			  <c:when test="${cursoConsumidor.id != null}">
+				  <tr id="aluno">
+					<td>
+						Curso		
+					</td>
+					<td>
+						<select name ="curso">
+							<option value=""></option>
+							<c:forEach var="curso" items="${cursos}">
+				          			<c:choose>
+									  <c:when test="${curso.nome == cursoConsumidor.nome}">
+									  	<option value="${curso.nome}" selected>${curso.nome}</option>
+									  </c:when>
+									  <c:otherwise>
+									    <option value="${curso.nome}">${curso.nome}</option>
+									  </c:otherwise>
+									</c:choose>
+							</c:forEach>							
+						</select>								
+					</td>
+				</tr>
+			  </c:when>
+			  <c:otherwise>
+				<tr id="funcionario">
+					<td>
+						Departamento		
+					</td>
+					<td>			
+						<select name ="departamento">
+							<option value=""></option>
+							<c:forEach var="departamento" items="${departamentos}">
+				          			<c:choose>
+									  <c:when test="${departamento.nome == departamentoConsumidor.nome}">
+									  	<option value="${departamento.nome}" selected>${departamento.nome}</option>
+									  </c:when>
+									  <c:otherwise>
+									    <option value="${departamento.nome}">${departamento.nome}</option>
+									  </c:otherwise>
+									</c:choose>
+							</c:forEach>
+						</select>			
+					</td>
+				</tr>
+			  </c:otherwise>
+			</c:choose>
 			
 			
 			

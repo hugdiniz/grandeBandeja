@@ -72,8 +72,8 @@ public class ListarConsumidor extends HttpServlet {
 			case "Atualizar":
 				request.getRequestDispatcher("AtualizarConsumidor").forward(request,response);
 				break;
-			case "Ver":
-				request.getRequestDispatcher("VerConsumidor").forward(request,response);
+			case "Excluir":
+				request.getRequestDispatcher("ExcluirConsumidor").forward(request,response);
 				break;
 			case "":
 			default:

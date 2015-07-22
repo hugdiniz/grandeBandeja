@@ -89,7 +89,8 @@ public class Funcionario
 	}	
 	
 	
-	public void adicionarFuncionario(ConsumidorVO consumidorVO) throws ConsumidorException 
+	
+	public void manterFuncionario(ConsumidorVO consumidorVO) throws ConsumidorException 
 	{
 		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
 		consumidorVOBusca.setId(consumidorVO.getId());
@@ -102,7 +103,7 @@ public class Funcionario
 		}
 		
 		consumidorVO.setHabilitado(true);
-		Consumidor.getInstance().adicionarConsumidor(consumidorVO);
+		Consumidor.getInstance().manterConsumidor(consumidorVO);
 		ConsumidorVO consumidorVOAdicionado = Consumidor.getInstance().recuperarConsumidor(consumidorVO);
 		consumidorVOAdicionado.setIdDepartamento(consumidorVO.getIdDepartamento());	
 		
@@ -116,28 +117,6 @@ public class Funcionario
 			throw new FuncionarioException("erro.adicionar.funcionario.repositorio.consumidor.inserirOuAtualizar");
 		}	
 	}
-
-	public void atualizarFuncionario(ConsumidorVO vo) throws ConsumidorException 
-	{	
-		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
-		consumidorVOBusca.setId(vo.getId());
-		ConsumidorVO consumidorVOantigo = recuperarFuncionario(consumidorVOBusca);
-		
-		//Verifica se objeto recuperado na base é o mesmo alterado no front-end. Caso não seja, lança erro.
-		if (consumidorVOantigo == null || consumidorVOantigo.getId() != vo.getId())
-		{			
-			throw new FuncionarioException("erro.atualizar.funcionario.nao.existe");
-		}
-		
-		Consumidor.getInstance().adicionarConsumidor(vo);			
-		try
-		{
-			RepositorioFuncionario.getInstance().inserirOuAtualizar(vo);
-		}
-		catch (SQLException e)
-		{			
-			e.printStackTrace();
-			throw new FuncionarioException("erro.atualizar.funcionario.repositorio.consumidor.inserirOuAtualizar");
-		}	
-	}
+	
+	
 }

@@ -38,7 +38,7 @@
 	</table>
 		<input type="submit" class="btn btn-primary" name ="acaoListar" value = "Criar">
 		<input type="submit" class="btn btn-primary" name ="acaoListar" value = "Atualizar">
-		<input type="submit" class="btn btn-primary" name ="acaoListar" value = "Ver">
+		<input type="submit" class="btn btn-primary" name ="acaoListar" value = "Excluir">
 	</form>
 </div>
 </body>

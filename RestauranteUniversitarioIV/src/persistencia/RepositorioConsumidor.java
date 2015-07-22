@@ -8,6 +8,8 @@ import java.util.Collection;
 import entidades.enumerados.SexoEnum;
 import entidades.enumerados.TituloEnum;
 import entidades.value_objects.ConsumidorVO;
+import entidades.value_objects.CursoVO;
+import entidades.value_objects.DepartamentoVO;
 import entidades.value_objects.VO;
 
 public class RepositorioConsumidor extends Repositorio
@@ -38,7 +40,7 @@ public class RepositorioConsumidor extends Repositorio
 		
 		StringBuilder campos = new StringBuilder();
 		
-		if (consumidorVO.getId() != null)
+		if (consumidorVO.getAtualizar() != null && consumidorVO.getAtualizar())
 		{
 			campos.append("UPDATE consumidor SET (");
 			stringVars.append(" = (");
@@ -179,7 +181,7 @@ public class RepositorioConsumidor extends Repositorio
 				stringVars.append(",?");
 			}
 			
-			vars.add(consumidorVO.getCpf());
+			vars.add(consumidorVO.getHabilitado());
 		}
 
 		
@@ -189,7 +191,7 @@ public class RepositorioConsumidor extends Repositorio
 		
 		campos.append(stringVars);
 		
-		if (consumidorVO.getId() != null)
+		if (consumidorVO.getAtualizar() != null && consumidorVO.getAtualizar())
 		{
 			campos.append(") WHERE id=?;");
 			vars.add(consumidorVO.getId());
@@ -219,7 +221,7 @@ public class RepositorioConsumidor extends Repositorio
 		projecao.append("select * ");		
 		
 		Boolean primeiroCampo = true;
-		Boolean joinDepartamento = false;
+		
 		
 		if (consumidorVO.getId() != null && !consumidorVO.getId().equals(""))
 		{			
@@ -275,8 +277,10 @@ public class RepositorioConsumidor extends Repositorio
 		 * Parte do Joins
 		 */
 		tabela.append("from consumidor ");
-		//tabela.append(" join departamento on departamento.id = consumidor.departamento_fk");
-		
+		tabela.append(" left join funcionario on funcionario.id = consumidor.id ");
+		tabela.append(" left join aluno on aluno.id = consumidor.id ");
+		tabela.append(" left join curso on aluno.curso_fk = curso.id ");
+		tabela.append(" left join departamento on funcionario.departamento_fk = departamento.id ");
 		
 		
 		sql.append(projecao);
@@ -298,6 +302,19 @@ public class RepositorioConsumidor extends Repositorio
 			consumidorVOSaida.setCpf(resultSet.getString("consumidor.cpf"));
 			consumidorVOSaida.setTitulo(TituloEnum.valueOf(resultSet.getString("consumidor.titulo")));
 			consumidorVOSaida.setSexo(SexoEnum.valueOf(resultSet.getString("consumidor.sexo")));
+			
+			CursoVO cursoVO = new CursoVO();
+			cursoVO.setId(resultSet.getLong("curso.id"));
+			cursoVO.setNome(resultSet.getString("curso.nome"));
+			cursoVO.setSigla(resultSet.getString("curso.sigla"));
+			consumidorVOSaida.setCursoVO(cursoVO);
+			
+			DepartamentoVO departamentoVO = new DepartamentoVO();
+			
+			departamentoVO.setId(resultSet.getLong("departamento.id"));
+			departamentoVO.setNome(resultSet.getString("departamento.nome"));
+			departamentoVO.setSigla(resultSet.getString("departamento.sigla"));
+			consumidorVOSaida.setDepartamentoVO(departamentoVO);
 			
 			vos.add(consumidorVOSaida);
 			

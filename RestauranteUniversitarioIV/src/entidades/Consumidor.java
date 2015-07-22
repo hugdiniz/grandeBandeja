@@ -62,18 +62,28 @@ public class Consumidor
 		return consumidorVOs;
 	}	
 	
-	
-	public void adicionarConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException 
+	public void manterConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException 
 	{
 		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
 		consumidorVOBusca.setId(consumidorVO.getId());
 		ConsumidorVO consumidorVOantigo = recuperarConsumidor(consumidorVOBusca);		
 		
-		if (consumidorVOantigo != null && consumidorVOantigo.getId() == consumidorVO.getId())
+		if (consumidorVO.getAtualizar() != null && consumidorVO.getAtualizar())
 		{
-			//RN não pode ter mesmo consumidor (nome e sigla) 
-			throw new ConsumidorException("erro.adiconar.consumidor.repositorio.consumidor.ja.existe");
+			if (consumidorVOantigo == null || consumidorVOantigo.getId() != consumidorVO.getId())
+			{				
+				throw new ConsumidorException("erro.adiconar.consumidor.repositorio.consumidor.nao.existe");
+			}
 		}
+		else
+		{
+			if (consumidorVOantigo != null && consumidorVOantigo.getId() == consumidorVO.getId())
+			{
+				//RN não pode ter mesmo consumidor (nome e sigla) 
+				throw new ConsumidorException("erro.adiconar.consumidor.repositorio.consumidor.ja.existe");
+			}
+		}	
+		
 		
 		Boolean cpfValido = CPF.getInstance().isValidCPF(consumidorVO.getCpf());
 		
@@ -82,7 +92,6 @@ public class Consumidor
 			throw new ConsumidorException("erro.adiconar.consumidor.cpf.nao.valido");
 		}
 		
-		consumidorVO.setHabilitado(Boolean.TRUE);
 		 try
 		{
 			RepositorioConsumidor.getInstance().inserirOuAtualizar(consumidorVO);
@@ -93,38 +102,29 @@ public class Consumidor
 			throw new ConsumidorException("erro.recuperar.adicionar.repositorio.consumidor.inserirOuAtualizar");
 		}	
 	}
-
+	
+	@Deprecated
+	public void adicionarConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException 
+	{
+		consumidorVO.setAtualizar(Boolean.FALSE);
+		manterConsumidor(consumidorVO);
+	}
+	
+	
+	@Deprecated
 	public void atualizarConsumidor(ConsumidorVO vo) throws ConsumidorException 
 	{	
-		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
-		consumidorVOBusca.setId(vo.getId());
-		ConsumidorVO consumidorVOantigo = recuperarConsumidor(consumidorVOBusca);
-		
-		//Verifica se objeto recuperado na base é o mesmo alterado no front-end. Caso não seja, lança erro.
-		if (consumidorVOantigo == null || consumidorVOantigo.getId() != vo.getId())
-		{			
-			throw new ConsumidorException("erro.atualizar.consumidor.repositorio.consumidor.nao.existe");
-		}
-		
-		Boolean cpfValido = CPF.getInstance().isValidCPF(vo.getCpf());
-		if (cpfValido.equals(false))
-		{
-			throw new ConsumidorException("erro.adiconar.consumidor.cpf.nao.valido");
-		}
-		
-		try
-		{
-			RepositorioConsumidor.getInstance().inserirOuAtualizar(vo);
-		}
-		catch (SQLException e)
-		{			
-			e.printStackTrace();
-			throw new ConsumidorException("erro.atualizar.consumidor.repositorio.consumidor.inserirOuAtualizar");
-		}	
+		vo.setAtualizar(Boolean.TRUE);
+		manterConsumidor(vo);
 	}
 	public void removerConsumidor(ConsumidorVO vo) throws ConsumidorException
 	{
-		vo.setHabilitado(Boolean.FALSE);
-		atualizarConsumidor(vo);
+		ConsumidorVO consumidorVODesabilitado = new ConsumidorVO();
+		consumidorVODesabilitado.setId(vo.getId());
+		consumidorVODesabilitado = recuperarConsumidor(consumidorVODesabilitado);
+		
+		consumidorVODesabilitado.setHabilitado(Boolean.FALSE);
+		consumidorVODesabilitado.setAtualizar(Boolean.TRUE);
+		manterConsumidor(consumidorVODesabilitado);
 	}
 }
