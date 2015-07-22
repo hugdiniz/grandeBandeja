@@ -5,14 +5,16 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import entidades.Aluno;
+import entidades.value_objects.CursoVO;
+import entidades.value_objects.DepartamentoVO;
 
 public class AlunoTest {
 
 	@Test
 	public void testGetInstance() {
 		
-		Aluno aluno= new Aluno();
-		assertNotNull(aluno);
+		AlunoVO alunvo = new AlunoVO("Departamento", "CC");
+		assertNotNull(alunvo);
 	}
 
 	@Test
