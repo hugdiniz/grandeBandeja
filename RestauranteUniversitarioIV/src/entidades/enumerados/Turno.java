@@ -3,21 +3,25 @@ package entidades.enumerados;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public enum Turno {
+public enum Turno
+{
 	MANHA(3,0.5), TARDE(6,1), NOITE(6,1);
 	
 	private double valorFuncionario, valorAluno;
 
-	private Turno(double valorFuncionario, double valorAluno) {
+	private Turno(double valorFuncionario, double valorAluno)
+	{
 		this.valorAluno = valorAluno;
 		this.valorFuncionario = valorFuncionario;
 	}
 	
-	public double getValorAluno() {
+	public double getValorAluno()
+	{
 		return valorAluno;
 	}
 	
-	public double getValorFuncionario() {
+	public double getValorFuncionario()
+	{
 		return valorFuncionario;
 	}
 	
@@ -30,4 +34,24 @@ public enum Turno {
 		}
 		return names;
 	}
+	public static Collection valoresAluno()
+	{
+		Collection valores = new ArrayList();
+		for (Turno turno : Turno.values())
+		{
+			valores.add(turno.getValorAluno());
+		}
+		return valores;
+	}
+	
+	public static Collection valoresFuncionario()
+	{
+		Collection valores = new ArrayList();
+		for (Turno turno : Turno.values())
+		{
+			valores.add(turno.getValorFuncionario());
+		}
+		return valores;
+	}
+
 }

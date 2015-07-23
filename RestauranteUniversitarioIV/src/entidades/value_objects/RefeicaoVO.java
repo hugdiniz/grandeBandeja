@@ -7,8 +7,19 @@ public class RefeicaoVO implements VO {
 	private String descricao;
 	private String op_vegetariana;
 	private Long id;
+	private Double valorAluno;
+	private Double valorFuncionario;
 	
-	
+	public void setValorAluno(Double valorAluno)
+	{
+		this.valorAluno = valorAluno;
+	}
+
+	public void setValorFuncionario(Double valorFuncionario)
+	{
+		this.valorFuncionario = valorFuncionario;
+	}
+
 	public RefeicaoVO() 
 	{
 		
@@ -55,12 +66,12 @@ public class RefeicaoVO implements VO {
 	
 	public double getValorFuncionario()
 	{
-		return turno.getValorFuncionario();
+		return valorAluno;
 	}
 	
 	public double getValorAluno()
 	{
-		return turno.getValorAluno();
+		return valorFuncionario;
 	}
 }
  

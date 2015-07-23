@@ -209,6 +209,12 @@ public class RepositorioRefeicao extends Repositorio {
 			refeicaoSaida.setOp_vegetariana(resultSet.getString("refeicao.opcaoVegan"));
 			refeicaoSaida.setTurno(Turno.valueOf(resultSet.getString("refeicao.turno")));
 			
+			Turno turno = Turno.valueOf(resultSet.getString("refeicao.turno"));
+			
+			refeicaoSaida.setValorAluno(turno.getValorAluno());
+			refeicaoSaida.setValorFuncionario(turno.getValorFuncionario());
+			refeicaoSaida.setTurno(turno);
+			
 			vos.add(refeicaoSaida);
 			
 		}

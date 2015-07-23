@@ -119,6 +119,17 @@ public class RepositorioTicket extends Repositorio
 			vars.add(ticketVO.getIdRefeicao());
 		}
 		
+		campos.append(") ");
+
+		campos.append(stringVars);
+
+		if (ticketVO.getId() != null) {
+			campos.append(") WHERE id=?;");
+			vars.add(ticketVO.getId());
+		} else {
+			campos.append(");");
+		}
+		
 		System.out.println(campos);
 		insertOrUpdateSQL(campos.toString(), vars);	
 
@@ -279,7 +290,11 @@ public class RepositorioTicket extends Repositorio
 			refeicaoSaida.setDescricao(resultSet.getString("refeicao.descricao"));
 			refeicaoSaida.setId(resultSet.getLong("refeicao.id"));
 			refeicaoSaida.setOp_vegetariana(resultSet.getString("refeicao.opcaoVegan"));
-			refeicaoSaida.setTurno(Turno.valueOf(resultSet.getString("refeicao.turno")));
+			Turno turno = Turno.valueOf(resultSet.getString("refeicao.turno"));
+			
+			refeicaoSaida.setValorAluno(turno.getValorAluno());
+			refeicaoSaida.setValorFuncionario(turno.getValorFuncionario());
+			refeicaoSaida.setTurno(turno);
 			
 			ticketVOSaida.setRefeicaoVO(refeicaoSaida);
 			ticketVOSaida.setConsumidorVO(consumidorVOSaida);

@@ -20,12 +20,15 @@
 <title>Listando Tickets</title>
 </head>
 <body>
+<script>
 
+</script>
 <form action="ComprarTicket" method="post">
 	<div align="center">
 		<div align="left" style="width:50%">
 			<div style="margin-top: 80px; margin-left: 30px;">			    
 			    <input class="form-control" type="text" name="matricula" style="width: 50%;"  placeholder="Matricula" value="">
+			    <input class="form-control" type="hidden" name="matriculaFinal" style="width: 50%;"  placeholder="Matricula" value="${consumidor.matricula}">
 			    <input class="btn btn-primary btn-block" style="width: 20%; margin-top: 2%;" type="submit" name ="buscarMatr" value = "Buscar">		  		 
 			</div>
 			<c:if test='${consumidor != null}'>	
@@ -68,38 +71,36 @@
 						<span style="font-size:18px;color:#337ab7">Comprar Ticket</span>
 					</legend>
 					<table class="table">     
-				      <tbody>
-				        <tr>
-				        	<th scope="row">Turno</th>
-							<td>
-								<select name ="turno">
-									<c:forEach var="turnoNome" items="${turnoNomes}">	
-										<option value="${turnoNome}">${turnoNome}</option>											 
-									</c:forEach>		
-								</select>
-							</td>
-							          
-				        </tr>				       	
+				      <tbody>   	
 				        <tr>
 				          <th scope="row">Refeição</th>
-				          <td>
+				          <td>				          
 							<select name ="refeicao">
+								<option onclick="$('#valorPago').val('')" value=""></option>
 								<c:forEach var="refeicao" items="${refeicaos}">	
-									<option value="${refeicao.id}">${refeicao.descricao}</option>											 
+									<c:choose>
+									  <c:when test="${consumidor.cursoVO != null && consumidor.cursoVO.id != null}">
+									  	<option onclick="$('#valorPago').val(${refeicao.valorAluno})" value="${refeicao.id}">${refeicao.descricao}	Turno: ${refeicao.turno}</option>
+									  </c:when>
+									  <c:otherwise>
+									  	<option onclick="$('#valorPago').val(${refeicao.valorFuncionario})" value="${refeicao.id}">${refeicao.descricao}	Turno: ${refeicao.turno}</option>		    
+									  </c:otherwise>
+									</c:choose>
+																				 
 								</c:forEach>		
 							</select>
 						   </td>	          
 				        </tr>	
 				        <tr>
-				          <th scope="row">Total</th>
+				          <th scope="row">Valor</th>
 				          <td>				          	
-				          	<span> Total:<input type="text" name="pago" disabled="disabled"></span>
+				          	<span><input id="valorPago" type="text" name="pago" disabled="disabled"></span>
 				          	<span>Pago: </span> <input TYPE="checkbox" NAME="pago"> 
 				          </td>	          
 				        </tr>      
 				      </tbody>
 			    	</table>
-			    	<input type="submit" name="comprar" value="Comprar"> 
+			    	 <input class="btn btn-primary btn-block" style="width: 20%; margin-top: 2%;" type="submit" name ="comprar" value = "comprar">
 				</fieldset>
 				
 				

@@ -69,4 +69,8 @@ public class GerirTickets
 		
 		return refeicaoVOSaida;
 	}
+	public void adicionarTicket(TicketVO ticketVO) throws TicketException
+	{
+		Ticket.getInstance().adicionarTicket(ticketVO);
+	}
 }
