@@ -91,7 +91,7 @@ public class GerirConsumidor
 		{
 			Aluno.getInstance().manterAluno(consumidorVO);
 		}
-		else
+		else if(consumidorVO.getIdDepartamento() != null)
 		{
 			Funcionario.getInstance().manterFuncionario(consumidorVO);
 		}	
