@@ -1,8 +1,5 @@
 package entidades.value_objects;
 
-import entidades.Consumidor;
-import entidades.Refeicao;
-
 public class TicketVO implements VO
 {
 	private Long idConsumidor;
@@ -19,28 +16,36 @@ public class TicketVO implements VO
 		this.idRefeicao = ref;
 		this.pago = pg;
 	}
-	public Long getIdConsumidor() {
+	public Long getIdConsumidor()
+	{
 		return idConsumidor;
 	}
-	public void setIdConsumidor(Long idConsumidor) {
+	public void setIdConsumidor(Long idConsumidor)
+	{
 		this.idConsumidor = idConsumidor;
 	}
-	public Long getIdRefeicao() {
+	public Long getIdRefeicao()
+	{
 		return idRefeicao;
 	}
-	public void setIdRefeicao(Long idRefeicao) {
+	public void setIdRefeicao(Long idRefeicao) 
+	{
 		this.idRefeicao = idRefeicao;
 	}
-	public boolean isPago() {
+	public boolean isPago() 
+	{
 		return pago;
 	}
-	public void setPago(boolean pago) {
+	public void setPago(boolean pago) 
+	{
 		this.pago = pago;
 	}
-	public Long getId() {
+	public Long getId()
+	{
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Long id)
+	{
 		this.id = id;
 	}
 	

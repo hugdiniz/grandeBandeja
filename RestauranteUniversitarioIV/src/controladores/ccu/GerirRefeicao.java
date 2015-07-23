@@ -9,8 +9,13 @@ import entidades.Refeicao;
 import entidades.exceptions.RefeicaoException;
 import entidades.value_objects.RefeicaoVO;
 
-public class GerirRefeicao {
-
+public class GerirRefeicao
+{
+	private GerirRefeicao()
+	{
+		
+	}
+	
 	private static GerirRefeicao gerirRefeicao;
 	public static GerirRefeicao getInstance()
 	{
