@@ -21,12 +21,12 @@
 </head>
 <body>
 
-<form action="ListarTicket" method="post">
+<form action="ComprarTicket" method="post">
 	<div align="center">
 		<div align="left" style="width:50%">
 			<div style="margin-top: 80px; margin-left: 30px;">			    
-			    <input class="form-control" type="text" name="matricula" style="width: 50%;" value="">
-			    <input class="btn btn-primary btn-block" style="width: 20%; margin-top: 2%;" type="submit" name ="buscarMatr" value = "buscarMatricula">		  		 
+			    <input class="form-control" type="text" name="matricula" style="width: 50%;"  placeholder="Matricula" value="">
+			    <input class="btn btn-primary btn-block" style="width: 20%; margin-top: 2%;" type="submit" name ="buscarMatr" value = "Buscar">		  		 
 			</div>
 			<c:if test='${consumidor != null}'>	
 				<fieldset style="margin-top: 10%">
@@ -53,12 +53,57 @@
 				      </tbody>
 			    	</table>
 				</fieldset>
-			</c:if>
-			<div class="botoes">
-				<input type="submit" name ="acaoListar" value = "Criar">
-				<input type="submit" name ="acaoListar" value = "Atualizar">
-				<input type="submit" name ="acaoListar" value = "Excluir">
-			</div>
+				
+				<%-- <c:choose>
+				  <c:when test="${cursoConsumidor.id != null}">
+				  	<span>Pago: </span> <input TYPE="checkbox" NAME="OPCAO" VALUE="op2" CHECKED> 
+				  </c:when>
+				  <c:otherwise>
+				  	<span>Pago: </span> <input TYPE="checkbox" NAME="OPCAO" VALUE="op2" CHECKED> 			    
+				  </c:otherwise>
+				</c:choose> --%>
+				
+				<fieldset style="margin-top: 10%">
+					<legend>
+						<span style="font-size:18px;color:#337ab7">Comprar Ticket</span>
+					</legend>
+					<table class="table">     
+				      <tbody>
+				        <tr>
+				        	<th scope="row">Turno</th>
+							<td>
+								<select name ="turno">
+									<c:forEach var="turnoNome" items="${turnoNomes}">	
+										<option value="${turnoNome}">${turnoNome}</option>											 
+									</c:forEach>		
+								</select>
+							</td>
+							          
+				        </tr>				       	
+				        <tr>
+				          <th scope="row">Refeição</th>
+				          <td>
+							<select name ="refeicao">
+								<c:forEach var="refeicao" items="${refeicaos}">	
+									<option value="${refeicao.id}">${refeicao.descricao}</option>											 
+								</c:forEach>		
+							</select>
+						   </td>	          
+				        </tr>	
+				        <tr>
+				          <th scope="row">Total</th>
+				          <td>				          	
+				          	<span> Total:<input type="text" name="pago" disabled="disabled"></span>
+				          	<span>Pago: </span> <input TYPE="checkbox" NAME="pago"> 
+				          </td>	          
+				        </tr>      
+				      </tbody>
+			    	</table>
+			    	<input type="submit" name="comprar" value="Comprar"> 
+				</fieldset>
+				
+				
+			</c:if>			
 		</div>
 	</div>
 </form>

@@ -27,23 +27,41 @@ public class Ticket {
 	}
 	public Collection recuperarTickets(TicketVO ticketvo) throws TicketException
 	{		
-		return RepositorioTicket.getInstance().buscar(ticketvo);		
+		try
+		{
+			return RepositorioTicket.getInstance().buscar(ticketvo);
+		}
+		catch (SQLException e)
+		{			
+			e.printStackTrace();
+			throw new TicketException("erro.recuperar.tickets.repositorio.buscar");
+		}		
 	}
 	
 	public TicketVO recuperarTicket(TicketVO ticketvo) throws TicketException 
 	{
 		Collection ticketsVO = null;
 		
-		ticketsVO =  RepositorioTicket.getInstance().buscar(ticketvo);
-		
-		if (ticketsVO != null && !ticketsVO.isEmpty())
+		try
 		{
-			return (TicketVO) ticketsVO.iterator().next();
+			ticketsVO =  RepositorioTicket.getInstance().buscar(ticketvo);
+			
+			if (ticketsVO != null && !ticketsVO.isEmpty())
+			{
+				return (TicketVO) ticketsVO.iterator().next();
+			}
+			else
+			{
+				return null;
+			}	
 		}
-		else
-		{
-			return null;
-		}	
+		catch (SQLException e)
+		{			
+			e.printStackTrace();
+			throw new TicketException("erro.recuperar.ticket.repositorio.buscar");
+		}
+		
+		
 	}
 	
 	@SuppressWarnings("null")
@@ -70,7 +88,15 @@ public class Ticket {
 			throw new TicketException("erro.adicionar.ticket.repositorio.ticket.nao.existe.refeicao");
 		}
 		
-		 RepositorioTicket.getInstance().inserirOuAtualizar(ticketvo);	
+		 try
+		{
+			RepositorioTicket.getInstance().inserirOuAtualizar(ticketvo);
+		}
+		catch (SQLException e)
+		{			
+			e.printStackTrace();
+			throw new TicketException("erro.adiconar.ticket.repositorio.inserirOuAtualizar");
+		}	
 	}
 
 	public void atualizarTicket(TicketVO vo) throws TicketException 
@@ -95,6 +121,14 @@ public class Ticket {
 			//RN Não existe curso sem o seu respectivo Departamento.
 			throw new TicketException("erro.adicionar.ticket.repositorio.ticket.nao.existe.refeicao");
 		}
-		RepositorioTicket.getInstance().inserirOuAtualizar(vo);	
+		try
+		{
+			RepositorioTicket.getInstance().inserirOuAtualizar(vo);
+		}
+		catch (SQLException e)
+		{			
+			e.printStackTrace();
+			throw new TicketException("erro.atualizar.ticket.repositorio.inserirOuAtualizar");
+		}	
 	}
 }

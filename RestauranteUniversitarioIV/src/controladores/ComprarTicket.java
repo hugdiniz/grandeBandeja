@@ -2,31 +2,20 @@ package controladores;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import controladores.ccu.GerirConsumidor;
 import controladores.ccu.GerirTickets;
-import entidades.Aluno;
-import entidades.CPF;
-import entidades.Consumidor;
-import entidades.Funcionario;
+import entidades.enumerados.Turno;
 import entidades.exceptions.ConsumidorException;
-import entidades.exceptions.CursoException;
-import entidades.exceptions.DepartamentoException;
+import entidades.exceptions.RefeicaoException;
+import entidades.exceptions.TicketException;
 import entidades.value_objects.ConsumidorVO;
-import entidades.value_objects.CursoVO;
-import entidades.value_objects.DepartamentoVO;
 
-@WebServlet("/ListarTicket")
-public class ListarTicket extends HttpServlet 
+@WebServlet("/ComprarTicket")
+public class ComprarTicket extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
 
@@ -54,16 +43,23 @@ public class ListarTicket extends HttpServlet
 			
 			try
 			{
+				Collection ticketVOs = GerirTickets.getInstance().buscarTicketConsumidor(consumidorVO);
+				Collection refeicaoVOs = GerirTickets.getInstance().listarRefeicao();
 				consumidorVO = GerirTickets.getInstance().buscarConsumidor(consumidorVO);
-			}
-			catch (ConsumidorException e)
-			{				
+				
+				request.setAttribute("turnoNomes", Turno.names());
+				request.setAttribute("consumidor",consumidorVO);
+				request.setAttribute("refeicaos",refeicaoVOs);
+				request.setAttribute("tickets",ticketVOs);
+			}			
+			catch (TicketException | ConsumidorException | RefeicaoException e)
+			{
+				request.setAttribute("erro",e.getMessage());
 				e.printStackTrace();
 			}
-			request.setAttribute("consumidor",consumidorVO);			
-		}
-		
-		request.getRequestDispatcher("WEB-INF/ListarTicket.jsp").forward(request,response);
+						
+		}		
+		request.getRequestDispatcher("WEB-INF/ComprarTicket.jsp").forward(request,response);
 
 	}
 	

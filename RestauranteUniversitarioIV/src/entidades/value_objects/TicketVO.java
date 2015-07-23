@@ -4,18 +4,22 @@ public class TicketVO implements VO
 {
 	private Long idConsumidor;
 	private Long idRefeicao;
-	private boolean pago;
+	private Boolean pago;
 	private Long id;
+	private ConsumidorVO consumidorVO;
+	private RefeicaoVO refeicaoVO;
 	
-	public TicketVO() {
+	public TicketVO() 
+	{
 		// TODO Auto-generated constructor stub
 	}
-	public TicketVO(Long cons, Long ref, boolean pg)
+	public TicketVO(Long cons, Long ref, Boolean pg)
 	{
 		this.idConsumidor = cons;
 		this.idRefeicao = ref;
 		this.pago = pg;
 	}
+	
 	public Long getIdConsumidor()
 	{
 		return idConsumidor;
@@ -24,6 +28,7 @@ public class TicketVO implements VO
 	{
 		this.idConsumidor = idConsumidor;
 	}
+	
 	public Long getIdRefeicao()
 	{
 		return idRefeicao;
@@ -32,14 +37,16 @@ public class TicketVO implements VO
 	{
 		this.idRefeicao = idRefeicao;
 	}
-	public boolean isPago() 
+	
+	public Boolean getPago() 
 	{
 		return pago;
 	}
-	public void setPago(boolean pago) 
+	public void setPago(Boolean pago) 
 	{
 		this.pago = pago;
 	}
+	
 	public Long getId()
 	{
 		return id;
@@ -47,6 +54,24 @@ public class TicketVO implements VO
 	public void setId(Long id)
 	{
 		this.id = id;
+	}
+	
+	public ConsumidorVO getConsumidorVO()
+	{
+		return consumidorVO;
+	}
+	public void setConsumidorVO(ConsumidorVO consumidorVO)
+	{
+		this.consumidorVO = consumidorVO;
+	}
+	
+	public RefeicaoVO getRefeicaoVO()
+	{
+		return refeicaoVO;
+	}
+	public void setRefeicaoVO(RefeicaoVO refeicaoVO)
+	{
+		this.refeicaoVO = refeicaoVO;
 	}
 	
 }

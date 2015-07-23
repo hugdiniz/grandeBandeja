@@ -60,5 +60,6 @@ CREATE TABLE IF NOT EXISTS TICKET
 	consumidor_fk bigint,
 	FOREIGN KEY (consumidor_fk) REFERENCES CONSUMIDOR(id),	
 	refeicao_fk bigint,
-	FOREIGN KEY (refeicao_fk) REFERENCES REFEICAO(id)
+	FOREIGN KEY (refeicao_fk) REFERENCES REFEICAO(id),
+	pago boolean
 );
