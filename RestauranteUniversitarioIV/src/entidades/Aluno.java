@@ -90,18 +90,16 @@ public class Aluno
 	public void manterAluno(ConsumidorVO consumidorVO) throws ConsumidorException 
 	{
 		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
-		consumidorVOBusca.setNome(consumidorVO.getNome());
-		
-		ConsumidorVO consumidorVOantigo = recuperarAluno(consumidorVOBusca);		
-		
-		if (consumidorVOantigo != null && consumidorVOantigo.getId() == consumidorVO.getId())
+		consumidorVOBusca.setMatricula(consumidorVO.getMatricula());
+				
+		if (consumidorVO.getIdCurso() == null)
 		{
-			//RN não pode ter mesmo consumidor (nome e sigla) 
-			throw new AlunoException("erro.adiconar.aluno.aluno.ja.existe (nome ou sigla)");
-		}
+			throw new AlunoException("erro.adicionar.curso.vazio");
+		}			
 		
 		consumidorVO.setHabilitado(true);
 		Consumidor.getInstance().manterConsumidor(consumidorVO);
+		
 		ConsumidorVO consumidorVOAdicionado = Consumidor.getInstance().recuperarConsumidor(consumidorVO);
 		consumidorVOAdicionado.setIdCurso(consumidorVO.getIdCurso());	
 		consumidorVOAdicionado.setAtualizar(consumidorVO.getAtualizar());

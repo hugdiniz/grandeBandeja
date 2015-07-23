@@ -65,11 +65,13 @@ public class Consumidor
 	public void manterConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException 
 	{
 		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
-		consumidorVOBusca.setId(consumidorVO.getId());
-		ConsumidorVO consumidorVOantigo = recuperarConsumidor(consumidorVOBusca);		
+			
 		
 		if (consumidorVO.getAtualizar() != null && consumidorVO.getAtualizar())
 		{
+			consumidorVOBusca.setId(consumidorVO.getId());
+			ConsumidorVO consumidorVOantigo = recuperarConsumidor(consumidorVOBusca);	
+			
 			if (consumidorVOantigo == null || consumidorVOantigo.getId() != consumidorVO.getId())
 			{				
 				throw new ConsumidorException("erro.adiconar.consumidor.repositorio.consumidor.nao.existe");
@@ -77,6 +79,8 @@ public class Consumidor
 		}
 		else
 		{
+			consumidorVOBusca.setMatricula(consumidorVO.getMatricula());
+			ConsumidorVO consumidorVOantigo = recuperarConsumidor(consumidorVOBusca);	
 			if (consumidorVOantigo != null && consumidorVOantigo.getId() == consumidorVO.getId())
 			{
 				//RN não pode ter mesmo consumidor (nome e sigla) 

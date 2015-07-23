@@ -39,7 +39,9 @@ public class ExcluirConsumidor extends HttpServlet
 			{				
 				e.printStackTrace();
 			}
-		}
+		}		
+		
 		request.getRequestDispatcher("WEB-INF/ListarConsumidor.jsp").forward(request,response);
+		
 	}
 }

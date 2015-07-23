@@ -139,9 +139,18 @@ public class CriarConsumidor extends HttpServlet
 			consumidorVO.setIdDepartamento(idDepartamento);
 		}	
 		
-		GerirConsumidor.getInstance().criarConsumidor(consumidorVO);
+		if (consumidorVO.getIdCurso() != null || consumidorVO.getIdDepartamento() != null)
+		{
+			GerirConsumidor.getInstance().criarConsumidor(consumidorVO);
+			request.setAttribute("message", "Novo Consumidor criado!");
+		}
+		else
+		{
+			request.setAttribute("message", "Erro, campos obrigatorios não preenchidos");
+		}	
 		
-		request.setAttribute("message", "Novo Consumidor criado!");
+		
+		
 		request.getRequestDispatcher("ListarConsumidor").forward(request,response);
 	}
 
