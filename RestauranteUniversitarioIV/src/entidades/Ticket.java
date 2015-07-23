@@ -105,25 +105,20 @@ public class Ticket {
 		ticketBusca.setId(vo.getId());
 		TicketVO ticketAntigo = recuperarTicket(ticketBusca);
 		
-		//Verifica se objeto recuperado na base é o mesmo alterado no front-end. Caso não seja, lança erro.
-		if (ticketAntigo != null && ticketAntigo.getId() == vo.getId())
-		{	
-			//RN não pode ter mesmo curso (nome e sigla) 
-			throw new TicketException("erro.adiconar.ticket.repositorio.ticket.ja.existe");
-		}
-		if(vo.getIdConsumidor() == null)
+		ticketAntigo.setPago(vo.getPago());
+		if(ticketAntigo.getConsumidorVO() == null || ticketAntigo.getConsumidorVO().getId() == null)
 		{
 			//RN Não existe curso sem o seu respectivo Departamento.
 			throw new TicketException("erro.adicionar.ticket.repositorio.ticket.nao.existe.consumidor");
 		}
-		if(vo.getIdRefeicao() == null)
+		if(ticketAntigo.getRefeicaoVO() == null || ticketAntigo.getRefeicaoVO().getId() == null)
 		{
 			//RN Não existe curso sem o seu respectivo Departamento.
 			throw new TicketException("erro.adicionar.ticket.repositorio.ticket.nao.existe.refeicao");
 		}
 		try
 		{
-			RepositorioTicket.getInstance().inserirOuAtualizar(vo);
+			RepositorioTicket.getInstance().inserirOuAtualizar(ticketAntigo);
 		}
 		catch (SQLException e)
 		{			

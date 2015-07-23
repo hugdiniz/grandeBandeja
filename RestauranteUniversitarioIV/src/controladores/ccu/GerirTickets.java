@@ -52,6 +52,12 @@ public class GerirTickets
 		
 		return ticketVOs;
 	}
+	public TicketVO buscarTicket(TicketVO ticketVO) throws TicketException
+	{		
+		TicketVO ticketVOSaida = Ticket.getInstance().recuperarTicket(ticketVO);		
+		
+		return ticketVOSaida;
+	}
 	
 	public ConsumidorVO buscarConsumidor(ConsumidorVO consumidorVO) throws ConsumidorException
 	{
@@ -72,5 +78,9 @@ public class GerirTickets
 	public void adicionarTicket(TicketVO ticketVO) throws TicketException
 	{
 		Ticket.getInstance().adicionarTicket(ticketVO);
+	}
+	public void atualizarTicket(TicketVO ticketVO) throws TicketException
+	{
+		Ticket.getInstance().atualizarTicket(ticketVO);
 	}
 }

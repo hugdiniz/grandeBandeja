@@ -24,6 +24,8 @@
 
 </script>
 <form action="ComprarTicket" method="post">
+
+	
 	<div align="center">
 		<div align="left" style="width:50%">
 			<div style="margin-top: 80px; margin-left: 30px;">			    
@@ -55,17 +57,10 @@
 				        </tr>	      
 				      </tbody>
 			    	</table>
+			    	<a href="/RestauranteUniversitario/ListarTicket?id=${consumidor.id}">Listar Ticket</a>
 				</fieldset>
 				
-				<%-- <c:choose>
-				  <c:when test="${cursoConsumidor.id != null}">
-				  	<span>Pago: </span> <input TYPE="checkbox" NAME="OPCAO" VALUE="op2" CHECKED> 
-				  </c:when>
-				  <c:otherwise>
-				  	<span>Pago: </span> <input TYPE="checkbox" NAME="OPCAO" VALUE="op2" CHECKED> 			    
-				  </c:otherwise>
-				</c:choose> --%>
-				
+								
 				<fieldset style="margin-top: 10%">
 					<legend>
 						<span style="font-size:18px;color:#337ab7">Comprar Ticket</span>

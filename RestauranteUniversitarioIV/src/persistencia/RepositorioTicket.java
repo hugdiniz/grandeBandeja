@@ -276,6 +276,7 @@ public class RepositorioTicket extends Repositorio
 		{
 			TicketVO ticketVOSaida = new TicketVO();			
 			ticketVOSaida.setId(resultSet.getLong("ticket.id"));
+			ticketVOSaida.setPago(resultSet.getBoolean("ticket.pago"));
 			
 			ConsumidorVO consumidorVOSaida = new ConsumidorVO();
 			consumidorVOSaida.setId(resultSet.getLong("consumidor.id"));
