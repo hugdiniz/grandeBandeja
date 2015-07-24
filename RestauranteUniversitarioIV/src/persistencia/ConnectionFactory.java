@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	
-	private static final String CONNECTION_URL = "jdbc:h2:~/jerryTest";
+	private static final String CONNECTION_URL = "jdbc:h2:~/jerry";
 	private static final String USER = "admin";
 	private static final String PASSWORD = "foca";
 	

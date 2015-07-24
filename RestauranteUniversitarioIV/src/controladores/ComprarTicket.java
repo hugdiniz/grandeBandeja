@@ -77,7 +77,7 @@ public class ComprarTicket extends HttpServlet
 			}
 			
 			String comprar = request.getParameter("comprar");	
-			if (comprar != null && !comprar.equals(""))
+			if (comprar != null && !comprar.equals("") && request.getParameter("refeicao") != null && !request.getParameter("refeicao").equals(""))
 			{
 				TicketVO ticketVO = new TicketVO();
 				
@@ -108,7 +108,10 @@ public class ComprarTicket extends HttpServlet
 					e.printStackTrace();
 				}
 			}
-						
+			else if( request.getParameter("refeicao") == null || request.getParameter("refeicao").equals(""))
+			{
+				request.setAttribute("erro","Refeicao nao selecionada");				
+			}			
 		}
 		
 		

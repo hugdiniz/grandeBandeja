@@ -4,7 +4,10 @@ import static org.junit.Assert.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
+
 import org.junit.Test;
+
 import entidades.Consumidor;
 import entidades.Departamento;
 import entidades.enumerados.SexoEnum;
@@ -19,19 +22,7 @@ public class ConsumidorTest {
 
 	public void testGetInstance() 
 	{
-
-		ConsumidorVO consumidorVO = new ConsumidorVO();
-		consumidorVO.setCpf("73117906118");
-		consumidorVO.setIdCurso(new Long(123));
-		consumidorVO.setIdDepartamento(new Long(1));
-		consumidorVO.setNome("José Silva");
-		consumidorVO.setMatricula("2015780000");
-		consumidorVO.setSexo(SexoEnum.MASCULINO);
-		consumidorVO.setTitulo(TituloEnum.ESPECIALIZACAO);
-		consumidorVO.setAnoIngresso("2015");
-
-		assertNotNull(consumidorVO);
-
+		assertNotNull(Consumidor.getInstance());
 	}
 	@Test
 	public void testRecuperarConsumidor() throws ConsumidorException, SQLException {
@@ -47,8 +38,8 @@ public class ConsumidorTest {
 	public void testRecuperarConsumidors() throws ConsumidorException {
 
 		ConsumidorVO consumidorVO = new ConsumidorVO();
-		Consumidor.getInstance().recuperarConsumidors(consumidorVO);
-		assertNotNull(consumidorVO);
+		Collection  consumidors = Consumidor.getInstance().recuperarConsumidors(consumidorVO);
+		assertNotNull(consumidors);
 	}
 	@Test
 	public void testAdicionarConsumidor() throws ConsumidorException, SQLException {
@@ -57,41 +48,35 @@ public class ConsumidorTest {
 		consumidorVO.setCpf("73117906118");
 		consumidorVO.setIdCurso(new Long(123));
 		//consumidorVO.setIdDepartamento(new Long(1));
-		consumidorVO.setNome("José Silva");
+		consumidorVO.setNome("Jose Silva");
 		consumidorVO.setMatricula("2015780000");
 		consumidorVO.setSexo(SexoEnum.MASCULINO);
 		consumidorVO.setTitulo(TituloEnum.ESPECIALIZACAO);
 		consumidorVO.setAnoIngresso("2015");
 
-		assertNotNull(consumidorVO);
-		assertEquals( "José Silva", consumidorVO.getNome());
+		assertEquals( "Jose Silva", consumidorVO.getNome());
 		assertEquals( "2015780000", consumidorVO.getMatricula());
 		assertEquals( "2015", consumidorVO.getAnoIngresso());
 
 		String matricula = null;
 
-		try 
-		{
-			Consumidor.getInstance().manterConsumidor(consumidorVO);	
-			PreparedStatement prep = ConnectionFactory.getConnection().prepareStatement("select * from consumidor where matricula like '2015780000'");
-			ResultSet resultSet = prep.executeQuery();
-			resultSet.next();
-			matricula = resultSet.getString("matricula");
-			assertEquals(consumidorVO.getMatricula(),matricula);
-
-		} 
-		catch (ConsumidorException e)
-		{
-			throw new RuntimeException(e.getMessage(), e);
-		}
+		Consumidor.getInstance().manterConsumidor(consumidorVO);	
+		PreparedStatement prep = ConnectionFactory.getConnection().prepareStatement("select * from consumidor where matricula like '2015780000'");
+		ResultSet resultSet = prep.executeQuery();
+		resultSet.next();
+		matricula = resultSet.getString("matricula");
+		assertEquals(consumidorVO.getMatricula(),matricula);
+		
+		
 	}
 
-	@Test
-	public void testAtualizarConsumidor() throws ConsumidorException, SQLException {
+	@Test(expected=ConsumidorException.class)
+	public void testAtualizarConsumidorNaoExistente() throws ConsumidorException, SQLException {
 
 		String nome = null;
 		ConsumidorVO consumidorVO = new ConsumidorVO();
-
+		
+		
 		consumidorVO.setCpf("59920837407");
 		consumidorVO.setIdCurso(new Long(123));
 		consumidorVO.setNome("Maria Silva");
@@ -99,24 +84,17 @@ public class ConsumidorTest {
 		consumidorVO.setSexo(SexoEnum.FEMININO);
 		consumidorVO.setTitulo(TituloEnum.ESPECIALIZACAO);
 		consumidorVO.setAnoIngresso("2015");
+		consumidorVO.setAtualizar(Boolean.TRUE);
 
-		try 
-		{
-			Consumidor.getInstance().manterConsumidor(consumidorVO);
+		Consumidor.getInstance().manterConsumidor(consumidorVO);
 
-			PreparedStatement prep = ConnectionFactory.getConnection().prepareStatement("select * from consumidor where matricula like '2015780000'");			
-			ResultSet resultSet = prep.executeQuery();
-			resultSet.next();
-			nome = resultSet.getString("nome");
-			
-			assertEquals( SexoEnum.FEMININO, consumidorVO.getSexo());
-			assertEquals(consumidorVO.getNome() ,nome);
-		}
-		catch (ConsumidorException e)
-		{
-			throw new RuntimeException(e.getMessage(), e);
-		}
-
+		PreparedStatement prep = ConnectionFactory.getConnection().prepareStatement("select * from consumidor where matricula like '2015780000'");			
+		ResultSet resultSet = prep.executeQuery();
+		resultSet.next();
+		nome = resultSet.getString("nome");
+		
+		assertEquals( SexoEnum.FEMININO, consumidorVO.getSexo());
+		assertEquals(consumidorVO.getNome() ,nome);
 
 	}
 

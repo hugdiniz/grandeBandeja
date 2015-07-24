@@ -67,20 +67,6 @@ public class DepartamentoTest {
 	}
 
 
-	@Test
-	public void testVerificaDepartamentoJaExiste()
-	{
-		
-		DepartamentoVO deptvo = new DepartamentoVO("Computacao", "DCC");
-		try
-		{
-			assertTrue(Departamento.getInstance().verificaDepartamentoJaExiste(deptvo));
-		}
-		catch(DepartamentoException e) 
-		{
-			assertEquals("erro.adicionar.departamento.repositorio.departamento", e.getMessage()) ;
-		}
-	}
 	
 
 
@@ -101,28 +87,6 @@ public class DepartamentoTest {
 		}
 	}
 
-	@Test
-	public void testAtualizarDepartamento() throws SQLException
-	{
-		
-		String nome = null;
-		DepartamentoVO deptVo = new DepartamentoVO("Computacao","DCC");
-		
-		try 
-		{
-			Departamento.getInstance().atualizarDepartamento(deptVo); 
-			PreparedStatement prep = ConnectionFactory.getConnection().prepareStatement("select * from departamento where sigla like 'DCC'");			
-			ResultSet resultSet = prep.executeQuery();
-			resultSet.next();
-			nome = resultSet.getString("nome");
-			assertEquals(deptVo.getNome() ,nome);
-		}
-		catch (DepartamentoException e)
-		{
-			assertEquals("erro.atualizar.departamento.nao.encontrado", e.getMessage()) ;
-		}
-
-	}
 
 	@Test
 	public void testRecuperarDepartamentos() throws DepartamentoException 
