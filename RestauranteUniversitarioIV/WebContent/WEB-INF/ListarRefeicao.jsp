@@ -39,7 +39,6 @@
 	<div class="botoes">
 		<input type="submit" name ="acaoListar" value = "Criar">
 		<input type="submit" name ="acaoListar" value = "Atualizar">
-		<input type="submit" name ="acaoListar" value = "Ver">
 	</div>	
 	</form>
 
