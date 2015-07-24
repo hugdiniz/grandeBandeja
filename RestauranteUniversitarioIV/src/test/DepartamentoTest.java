@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Random;
 
 import org.junit.Test;
@@ -131,8 +132,8 @@ public class DepartamentoTest {
 		
 		try
 		{
-			Departamento.getInstance().recuperarDepartamentos(deptVO);
-			assertNotNull(deptVO);
+			Collection departamentos = Departamento.getInstance().recuperarDepartamentos(deptVO);
+			assertNotNull(departamentos);
 		}
 		catch (DepartamentoException e)
 		{
