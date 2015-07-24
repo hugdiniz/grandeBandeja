@@ -66,12 +66,12 @@ public class RefeicaoVO implements VO {
 	
 	public double getValorFuncionario()
 	{
-		return valorAluno;
+		return valorFuncionario;
 	}
 	
 	public double getValorAluno()
 	{
-		return valorFuncionario;
+		return valorAluno;
 	}
 }
  

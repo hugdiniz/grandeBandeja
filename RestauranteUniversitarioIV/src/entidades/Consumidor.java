@@ -37,6 +37,7 @@ public class Consumidor
 		
 		if (consumidorVOs != null && !consumidorVOs.isEmpty())
 		{
+			
 			return (ConsumidorVO) consumidorVOs.iterator().next();
 		}
 		else
@@ -66,11 +67,10 @@ public class Consumidor
 	{
 		ConsumidorVO consumidorVOBusca = new ConsumidorVO();
 			
-		
 		if (consumidorVO.getAtualizar() != null && consumidorVO.getAtualizar())
 		{
 			consumidorVOBusca.setId(consumidorVO.getId());
-			ConsumidorVO consumidorVOantigo = recuperarConsumidor(consumidorVOBusca);	
+			ConsumidorVO consumidorVOantigo = recuperarConsumidor(consumidorVOBusca);
 			
 			if (consumidorVOantigo == null || consumidorVOantigo.getId() != consumidorVO.getId())
 			{				
@@ -80,12 +80,23 @@ public class Consumidor
 		else
 		{
 			consumidorVOBusca.setMatricula(consumidorVO.getMatricula());
-			ConsumidorVO consumidorVOantigo = recuperarConsumidor(consumidorVOBusca);	
+			ConsumidorVO consumidorVOantigo = recuperarConsumidor(consumidorVOBusca);
+			
 			if (consumidorVOantigo != null && consumidorVOantigo.getId() == consumidorVO.getId())
 			{
 				//RN não pode ter mesmo consumidor (nome e sigla) 
 				throw new ConsumidorException("erro.adiconar.consumidor.repositorio.consumidor.ja.existe");
 			}
+		    if(consumidorVOantigo != null && consumidorVOantigo.getMatricula().equals(consumidorVO.getMatricula()))
+			{
+				//RN não pode ter mesmo consumidor (nome e sigla) 
+				throw new ConsumidorException("erro.adiconar.consumidor.repositorio.consumidor.nao.pode.cadastrar.consumidor.com.mesma.matricula");
+			}
+		    if(consumidorVOantigo != null && consumidorVOantigo.getCpf().equals(consumidorVO.getCpf()))
+		    {
+		    	//RN não pode ter mesmo consumidor (nome e sigla) 
+				throw new ConsumidorException("erro.adiconar.consumidor.repositorio.consumidor.nao.pode.cadastrar.consumidor.com.mesmo.cpf");
+		    }
 		}	
 		
 		
@@ -121,7 +132,6 @@ public class Consumidor
 		vo.setAtualizar(Boolean.TRUE);
 		manterConsumidor(vo);
 	}
-	
 	public void removerConsumidor(ConsumidorVO vo) throws ConsumidorException
 	{
 		ConsumidorVO consumidorVODesabilitado = new ConsumidorVO();
