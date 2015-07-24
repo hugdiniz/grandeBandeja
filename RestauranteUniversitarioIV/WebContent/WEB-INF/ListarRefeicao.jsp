@@ -25,7 +25,7 @@
 				  for (RefeicaoVO refeicao: refeicoes){
 		  %>
 			  <tr align="center">
-			  	<td><input type="radio" name="id" va"WebContent/WEB-INF/ListarRefeicao.jsp"lue='<%=refeicao.getId()%>'><%=refeicao.getDescricao()%></td>
+			  	<td><input type="radio" name="id" value='<%=refeicao.getId()%>'><%=refeicao.getDescricao()%></td>
 			    <td><%=refeicao.getOp_vegetariana()%></td>
 			    <td><%=refeicao.getTurno().name()%></td> 	
 			  </tr>
