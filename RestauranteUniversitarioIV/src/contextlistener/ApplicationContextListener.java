@@ -17,7 +17,7 @@ public class ApplicationContextListener implements ServletContextListener {
 		try {
 			DataBaseInitializer.rootConection.close();
 		} catch (SQLException e) {
-			throw new RuntimeException("Impossivel fechar conexões!");
+			throw new RuntimeException("Impossivel fechar conexoes!");
 		}
 	}
 
@@ -26,8 +26,9 @@ public class ApplicationContextListener implements ServletContextListener {
 			try {
 				DataBaseInitializer.inicializarDb(arg0);
 			} catch (ClassNotFoundException | SQLException e) {
-				throw new java.lang.RuntimeException("Exceção não tratada!", e);
+				throw new java.lang.RuntimeException("Excesao nao tratada!", e);
 			}
 	}
+	
 
 }

@@ -23,8 +23,8 @@ import persistencia.ConnectionFactory;
 public class DataBaseInitializer {
 
 	private static final String DRIVER_CLASS = "org.h2.Driver";
-	//Manter essa conexão aberta para não fechar a conexão com o database
-	//Fechar essa conexão ao destruir o contexto
+	//Manter essa conexï¿½o aberta para nï¿½o fechar a conexï¿½o com o database
+	//Fechar essa conexï¿½o ao destruir o contexto
 	public static Connection rootConection;
 
 	private DataBaseInitializer (){
@@ -40,11 +40,21 @@ public class DataBaseInitializer {
 		System.out.println("Sucesso");
 		InputStream is = DataBaseInitializer.class.getResourceAsStream("../sql/schema_create.sql");
 		Reader reader = new InputStreamReader(is);
-		System.out.println("Executando Script de Criação do Banco de dados");
+		System.out.println("Executando Script de Criacao do Banco de dados");
 		RunScript.execute(rootConection, reader);
 		Connection con = ConnectionFactory.getConnection();
 		con.createStatement().executeQuery("SELECT 1 FROM CONSUMIDOR");
 		System.out.println("Sucesso!");
+	}
+	public static void inicializarDbDrop(ServletContextEvent evt) throws ClassNotFoundException, SQLException {
+		inicializarDb(evt);
+		
+		InputStream is = DataBaseInitializer.class.getResourceAsStream("../sql/schema_drop.sql");
+		Reader reader = new InputStreamReader(is);
+		RunScript.execute(rootConection, reader);
+		is = DataBaseInitializer.class.getResourceAsStream("../sql/schema_create.sql");
+		reader = new InputStreamReader(is);
+		RunScript.execute(rootConection, reader);
 	}
 
 

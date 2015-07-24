@@ -1,9 +1,6 @@
 package test.funcional;
 
 import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 
 import org.dbunit.Assertion;
 import org.dbunit.DBTestCase;
@@ -16,29 +13,20 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.h2.H2DataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
-import org.h2.tools.RunScript;
-import org.junit.After;
 import org.junit.Before;
 
-import contextlistener.DataBaseInitializer;
-import persistencia.ConnectionFactory;
+import controladores.ccu.GerirCurso;
 import entidades.Departamento;
+import entidades.value_objects.CursoVO;
 import entidades.value_objects.DepartamentoVO;
 
-public class GerirDepartamentoTestFuncional extends DBTestCase
+public class CriarCursoTestFuncional  extends DBTestCase
 {
 	private FlatXmlDataSet bancoCarregado;
 
 	@Before
 	public void setUp() throws Exception
 	{
-		/*InputStream is = DataBaseInitializer.class.getResourceAsStream("../sql/schema_drop.sql");
-		Reader reader = new InputStreamReader(is);
-		RunScript.execute(DataBaseInitializer.rootConection, reader);
-		is = DataBaseInitializer.class.getResourceAsStream("../sql/schema_create.sql");
-		reader = new InputStreamReader(is);
-		RunScript.execute(DataBaseInitializer.rootConection, reader);*/
-		
 		System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "org.h2.Driver" );
 		System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:h2:file:~/jerry" );
 		System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "admin" );
@@ -46,21 +34,28 @@ public class GerirDepartamentoTestFuncional extends DBTestCase
 
 	}
 
-	public void testCriarDepartamento() throws Exception
+	public void testCriarCurso() throws Exception
 	{		
 		DepartamentoVO departamentoVO = new DepartamentoVO();
 		departamentoVO.setNome("Departamento de Ciencia da Computacao3");
 		departamentoVO.setSigla("DCC3");
 		Departamento.getInstance().adicionarDepartamento(departamentoVO);
+		departamentoVO = Departamento.getInstance().recuperarDepartamento(departamentoVO);
+		
+		CursoVO cursoVO = new CursoVO();
+		cursoVO.setDepartamentoVO(departamentoVO);
+		cursoVO.setNome("Ciencia da Computacao");
+		cursoVO.setSigla("CC");
+		GerirCurso.criarCurso(cursoVO);
 
 		IDataSet dadosSetBanco1 = getConnection().createDataSet();
-		ITable dadosNoBanco1 = dadosSetBanco1.getTable("departamento");
+		ITable dadosNoBanco1 = dadosSetBanco1.getTable("curso");
 
 		//remove coluna da tabela.
 		ITable filteredTable1 = DefaultColumnFilter.excludedColumnsTable(dadosNoBanco1, new String[]{"id"});
 
 		IDataSet dadosSetEsperado1 = new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/funcional/gerirDepartamentoDataset.xml"));
-		ITable dadosEsperados1 = dadosSetEsperado1.getTable("departamento");
+		ITable dadosEsperados1 = dadosSetEsperado1.getTable("curso");
 
 		Assertion.assertEquals(dadosEsperados1, filteredTable1);
 	}
