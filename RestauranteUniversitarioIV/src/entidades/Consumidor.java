@@ -121,6 +121,7 @@ public class Consumidor
 		vo.setAtualizar(Boolean.TRUE);
 		manterConsumidor(vo);
 	}
+	
 	public void removerConsumidor(ConsumidorVO vo) throws ConsumidorException
 	{
 		ConsumidorVO consumidorVODesabilitado = new ConsumidorVO();
