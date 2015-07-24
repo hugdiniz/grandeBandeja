@@ -18,11 +18,8 @@ public class DepartamentoTest {
 	
 	@Test
 	public void testGetInstance() 
-	{
-		
-		DepartamentoVO deptVO = new DepartamentoVO("Departamento","DCC");
-		assertNotNull(deptVO);
-		
+	{		
+		assertNotNull(Departamento.getInstance());		
 	}
 	
 	
@@ -57,7 +54,7 @@ public class DepartamentoTest {
 	{
 		
 		
-		DepartamentoVO deptVo = new DepartamentoVO("Departamento Ciencia", " ");
+		DepartamentoVO deptVo = new DepartamentoVO("Departamento Ciencia", "");
 		try 
 		{
 			Departamento.getInstance().adicionarDepartamento(deptVo);
@@ -143,6 +140,18 @@ public class DepartamentoTest {
 		}
 		
 	
+	}
+	
+
+	
+	@Test(expected=DepartamentoException.class)
+	public void testaSigla() throws DepartamentoException
+	{
+		DepartamentoVO depVo = new DepartamentoVO();
+		depVo.setSigla("SIGLA_FAKE");
+		depVo.setNome("NOME FAKE");
+		Departamento.getInstance().adicionarDepartamento(depVo);
+		Departamento.getInstance().adicionarDepartamento(depVo);
 	}
 	
 	

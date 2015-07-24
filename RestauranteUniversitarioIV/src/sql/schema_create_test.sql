@@ -1,3 +1,11 @@
+DROP TABLE DEPARTAMENTO;
+DROP TABLE CURSO;
+DROP TABLE CONSUMIDOR;
+DROP TABLE REFEICAO;
+DROP TABLE TICKET;
+DROP TABLE ALUNO;
+DROP TABLE FUNCIONARIO;
+
 	CREATE TABLE IF NOT EXISTS CONSUMIDOR
 (
 	id bigint auto_increment,
@@ -7,7 +15,7 @@
 	sexo varchar(255),
 	titulo varchar(255),
 	cpf varchar(255),
-	habilitado boolean,
+	habilitado boolean
 );
 
 CREATE TABLE IF NOT EXISTS DEPARTAMENTO
@@ -22,26 +30,19 @@ CREATE TABLE IF NOT EXISTS CURSO
 	id bigint auto_increment,
 	nome varchar(255),
 	SIGLA varchar(255),
-	departamento_fk bigint,
-	FOREIGN KEY (departamento_fk) REFERENCES DEPARTAMENTO(id)
+	departamento_fk bigint
 ) ;
-
-
 
 CREATE TABLE IF NOT EXISTS ALUNO
 (
 	id bigint,	
-	FOREIGN KEY (id) REFERENCES CONSUMIDOR(id),
-	curso_fk bigint,
-	FOREIGN KEY (curso_fk) REFERENCES CURSO(id)
+	curso_fk bigint
 ) ;
 
 CREATE TABLE IF NOT EXISTS FUNCIONARIO
 (
 	id bigint,
-	departamento_fk bigint,
-	FOREIGN KEY (id) REFERENCES CONSUMIDOR(id),
-	FOREIGN KEY (departamento_fk) REFERENCES DEPARTAMENTO(id)
+	departamento_fk bigint
 );
 
 CREATE TABLE IF NOT EXISTS REFEICAO
@@ -56,9 +57,7 @@ CREATE TABLE IF NOT EXISTS REFEICAO
 CREATE TABLE IF NOT EXISTS TICKET
 (
 	id bigint auto_increment,
-	consumidor_fk bigint,
-	FOREIGN KEY (consumidor_fk) REFERENCES CONSUMIDOR(id),	
+	consumidor_fk bigint,	
 	refeicao_fk bigint,
-	FOREIGN KEY (refeicao_fk) REFERENCES REFEICAO(id),
 	pago boolean
 );

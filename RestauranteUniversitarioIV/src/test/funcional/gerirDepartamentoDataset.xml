@@ -4,4 +4,5 @@
 	<departamento nome='Departamento de Ciencia da Computacao3' sigla='DCC3'/>
 	<curso nome='Ciencia da Computacao' sigla='CC' departamento_fk="1"/>
 	<refeicao descricao='Hamburguer' opcaovegan="Batata frita" turno="MANHA"/>
+	<consumidor nome='nome' habilitado='true' matricula='2011785123' cpf='37951129666' anoingresso='2011' sexo='FEMININO' titulo='ESPECIALIZACAO'/>
 </dataset>
