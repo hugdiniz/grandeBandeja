@@ -56,7 +56,7 @@ $(function ()
 			  </c:otherwise>
 			</c:choose>
 		</div>		
-		<input type="hidden" name="id" value="${consumidorVO.id}">
+		<input type="hidden" name="id" value="${consumidor.id}">
 		<table class="table" style="margin-top: 2%;">
 			<tr>
 				<td>
@@ -144,10 +144,10 @@ $(function ()
 							<c:forEach var="curso" items="${cursos}">
 				          			<c:choose>
 									  <c:when test="${curso.nome == cursoConsumidor.nome}">
-									  	<option value="${curso.nome}" selected>${curso.nome}</option>
+									  	<option value="${curso.id}" selected>${curso.nome}</option>
 									  </c:when>
 									  <c:otherwise>
-									    <option value="${curso.nome}">${curso.nome}</option>
+									    <option value="${curso.id}">${curso.nome}</option>
 									  </c:otherwise>
 									</c:choose>
 							</c:forEach>							

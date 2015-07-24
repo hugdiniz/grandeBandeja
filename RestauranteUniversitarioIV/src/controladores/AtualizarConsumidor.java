@@ -75,6 +75,7 @@ public class AtualizarConsumidor extends HttpServlet
 						consumidorVO.setId(Long.parseLong((String) request.getParameter("idConsumidor")));
 					}
 					
+					request.setAttribute("id",consumidorVO.getId());
 					ConsumidorVO consumidorAntigo = GerirConsumidor.getInstance().buscarConsumidor(consumidorVO);
 					request.setAttribute("consumidor",consumidorAntigo);
 					request.setAttribute("titulos",TituloEnum.valores());
@@ -144,9 +145,6 @@ public class AtualizarConsumidor extends HttpServlet
 			id = Long.parseLong((String) request.getParameter("id"));
 		}
 		
-		
-		String tipoConsumidor = (String) request.getParameter("tipoConsumidor");
-		
 		SexoEnum sexo = null;
 		TituloEnum titulo = null;
 		
@@ -163,23 +161,16 @@ public class AtualizarConsumidor extends HttpServlet
 		
 		ConsumidorVO consumidorVO = new ConsumidorVO();
 		
+		consumidorVO.setId(id);
 		consumidorVO.setNome(nome);
 		consumidorVO.setMatricula(matricula);
 		consumidorVO.setCpf(cpf);
 		consumidorVO.setAnoIngresso(anoIngresso);
 		consumidorVO.setSexo(sexo);
 		consumidorVO.setTitulo(titulo);
-		
-		if (tipoConsumidor != null && tipoConsumidor.equals("aluno"))
-		{
-			consumidorVO.setIdCurso(idCurso);
-		}
-		else
-		{
-			consumidorVO.setIdDepartamento(idDepartamento);
-		}	
-		
-		
+		consumidorVO.setIdCurso(idCurso);
+		consumidorVO.setIdDepartamento(idDepartamento);
+				
 		try 
 		{
 			GerirConsumidor.getInstance().atualizarConsumidor(consumidorVO);
