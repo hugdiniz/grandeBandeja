@@ -13,7 +13,7 @@
 <%@include file="messagePage.jsp" %>
 
 	<form action="ListarRefeicao" method="post">
-		<table style="margin-top: 80px; margin-left: 30px;">
+		<table class="table table-bordered table-striped">	
 		  <tr>
 		    <th>Descricao</th>
 		    <th>Opeção Vegetariana</th>
@@ -25,8 +25,7 @@
 				  for (RefeicaoVO refeicao: refeicoes){
 		  %>
 			  <tr align="center">
-			  	<td><input type="radio" name="id" value="<%=refeicao.getId()%>"></td>
-			    <td><%=refeicao.getDescricao()%></td>
+			  	<td><input type="radio" name="id" va"WebContent/WEB-INF/ListarRefeicao.jsp"lue='<%=refeicao.getId()%>'><%=refeicao.getDescricao()%></td>
 			    <td><%=refeicao.getOp_vegetariana()%></td>
 			    <td><%=refeicao.getTurno().name()%></td> 	
 			  </tr>
