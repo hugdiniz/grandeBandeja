@@ -54,7 +54,7 @@ public class Departamento
 		
 		if (verificaDepartamentoJaExiste(departamentoVOBusca))
 		{
-			throw new DepartamentoException("erro.adiconar.departamento.repositorio.departamento.ja.existe");
+			throw new DepartamentoException("erro.adicionar.departamento.repositorio.departamento");
 		}
 		
 		try
@@ -64,7 +64,7 @@ public class Departamento
 		catch (SQLException e)
 		{
 			e.printStackTrace();
-			throw new DepartamentoException("erro.adiconar.departamento.repositorio.departamento.inserirOuAtualizar");			
+			throw new DepartamentoException("erro.adicionar.departamento.repositorio.departamento.inserirOuAtualizar");			
 		}
 				
 	}

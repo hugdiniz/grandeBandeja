@@ -9,10 +9,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-
 import persistencia.ConnectionFactory;
-import persistencia.Repositorio;
 import entidades.Departamento;
 import entidades.exceptions.DepartamentoException;
 import entidades.value_objects.DepartamentoVO;
@@ -49,7 +46,7 @@ public class DepartamentoTest {
 		} 
 		catch (DepartamentoException e)
 		{
-			throw new RuntimeException(e.getMessage(), e);
+			assertEquals("erro.adicionar.departamento.repositorio.departamento", e.getMessage()) ;
 		}
 			
 	}
@@ -61,11 +58,13 @@ public class DepartamentoTest {
 		
 		
 		DepartamentoVO deptVo = new DepartamentoVO("Departamento Ciencia", " ");
-		try {
+		try 
+		{
 			Departamento.getInstance().adicionarDepartamento(deptVo);
 			fail();
-		} catch (DepartamentoException e) {
-			assertEquals("erro.adiconar.departamento.repositorio.departamento", e.getMessage()) ;
+		} catch (DepartamentoException e) 
+		{
+			assertEquals("erro.adicionar.departamento.repositorio.departamento", e.getMessage()) ;
 		}		
 	}
 
@@ -81,7 +80,7 @@ public class DepartamentoTest {
 		}
 		catch(DepartamentoException e) 
 		{
-			assertEquals("erro.adiconar.departamento.repositorio.departamento", e.getMessage()) ;
+			assertEquals("erro.adicionar.departamento.repositorio.departamento", e.getMessage()) ;
 		}
 	}
 	
@@ -92,8 +91,16 @@ public class DepartamentoTest {
 	{
 		
 		DepartamentoVO deptVO = new DepartamentoVO("Departamento","DCC");
-		Departamento.getInstance().recuperarDepartamento(deptVO);
-		assertNotNull(deptVO);
+		
+		try
+		{
+			Departamento.getInstance().recuperarDepartamento(deptVO);
+			assertNotNull(deptVO);
+		}
+		catch (DepartamentoException e)
+		{
+			assertEquals("erro.recuperar.departamentos.repositorio.departamento.buscar", e.getMessage()) ;
+		}
 	}
 
 	@Test
@@ -114,7 +121,7 @@ public class DepartamentoTest {
 		}
 		catch (DepartamentoException e)
 		{
-			throw new RuntimeException(e.getMessage(), e);
+			assertEquals("erro.atualizar.departamento.nao.encontrado", e.getMessage()) ;
 		}
 
 	}
@@ -124,8 +131,17 @@ public class DepartamentoTest {
 	{
 		
 		DepartamentoVO deptVO = new DepartamentoVO();
-		Departamento.getInstance().recuperarDepartamentos(deptVO);
-		assertNotNull(deptVO);
+		
+		try
+		{
+			Departamento.getInstance().recuperarDepartamentos(deptVO);
+			assertNotNull(deptVO);
+		}
+		catch (DepartamentoException e)
+		{
+			assertEquals("erro.recuperar.departamentos.repositorio.departamento.buscar", e.getMessage()) ;
+		}
+		
 	
 	}
 	
