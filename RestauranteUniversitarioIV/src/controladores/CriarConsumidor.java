@@ -77,7 +77,7 @@ public class CriarConsumidor extends HttpServlet
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			request.setAttribute("message", "Novo Consumidor criado!");
+			request.setAttribute("message", e.getMessage());
 			request.getRequestDispatcher("WEB-INF/CriarConsumidor.jsp").forward(request,response);
 		}
 		

@@ -162,7 +162,7 @@ public class AtualizarConsumidor extends HttpServlet
 		
 		
 		ConsumidorVO consumidorVO = new ConsumidorVO();
-		
+		consumidorVO.setId(id);
 		consumidorVO.setNome(nome);
 		consumidorVO.setMatricula(matricula);
 		consumidorVO.setCpf(cpf);
@@ -170,20 +170,15 @@ public class AtualizarConsumidor extends HttpServlet
 		consumidorVO.setSexo(sexo);
 		consumidorVO.setTitulo(titulo);
 		
-		if (tipoConsumidor != null && tipoConsumidor.equals("aluno"))
-		{
-			consumidorVO.setIdCurso(idCurso);
-		}
-		else
-		{
-			consumidorVO.setIdDepartamento(idDepartamento);
-		}	
+		consumidorVO.setIdCurso(idCurso);
+		consumidorVO.setIdDepartamento(idDepartamento);
+		
 		
 		
 		try 
 		{
 			GerirConsumidor.getInstance().atualizarConsumidor(consumidorVO);
-			request.setAttribute("message", "Novo curso criado!");
+			request.setAttribute("message", "Consumidor atualizado!");
 			request.getRequestDispatcher("ListarConsumidor").forward(request,response);
 		}
 		catch (ConsumidorException e)

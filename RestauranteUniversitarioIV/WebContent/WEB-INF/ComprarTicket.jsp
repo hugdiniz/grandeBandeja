@@ -37,7 +37,7 @@
 				<fieldset style="margin-top: 10%">
 					<legend>
 						<c:choose>
-						  <c:when test="${consumidor.cursoVO != null && consumidor.cursoVO.id != null}">
+						  <c:when test="${consumidor.cursoVO != null && consumidor.cursoVO.id != null && consumidor.cursoVO.id > 0}">
 						  	<span style="font-size:18px;color:#337ab7">Aluno</span>
 						  </c:when>
 						  <c:otherwise>
@@ -74,7 +74,7 @@
 								<option onclick="$('#valorPago').val('')" value=""></option>
 								<c:forEach var="refeicao" items="${refeicaos}">	
 									<c:choose>
-									  <c:when test="${consumidor.cursoVO != null && consumidor.cursoVO.id != null}">
+									  <c:when test="${consumidor.cursoVO != null && consumidor.cursoVO.id != null && consumidor.cursoVO.id > 0}">
 									  	<option onclick="$('#valorPago').val(${refeicao.valorAluno})" value="${refeicao.id}">${refeicao.descricao}	Turno: ${refeicao.turno}</option>
 									  </c:when>
 									  <c:otherwise>

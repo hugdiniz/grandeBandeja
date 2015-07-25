@@ -110,10 +110,6 @@ public class GerirConsumidor
 		{
 			Funcionario.getInstance().manterFuncionario(consumidorVO);
 		}
-		else
-		{
-			throw new ConsumidorException("erro.");
-		}	
 		
 	}
 	

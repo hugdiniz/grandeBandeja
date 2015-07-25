@@ -271,7 +271,22 @@ public class RepositorioConsumidor extends Repositorio
 			
 			vars.add(consumidorVO.getHabilitado());
 		}
-		
+		if (consumidorVO.getMatricula()!= null && !consumidorVO.getMatricula().equals(""))
+		{			
+			if (primeiroCampo)
+			{
+				primeiroCampo = false;
+				restricao.append(" where consumidor.matricula like ");
+				restricao.append(" ? ");
+			}
+			else 
+			{
+				restricao.append(" and consumidor.matricula like");
+				restricao.append(" ? ");
+			}
+			
+			vars.add(consumidorVO.getMatricula());
+		}
 		
 		/*
 		 * Parte do Joins

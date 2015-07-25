@@ -42,7 +42,8 @@ public class ComprarTicket extends HttpServlet
 		String matriculaFinal = request.getParameter("matriculaFinal");
 		if ((matriculaFinal != null && !matriculaFinal.equals("")) || matricula != null && !matricula.equals(""))
 		{
-			if (matriculaFinal != null && !matriculaFinal.equals(""))
+			String acao = request.getParameter("buscarMatr");
+			if (matriculaFinal != null && !matriculaFinal.equals("") && (acao == null || acao.equals("")))
 			{
 				matricula = matriculaFinal;
 			}
